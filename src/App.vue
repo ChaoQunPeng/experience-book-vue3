@@ -1,0 +1,58 @@
+<!--
+ * @Author: PengChaoQun 1152684231@qq.com
+ * @Date: 2024-01-29 20:15:38
+ * @LastEditors: PengChaoQun 1152684231@qq.com
+ * @LastEditTime: 2024-01-29 21:17:17
+ * @FilePath: /experience-book-vue3/src/App.vue
+ * @Description: 
+-->
+<script setup lang="ts">
+import HelloWorld from './components/HelloWorld.vue';
+
+const themeToken = {
+  wireframe: false,
+  colorPrimary: '#198cff',
+  colorSuccess: '#5dce00',
+  colorWarning: '#fa9a25',
+  colorError: '#e31700',
+  colorInfo: '#198cff',
+  colorTextBase: 'rgb(31, 51, 73)',
+  colorText: 'rgba(31, 51, 73, 0.85)',
+  colorBorder: '#f3f3f4',
+  colorBorderSecondary: '#f3f3f4'
+};
+</script>
+
+<template>
+  <a-config-provider
+    :theme="{
+      token: themeToken
+    }"
+  >
+    <a-button type="primary">Primary Button</a-button>
+  </a-config-provider>
+  <div>
+    <a href="https://vitejs.dev" target="_blank">
+      <img src="/vite.svg" class="logo" alt="Vite logo" />
+    </a>
+    <a href="https://vuejs.org/" target="_blank">
+      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+    </a>
+  </div>
+  <HelloWorld msg="Vite + Vue" />
+</template>
+
+<style scoped>
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
+}
+</style>
