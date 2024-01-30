@@ -2,12 +2,27 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-01-29 21:17:17
+ * @LastEditTime: 2024-01-30 19:57:31
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
+<template>
+  <a-config-provider
+    :theme="{
+      token: themeToken
+    }"
+  >
+    <div class="flex h-screen">
+      <div class="w-260">
+        <side-nav></side-nav>
+      </div>
+      <main class="flex-1 bg-bg-blue"></main>
+    </div>
+  </a-config-provider>
+</template>
+
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue';
+import SideNav from '@/layout/side-nav.vue';
 
 const themeToken = {
   wireframe: false,
@@ -23,36 +38,4 @@ const themeToken = {
 };
 </script>
 
-<template>
-  <a-config-provider
-    :theme="{
-      token: themeToken
-    }"
-  >
-    <a-button type="primary">Primary Button</a-button>
-  </a-config-provider>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-</template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style lang="less" scoped></style>
