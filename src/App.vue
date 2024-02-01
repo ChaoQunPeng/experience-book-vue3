@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-01-30 19:57:31
+ * @LastEditTime: 2024-02-01 22:27:47
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -16,7 +16,9 @@
       <div class="w-260">
         <side-nav></side-nav>
       </div>
-      <main class="flex-1 bg-bg-blue"></main>
+      <main class="flex-1 bg-bg-blue">
+        <router-view></router-view>
+      </main>
     </div>
   </a-config-provider>
 </template>
@@ -34,8 +36,11 @@ const themeToken = {
   colorTextBase: 'rgb(31, 51, 73)',
   colorText: 'rgba(31, 51, 73, 0.85)',
   colorBorder: '#f3f3f4',
-  colorBorderSecondary: '#f3f3f4'
+  colorBorderSecondary: '#f3f3f4',
+  borderRadiusLG:'4px'
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less">
+
+</style>

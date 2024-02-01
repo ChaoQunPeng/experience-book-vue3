@@ -4,15 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --open",
+    "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/assets/tailwind-input.css -o ./src/assets/theme/tailwind-output.css --watch"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
     "ant-design-vue": "^4.1.1",
     "axios": "^1.6.7",
-    "vue": "^3.3.11"
+    "vue": "^3.3.11",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@types/mockjs": "^1.0.10",

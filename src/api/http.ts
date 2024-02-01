@@ -1,3 +1,12 @@
+/*
+ * @Author: PengChaoQun 1152684231@qq.com
+ * @Date: 2024-01-30 18:44:06
+ * @LastEditors: PengChaoQun 1152684231@qq.com
+ * @LastEditTime: 2024-02-01 15:32:22
+ * @FilePath: /experience-book-vue3/src/api/http.ts
+ * @Description: http文件
+ */
+
 import axios, { InternalAxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
 
 const axiosInstance: AxiosInstance = axios.create({
@@ -29,4 +38,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export { axiosInstance };
