@@ -2,12 +2,16 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 19:14:17
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-01 22:44:54
+ * @LastEditTime: 2024-02-02 18:10:58
  * @FilePath: /experience-book-vue3/mock/skill.ts
  * @Description:
  */
 import Mock from 'mockjs';
 import { SuccessModel } from '../src/api/model';
+
+function regUrl(url: string) {
+  return RegExp(url + '.*');
+}
 
 /**
  * 获取导航的技能列表
@@ -62,5 +66,29 @@ Mock.mock('/api/skill/list', 'get', () => {
     code: 1,
     msg: 'success',
     data: mockData.data
+  });
+});
+
+/**
+ * 获取技能里的笔记列表
+ */
+Mock.mock(regUrl('/api/skill/note-list'), 'get', options => {
+  const mockData = Mock.mock({
+    'expTotal|100-420': 1,
+    'noteList|10-20': [
+      {
+        id: '@id',
+        title: '@cword@cword@cword@cword@cword',
+        summary: '@cparagraph',
+        'exp|1-5': 1,
+        createDateTime: '@datetime'
+      }
+    ]
+  });
+
+  return new SuccessModel({
+    code: 1,
+    msg: 'success',
+    data: mockData
   });
 });

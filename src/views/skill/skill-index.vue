@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-01 22:47:30
+ * @LastEditTime: 2024-02-02 11:27:09
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -25,7 +25,10 @@
 
     <a-row class="px-20" :gutter="20">
       <a-col v-for="skill in resolveSkillList" :key="skill.id" :span="6" class="mb-20">
-        <div class="skill-card flex flex-col p-15 rounded-radius-4 bg-white h-160 cursor-pointer">
+        <div
+          class="skill-card flex flex-col p-15 rounded-radius-4 bg-white h-160 cursor-pointer"
+          @click="goNoteList(skill)"
+        >
           <div class="flex mb-4">
             <span class="font-bold text-size-20 text-black leading-normal skill-name transition-all"
               >{{ skill.name }}
@@ -47,11 +50,6 @@
               </span>
 
               <template v-for="i in 5" :key="i">
-                <!-- <i
-                  class="iconfont icon-xingxing-fill star"
-                  :class="skill.level > i ? `active-${skill.color}` : skill.color"
-                ></i> -->
-
                 <i
                   class="iconfont icon-xingxing-fill star"
                   :class="i < skill.level ? `active-${skill.color}` : skill.color"
@@ -130,7 +128,10 @@ export default defineComponent({
         .then(res => {
           this.skillList = res.data.data;
         })
-        .catch(err => {});
+        .catch(() => {});
+    },
+    goNoteList(skill: any) {
+      this.$router.push({ path: `/skill-note-list/${skill.id}`, query: { id: 1 } });
     }
   }
 });
