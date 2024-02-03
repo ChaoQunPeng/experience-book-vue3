@@ -21,6 +21,10 @@
   margin-right: auto
 }
 
+.mb-12 {
+  margin-bottom: 12px
+}
+
 .mb-20 {
   margin-bottom: 20px
 }
@@ -31,6 +35,10 @@
 
 .mb-5 {
   margin-bottom: 5px
+}
+
+.mb-6 {
+  margin-bottom: 6px
 }
 
 .mb-8 {
@@ -73,14 +81,6 @@
   margin-top: auto
 }
 
-.mb-12 {
-  margin-bottom: 12px
-}
-
-.mb-6 {
-  margin-bottom: 6px
-}
-
 .block {
   display: block
 }
@@ -102,6 +102,10 @@
   height: 160px
 }
 
+.h-300 {
+  height: 300px
+}
+
 .h-36 {
   height: 36px
 }
@@ -110,16 +114,8 @@
   height: 44px
 }
 
-.h-full {
-  height: 100%
-}
-
 .h-screen {
   height: 100vh
-}
-
-.h-140 {
-  height: 140px
 }
 
 .min-h-140 {
@@ -180,6 +176,14 @@
   overflow: hidden
 }
 
+.overflow-y-auto {
+  overflow-y: auto
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden
+}
+
 .rounded {
   border-radius: 0.25rem
 }
@@ -190,10 +194,6 @@
 
 .border-b {
   border-bottom-width: 1px
-}
-
-.border-solid {
-  border-style: solid
 }
 
 .border-black-5 {
@@ -209,10 +209,6 @@
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
-.to-black-45 {
-  --tw-gradient-to: rgba(31,51,73,0.45) var(--tw-gradient-to-position)
-}
-
 .p-15 {
   padding: 15px
 }
@@ -221,18 +217,27 @@
   padding: 6px
 }
 
-.px-20 {
-  padding-left: 20px;
-  padding-right: 20px
-}
-
 .px-15 {
   padding-left: 15px;
   padding-right: 15px
 }
 
+.px-20 {
+  padding-left: 20px;
+  padding-right: 20px
+}
+
+.px-32 {
+  padding-left: 32px;
+  padding-right: 32px
+}
+
 .pb-15 {
   padding-bottom: 15px
+}
+
+.pb-7 {
+  padding-bottom: 7px
 }
 
 .pl-15 {
@@ -247,12 +252,16 @@
   padding-right: 15px
 }
 
-.pb-7 {
-  padding-bottom: 7px
-}
-
 .pt-10 {
   padding-top: 10px
+}
+
+.pt-40 {
+  padding-top: 40px
+}
+
+.text-right {
+  text-align: right
 }
 
 .text-size-12 {
@@ -287,6 +296,10 @@
   font-weight: 500
 }
 
+.italic {
+  font-style: italic
+}
+
 .leading-none {
   line-height: 1
 }
@@ -305,6 +318,14 @@
 
 .text-black-65 {
   color: rgba(31,51,73,0.65)
+}
+
+.text-red {
+  color: rgba(227, 23, 0, 1)
+}
+
+.underline {
+  text-decoration-line: underline
 }
 
 .antialiased {

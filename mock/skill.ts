@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 19:14:17
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-02 18:10:58
+ * @LastEditTime: 2024-02-03 17:17:59
  * @FilePath: /experience-book-vue3/mock/skill.ts
  * @Description:
  */
@@ -16,7 +16,7 @@ function regUrl(url: string) {
 /**
  * 获取导航的技能列表
  */
-Mock.mock('/api/skill/nav', 'get', () => {
+Mock.mock('/api/skill/options', 'get', () => {
   const data = Mock.mock([
     {
       id: '@id',

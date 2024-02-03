@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-01 22:27:47
+ * @LastEditTime: 2024-02-03 11:09:29
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -12,11 +12,11 @@
       token: themeToken
     }"
   >
-    <div class="flex h-screen">
+    <div class="flex h-screen overflow-x-hidden">
       <div class="w-260">
         <side-nav></side-nav>
       </div>
-      <main class="flex-1 bg-bg-blue">
+      <main class="flex-1 bg-eb-blue">
         <router-view></router-view>
       </main>
     </div>
