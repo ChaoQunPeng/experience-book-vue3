@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-03 16:03:38
+ * @LastEditTime: 2024-02-04 11:11:23
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -74,7 +74,7 @@
       </div>
     </div>
 
-    <div class="note-editor overflow-y-auto flex-1 px-32 pt-40 bg-white">
+    <div class="note-editor overflow-y-auto flex-1 px-32 pt-40 bg-white w-0">
       <a-form
         :model="form"
         name="basic"
@@ -152,6 +152,7 @@
         :preview="true"
         class="md-editor rounded-radius-4 h-300"
         height="300px"
+        :toolbarsExclude="['github']"
       />
 
       <div class="text-right">
@@ -217,7 +218,7 @@ export default {
 
   methods: {
     async getNodeList() {
-      const res = await axiosInstance.get(`/api/skill/note-list?id=1`).catch(() => {});
+      const res = await axiosInstance.get(`/api/skill/note-list`).catch(() => {});
 
       this.noteData = res.data.data;
 
@@ -228,7 +229,7 @@ export default {
     },
     getSkillOptions() {
       axiosInstance
-        .get('/api/skill/nav')
+        .get('/api/skill/options')
         .then(res => {
           this.skillOptionList = res.data.data;
         })

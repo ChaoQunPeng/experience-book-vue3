@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-01 22:27:05
+ * @LastEditTime: 2024-02-04 12:33:43
  * @FilePath: /experience-book-vue3/src/main.ts
  * @Description:
  */
@@ -13,9 +13,9 @@ import App from './App.vue';
 
 import router from './router';
 
-import '../mock/index';
+// import '../mock/index';
 
-const app = createApp(App);
+export const app = createApp(App);
 
 app.use(router);
 app.use(Antd).mount('#app');

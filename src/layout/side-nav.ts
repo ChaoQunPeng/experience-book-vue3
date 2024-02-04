@@ -2,12 +2,12 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 16:11:22
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-01 15:32:26
+ * @LastEditTime: 2024-02-04 16:22:01
  * @FilePath: /experience-book-vue3/src/layout/side-nav.ts
  * @Description:
  */
 
-import { axiosInstance } from '@/api/http';
+import { SkillApi } from '@/api/skill';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -92,14 +92,11 @@ export default defineComponent({
      * @return {*}
      */
     async getList() {
-      axiosInstance
-        .get('/api/skill/nav')
-        .then(res => {
-          this.bookNavList = res.data.data;
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      const result = await SkillApi.getSkillOptionList();
+
+      if (result) {
+        this.bookNavList = result.data.data;
+      }
     }
   }
 });

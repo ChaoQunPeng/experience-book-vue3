@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-01 22:30:47
+ * @LastEditTime: 2024-02-04 11:10:55
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -41,8 +41,8 @@
       <div class="w-220 mx-auto">
         <div
           class="nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black"
-          :class="{ active: activeNav.id == -1 }"
-          @click="openTaskList({ id: -1 })"
+          :class="{ active: activeNav.id == 'all-title' }"
+          @click="openTaskList({ id: 'all-title' })"
         >
           <i></i>
           <span class="text-size-16 text-black select-none">任务</span>

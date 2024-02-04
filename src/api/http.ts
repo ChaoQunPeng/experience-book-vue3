@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 18:44:06
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-01 15:32:22
+ * @LastEditTime: 2024-02-04 16:09:30
  * @FilePath: /experience-book-vue3/src/api/http.ts
  * @Description: http文件
  */
@@ -10,7 +10,7 @@
 import axios, { InternalAxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: '',
+  baseURL: '/api/',
   timeout: 5000
 });
 

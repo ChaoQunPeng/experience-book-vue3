@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-03 11:09:29
+ * @LastEditTime: 2024-02-04 12:53:07
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -12,6 +12,7 @@
       token: themeToken
     }"
   >
+    <div id="modalMount"></div>
     <div class="flex h-screen overflow-x-hidden">
       <div class="w-260">
         <side-nav></side-nav>
@@ -37,10 +38,8 @@ const themeToken = {
   colorText: 'rgba(31, 51, 73, 0.85)',
   colorBorder: '#f3f3f4',
   colorBorderSecondary: '#f3f3f4',
-  borderRadiusLG:'4px'
+  borderRadiusLG: '4px'
 };
 </script>
 
-<style lang="less">
-
-</style>
+<style lang="less"></style>

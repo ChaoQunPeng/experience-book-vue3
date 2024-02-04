@@ -1,5 +1,9 @@
 /* @tailwind base; */
 
+.visible {
+  visibility: visible
+}
+
 .absolute {
   position: absolute
 }
@@ -120,6 +124,10 @@
 
 .min-h-140 {
   min-height: 140px
+}
+
+.w-0 {
+  width: 0px
 }
 
 .w-120 {

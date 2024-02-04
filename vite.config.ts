@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-01-30 19:01:32
+ * @LastEditTime: 2024-02-04 11:04:12
  * @FilePath: /experience-book-vue3/vite.config.ts
  * @Description:
  */
@@ -27,7 +27,14 @@ export default defineConfig({
     })
   ],
   server: {
-    hmr: true
+    hmr: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
   },
   resolve: {
     alias: [
