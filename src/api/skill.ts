@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 15:07:59
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-04 16:18:34
+ * @LastEditTime: 2024-02-05 18:31:04
  * @FilePath: /experience-book-vue3/src/api/skill.ts
  * @Description:
  */
@@ -28,6 +28,14 @@ class Skill extends BaseApi {
    */
   getSkillOptionList(): Promise<any> {
     return axiosInstance.get(`/${this.name}/options`);
+  }
+
+  /**
+   * @description: 获取笔记列表
+   * @return {*}
+   */
+  getSkillNoteList(skillId: number): Promise<any> {
+    return axiosInstance.get(`/${this.name}/note-list/${skillId}`);
   }
 }
 

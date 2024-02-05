@@ -126,6 +126,10 @@
   height: 100vh
 }
 
+.h-60 {
+  height: 60px
+}
+
 .min-h-140 {
   min-height: 140px
 }
@@ -206,6 +210,14 @@
 
 .border-b {
   border-bottom-width: 1px
+}
+
+.border-r {
+  border-right-width: 1px
+}
+
+.border-l {
+  border-left-width: 1px
 }
 
 .border-black-5 {

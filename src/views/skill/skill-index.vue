@@ -163,7 +163,7 @@ const openSkillForm = (options: { editId?: number }) => {
 };
 
 const goNoteList = (skill: SkillListItem) => {
-  router.push({ path: `/skill-note-list/${skill.id}`, query: { id: 1 } });
+  router.push({ path: `/skill-note-list/${skill.id}`});
 };
 
 const confirmDelete = (skill: SkillListItem) => {
