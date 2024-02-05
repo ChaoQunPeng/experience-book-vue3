@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-04 11:10:55
+ * @LastEditTime: 2024-02-05 13:00:59
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -18,7 +18,7 @@
         <div
           class="nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black"
           :class="{ active: activeNav.id == 0 }"
-          @click="openExpBookList({ id: 0 })"
+          @click="clickNav({ id: 0 })"
         >
           <i
             class="iconfont icon-shuji-line"
@@ -28,7 +28,7 @@
         </div>
         <ul class="ml-24 mt-5">
           <li
-            v-for="book in bookNavList"
+            v-for="book in skillNavList"
             class="nav-item h-36 flex items-center pl-15 mb-5 rounded cursor-pointer"
             :class="{ active: book.id == activeNav.id }"
             @click="clickNav(book)"
@@ -42,7 +42,7 @@
         <div
           class="nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black"
           :class="{ active: activeNav.id == 'all-title' }"
-          @click="openTaskList({ id: 'all-title' })"
+          @click="clickNav({ id: 'all-title' })"
         >
           <i></i>
           <span class="text-size-16 text-black select-none">任务</span>
@@ -62,7 +62,64 @@
   </div>
 </template>
 
-<script src="./side-nav.ts" lang="ts"></script>
+<!-- <script src="./side-nav.ts" lang="ts"></script> -->
+<script setup lang="ts">
+import { SkillApi } from '@/api/skill';
+import { Ref, onMounted, ref } from 'vue';
+
+interface navOption {
+  id?: string | number;
+  name?: string;
+}
+
+const skillNavList = ref<Array<navOption>>([]);
+
+const activeNav = ref<navOption>({});
+
+const taskNavList: Ref<Array<navOption>> = ref([
+  {
+    id: 'all',
+    name: '全部'
+  },
+  {
+    id: 'myDay',
+    name: '我的一天'
+  },
+  {
+    id: 'important',
+    name: '重要'
+  },
+  {
+    id: 'deadline',
+    name: '今天截止'
+  }
+]);
+
+/**
+ * @description: 获取列表
+ * @return {*}
+ */
+const getList = async () => {
+  const result = await SkillApi.getSkillOptionList();
+
+  if (result) {
+    skillNavList.value = result.data.data;
+  }
+};
+
+/**
+ * @description: 点击导航
+ * @param {*} nav
+ * @return {*}
+ */
+const clickNav = (nav: navOption) => {
+  activeNav.value = nav;
+};
+
+onMounted(() => {
+  getList();
+});
+</script>
 
 <style lang="less" scoped>
 .nav-item {

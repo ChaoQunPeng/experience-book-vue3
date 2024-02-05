@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 12:16:40
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-04 17:42:59
+ * @LastEditTime: 2024-02-05 15:37:09
  * @FilePath: /experience-book-vue3/src/views/skill/skill-form.vue
  * @Description: 
 -->
@@ -37,86 +37,137 @@
   </a-modal>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { SkillApi } from '@/api/skill';
+import { FormInstance } from 'ant-design-vue';
+import { computed, reactive, ref } from 'vue';
 
-export default {
-  name: 'skill-form',
+/**
+ * 组件配置
+ */
+interface ComponentOptions {
+  editId?: number | string;
+  onOk?: Function;
+}
 
-  data() {
-    return {
-      visible: false,
-      form: {
-        name: '',
-        description: ''
-      },
-      rules: {
-        name: [{ required: true, message: '名称不能为空' }]
-      },
-      componentOptions: {}
-    };
-  },
+defineOptions({
+  name: 'skill-form'
+});
 
-  computed: {
-    dialogTitle() {
-      return this.componentOptions.editId ? '编辑技能' : '创建技能';
-    }
-  },
+const emit = defineEmits<{
+  'on-ok': [];
+}>();
 
-  methods: {
-    async addSkill() {
-      const result = await SkillApi.add(this.form).catch(err => {
-        console.log(err);
-      });
-    },
-    async updateSkill() {
-      const result = await SkillApi.update(this.componentOptions.editId, this.form).catch(err => {
-        console.log(err);
-      });
-    },
-    async getInfo(editId) {
-      const result = await SkillApi.getById(editId).catch(err => {
-        console.log(err);
-      });
+const visible = ref(false);
 
-      if (result) {
-        const { data } = result.data;
-        this.form.name = data.name;
-        this.form.description = data.description;
-      }
-    },
-    handleVisible() {
-      this.visible = !this.visible;
-    },
-    async open(options: { editId?: number }) {
-      this.visible = true;
+const form = reactive({
+  name: '',
+  description: ''
+});
 
-      this.componentOptions = options;
+const formRef = ref<FormInstance>();
+// const formRef = ref<FormInstance>();
 
-      if (options.editId) {
-        await this.getInfo(options.editId);
-      }
-    },
-    async onOk() {
-      // if (this.form.name == '') {
-      //   return;
-      // }
+// const rules = reactive({
+//   name: [{ required: true, message: '名称不能为空' }]
+// });
 
-      const valid = await this.$refs.formRef.validate().catch(() => {});
+const rules = {
+  name: [{ required: true, message: '名称不能为空' }]
+};
 
-      if (valid) {
-        if (this.componentOptions.editId) {
-          await this.updateSkill();
-        } else {
-          await this.addSkill();
-        }
+let componentOptions: ComponentOptions = {};
 
-        this.$emit('on-ok');
-      }
-    },
-    onCancel() {}
+// # region 计算属性
+const dialogTitle = computed(() => {
+  return componentOptions.editId ? '编辑技能' : '创建技能';
+});
+// # endregion
+
+/**
+ * @description: 新增技能
+ * @return {*}
+ */
+const addSkill = async () => {
+  await SkillApi.add(form).catch(() => {});
+};
+
+/**
+ * @description: 更新技能
+ * @return {*}
+ */
+const updateSkill = async () => {
+  await SkillApi.update(<number>componentOptions.editId, form).catch(() => {});
+};
+
+/**
+ * @description: 获取技能详情
+ * @return {*}
+ */
+const getInfo = async (editId: number | string) => {
+  const result = await SkillApi.getById(editId).catch(err => {
+    console.log(err);
+  });
+
+  if (result) {
+    const { data } = result.data;
+    form.name = data.name;
+    form.description = data.description;
   }
 };
+
+/**
+ * @description: 打开/关闭弹框
+ * @return {*}
+ */
+const handleVisible = () => {
+  visible.value = !visible.value;
+};
+
+/**
+ * @description: 打开/关闭弹框
+ * @return {*}
+ */
+const open = async (options: ComponentOptions) => {
+  visible.value = true;
+
+  componentOptions = options;
+
+  if (options.editId) {
+    await getInfo(options.editId);
+  }
+};
+
+const onOk = async () => {
+  // const valid = await this.$refs.formRef.validate().catch(() => {});
+
+  const valid = await formRef.value?.validate().catch(() => {});
+
+  if (valid) {
+    if (componentOptions.editId) {
+      await updateSkill();
+    } else {
+      await addSkill();
+    }
+
+    debugger;
+    if (componentOptions.onOk) {
+      componentOptions.onOk();
+    }
+
+    emit('on-ok');
+  }
+};
+
+const onCancel = () => {};
+
+defineExpose({
+  handleVisible,
+  /**
+   * 创建并打开弹框
+   */
+  open
+});
 </script>
 
 <style scoped lang="less">

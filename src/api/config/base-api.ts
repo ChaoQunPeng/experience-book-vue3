@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 15:08:08
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-04 17:30:24
+ * @LastEditTime: 2024-02-05 15:12:31
  * @FilePath: /experience-book-vue3/src/api/base-api.ts
  * @Description:
  */
@@ -31,7 +31,7 @@ export class BaseApi {
     return axiosInstance.get(`${this.name}`, params);
   }
 
-  getById(id: number) {
+  getById(id: number | string) {
     return axiosInstance.get(`${this.name}/${id}`);
   }
 }

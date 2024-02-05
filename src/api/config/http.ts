@@ -2,8 +2,8 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 18:44:06
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-04 16:09:30
- * @FilePath: /experience-book-vue3/src/api/http.ts
+ * @LastEditTime: 2024-02-05 15:56:26
+ * @FilePath: /experience-book-vue3/src/api/config/http.ts
  * @Description: http文件
  */
 
@@ -30,6 +30,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     // 对响应数据做点什么
+    console.log(`response`, response);
     return response;
   },
   (error: any) => {

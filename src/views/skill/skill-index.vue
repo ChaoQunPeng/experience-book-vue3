@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-04 17:52:10
+ * @LastEditTime: 2024-02-05 15:26:58
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -92,113 +92,100 @@
       </a-col>
     </a-row>
 
-    <skill-form ref="skillFormRef" @on-ok="onOk"></skill-form>
+    <skill-form ref="skillFormRef"></skill-form>
   </div>
 </template>
 
-<!-- <script src="./skill-index.ts" lang="ts"></script> -->
-
-<script lang="ts">
-import { createVNode, defineComponent } from 'vue';
+<script setup lang="ts">
 import { PlusOutlined, MoreOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue';
-import { axiosInstance } from '@/api/http';
 import SkillForm from './skill-form.vue';
-import { createApp } from 'vue';
 import { Modal } from 'ant-design-vue';
 import { SkillApi } from '@/api/skill';
+import { computed, createVNode, onMounted, ref } from 'vue';
+import router from '@/router';
 
-export default defineComponent({
-  components: {
-    PlusOutlined,
-    MoreOutlined,
-    SkillForm
-  },
+interface SkillListItem {
+  id: number;
+  name: string;
+  description: string;
+  level: number;
+  levelName: string;
+  currentLevelExp: number;
+  color: string;
+  range: Array<number>[];
+}
 
-  data() {
-    return {
-      search: '',
-      skillList: [] as any
-    };
-  },
+const search = ref('');
+const skillList = ref<Array<SkillListItem>>([]);
 
-  computed: {
-    resolveSkillList() {
-      return this.skillList.filter((e: any) => e.name.indexOf(this.search) > -1);
-    },
-    resolveProgressstrokeColor() {
-      return function (color: string) {
-        if (color == 'black') {
-          return '#1f3349';
-        } else if (color == 'black-85') {
-          return 'rgba(31, 51, 73, 0.85)';
-        } else if (color == 'blue') {
-          return '#198cff';
-        } else if (color == 'red') {
-          return '#e31700';
-        } else if (color == 'purple') {
-          return '#8525fa';
-        } else if (color == 'green') {
-          return '#5dce00';
-        }
-      };
+const skillFormRef = ref<InstanceType<typeof SkillForm>>();
+
+const resolveSkillList = computed<Array<SkillListItem>>(() => {
+  return skillList.value.filter((e: any) => e.name.indexOf(search.value) > -1);
+});
+
+const resolveProgressstrokeColor = computed<Function>(() => {
+  return function (color: string) {
+    if (color == 'black') {
+      return '#1f3349';
+    } else if (color == 'black-85') {
+      return 'rgba(31, 51, 73, 0.85)';
+    } else if (color == 'blue') {
+      return '#198cff';
+    } else if (color == 'red') {
+      return '#e31700';
+    } else if (color == 'purple') {
+      return '#8525fa';
+    } else if (color == 'green') {
+      return '#5dce00';
+    } else {
+      return '';
     }
-  },
+  };
+});
 
-  created() {
-    this.getList();
-  },
+const getList = async () => {
+  const result = await SkillApi.getSkillList().catch(() => {});
 
-  mounted() {
-    // this.openSkillForm();
-  },
+  if (result) {
+    skillList.value = result.data.data;
+  }
+};
 
-  methods: {
-    async getList() {
-      const result = await SkillApi.getSkillList().catch(err => {});
+const openSkillForm = (options: { editId?: number }) => {
+  skillFormRef.value?.open({
+    editId: options?.editId,
+    onOk: () => {
+      getList();
+      skillFormRef.value?.handleVisible();
+    }
+  });
+};
 
-      if (result) {
-        this.skillList = result.data.data;
+const goNoteList = (skill: SkillListItem) => {
+  router.push({ path: `/skill-note-list/${skill.id}`, query: { id: 1 } });
+};
+
+const confirmDelete = (skill: SkillListItem) => {
+  Modal.confirm({
+    title: `确定要删除${skill.name}吗？`,
+    icon: createVNode(ExclamationCircleOutlined),
+    onOk: async () => {
+      const res = await SkillApi.delele(skill.id);
+
+      if (res) {
+        getList();
       }
     },
-    goNoteList(skill: any) {
-      this.$router.push({ path: `/skill-note-list/${skill.id}`, query: { id: 1 } });
-    },
-    openSkillForm(options: { editId?: number }) {
-      const skillForm = <{ open: Function; onOk: Function }>this.$refs.skillFormRef;
 
-      skillForm.open({
-        editId: options.editId
-      });
-
-      // const app = createApp(SkillForm);
-      // const myCom = app.component(SkillForm.name, SkillForm);
-      // document.body.appendChild(myCom.mount('#modalMount').$el);
-    },
-    confirmDelete(skill) {
-      Modal.confirm({
-        title: `确定要删除${skill.name}吗？`,
-        icon: createVNode(ExclamationCircleOutlined),
-        onOk: async () => {
-          // const res = await axiosInstance.delete(`/api/skill/${skill.id}`);
-          const res = await SkillApi.delele(skill.id);
-
-          if (res) {
-            this.getList();
-          }
-        },
-
-        onCancel() {
-          console.log('Cancel');
-        }
-      });
-    },
-    onOk() {
-      this.getList();
-      const skillForm = <{ handleVisible: Function; onOk: Function }>this.$refs.skillFormRef;
-
-      skillForm.handleVisible();
+    onCancel() {
+      console.log('Cancel');
     }
-  }
+  });
+};
+
+onMounted(() => {
+  getList();
 });
 </script>
 

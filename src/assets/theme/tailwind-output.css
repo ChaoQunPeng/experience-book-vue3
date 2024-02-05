@@ -4,6 +4,10 @@
   visibility: visible
 }
 
+.\!visible {
+  visibility: visible !important
+}
+
 .absolute {
   position: absolute
 }

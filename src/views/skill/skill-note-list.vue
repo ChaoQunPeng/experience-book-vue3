@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-04 11:11:23
+ * @LastEditTime: 2024-02-05 15:50:05
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -166,7 +166,7 @@
 </template>
 
 <script lang="ts">
-import { axiosInstance } from '@/api/http';
+import { axiosInstance } from '@/api/config/http';
 import { MoreOutlined, SearchOutlined } from '@ant-design/icons-vue';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
@@ -303,3 +303,4 @@ export default {
   height: 400px !important;
 }
 </style>
+@/api/config/http

@@ -6,8 +6,8 @@
  * @FilePath: /experience-book-vue3/src/api/skill.ts
  * @Description:
  */
-import { BaseApi } from './base-api';
-import { axiosInstance } from './http';
+import { BaseApi } from './config/base-api';
+import { axiosInstance } from './config/http';
 
 class Skill extends BaseApi {
   constructor() {

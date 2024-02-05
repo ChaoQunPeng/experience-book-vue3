@@ -2,8 +2,8 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 19:06:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-01-30 19:12:59
- * @FilePath: /experience-book-vue3/src/api/model.ts
+ * @LastEditTime: 2024-02-05 15:48:31
+ * @FilePath: /experience-book-vue3/src/api/config/model.ts
  * @Description: http模型
  */
 
