@@ -2,12 +2,11 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 19:14:17
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-03 17:17:59
+ * @LastEditTime: 2024-02-06 13:17:56
  * @FilePath: /experience-book-vue3/mock/skill.ts
  * @Description:
  */
 import Mock from 'mockjs';
-import { SuccessModel } from '../src/api/model';
 
 function regUrl(url: string) {
   return RegExp(url + '.*');

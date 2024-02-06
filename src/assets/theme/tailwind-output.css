@@ -1,11 +1,11 @@
 /* @tailwind base; */
 
-.visible {
-  visibility: visible
-}
-
 .\!visible {
   visibility: visible !important
+}
+
+.visible {
+  visibility: visible
 }
 
 .absolute {
@@ -14,10 +14,6 @@
 
 .relative {
   position: relative
-}
-
-.right-20 {
-  right: 20px
 }
 
 .m-46 {
@@ -73,6 +69,10 @@
   margin-right: 4px
 }
 
+.mt-10 {
+  margin-top: 10px
+}
+
 .mt-20 {
   margin-top: 20px
 }
@@ -122,12 +122,12 @@
   height: 44px
 }
 
-.h-screen {
-  height: 100vh
-}
-
 .h-60 {
   height: 60px
+}
+
+.h-screen {
+  height: 100vh
 }
 
 .min-h-140 {
@@ -136,10 +136,6 @@
 
 .w-0 {
   width: 0px
-}
-
-.w-120 {
-  width: 120px
 }
 
 .w-220 {
@@ -204,6 +200,10 @@
   border-radius: 0.25rem
 }
 
+.rounded-none {
+  border-radius: 0px
+}
+
 .rounded-radius-4 {
   border-radius: 4px
 }
@@ -212,12 +212,16 @@
   border-bottom-width: 1px
 }
 
+.border-l {
+  border-left-width: 1px
+}
+
 .border-r {
   border-right-width: 1px
 }
 
-.border-l {
-  border-left-width: 1px
+.border-none {
+  border-style: none
 }
 
 .border-black-5 {
@@ -254,10 +258,6 @@
 .px-32 {
   padding-left: 32px;
   padding-right: 32px
-}
-
-.pb-15 {
-  padding-bottom: 15px
 }
 
 .pb-7 {

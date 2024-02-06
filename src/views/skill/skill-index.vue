@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-05 15:26:58
+ * @LastEditTime: 2024-02-06 13:10:01
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -148,7 +148,7 @@ const getList = async () => {
   const result = await SkillApi.getSkillList().catch(() => {});
 
   if (result) {
-    skillList.value = result.data.data;
+    skillList.value = result.data;
   }
 };
 

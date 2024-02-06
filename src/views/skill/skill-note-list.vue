@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-05 20:30:21
+ * @LastEditTime: 2024-02-06 17:48:33
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -12,23 +12,31 @@
       class="note-area flex flex-col w-286 bg-eb-blue border-l border-r border-black-5"
       style="border-left-style: solid; border-right-style: solid"
     >
-      <div class="pb-15 border-b border-black-5" style="border-bottom-style: solid">
+      <div class="border-b border-black-5" style="border-bottom-style: solid">
         <div class="flex items-center mt-20 pl-20 pr-15 relative">
           <span class="text-size-24 text-black font-bold flex-shrink-0">{{ pageData.name }}</span>
 
-          <a-input v-model:value="search" placeholder="搜索笔记" class="w-120 absolute right-20">
-            <template #suffix>
-              <span class="is-link">
-                <SearchOutlined />
-              </span>
-            </template>
-          </a-input>
+          <a-button class="add-note-btn ml-auto" type="primary" shape="circle" @click="addNote">
+            <PlusOutlined size="20px" />
+          </a-button>
         </div>
 
         <div class="text-size-12 text-black-45 pl-20 mt-5">
-          {{ pageData.noteList.length }}篇笔记
+          {{ pageData.noteList?.length }}篇笔记
           <span class="font-bold ml-10"> {{ pageData.expTotal }} </span>exp
         </div>
+
+        <a-input
+          v-model:value="search"
+          placeholder="搜索笔记"
+          class="mt-10 rounded-none border-none"
+        >
+          <template #suffix>
+            <span class="is-link">
+              <SearchOutlined />
+            </span>
+          </template>
+        </a-input>
       </div>
 
       <div id="Note-List" class="note-list overflow-auto">
@@ -55,9 +63,9 @@
                 <MoreOutlined />
               </div>
               <template #overlay>
-                <a-menu>
-                  <a-menu-item>
-                    <div class="text-red" @click="deleteNote(note)">删除</div>
+                <a-menu @click="onDropdownClick($event, note)">
+                  <a-menu-item key="delete">
+                    <div class="text-red">删除</div>
                   </a-menu-item>
                 </a-menu>
               </template>
@@ -85,11 +93,7 @@
       >
         <a-row align="top">
           <a-col :span="24">
-            <a-form-item
-              label="笔记标题"
-              name="username"
-              :rules="[{ required: true, message: 'Please input your username!' }]"
-            >
+            <a-form-item label="笔记标题">
               <a-input
                 v-model:value="form.title"
                 size="large"
@@ -99,11 +103,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="11">
-            <a-form-item
-              label="所属技能"
-              name="skillId"
-              :rules="[{ required: true, message: 'Please input your password!' }]"
-            >
+            <a-form-item label="所属技能" name="skillId">
               <a-select
                 ref="select"
                 v-model:value="form.skillId"
@@ -112,7 +112,6 @@
                 show-search
                 :filter-option="filterOption"
                 optionFilterProp="label"
-                allow-clear
               >
                 <a-select-option
                   v-for="skill in skillOptionList"
@@ -124,11 +123,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="11" :offset="2">
-            <a-form-item
-              label="经验值"
-              name="exp"
-              :rules="[{ required: true, message: 'Please input your password!' }]"
-            >
+            <a-form-item label="经验值" name="exp">
               <a-select ref="select" v-model:value="form.exp" size="large" placeholder="请选择">
                 <a-select-option :value="0">0</a-select-option>
                 <a-select-option v-for="exp in 5" :key="exp" :value="exp">
@@ -154,13 +149,13 @@
         :preview="true"
         class="md-editor rounded-radius-4 h-300"
         height="300px"
-        :toolbarsExclude="['github']"
+        :toolbarsExclude="['github', 'next', 'revoke']"
       />
 
       <div class="text-right">
         <a-space block class="mt-30">
           <a-button type="primary" @click="updateNote">保存</a-button>
-          <a-button type="primary" :disabled="form.exp == 0">Get Exp!</a-button>
+          <a-button type="primary" :disabled="form.exp == 0" @click="getExp">Get Exp!</a-button>
         </a-space>
       </div>
     </div>
@@ -170,12 +165,21 @@
 <script setup lang="ts">
 import { NoteApi } from '@/api/note';
 import { SkillApi } from '@/api/skill';
-import { ExclamationCircleOutlined, MoreOutlined, SearchOutlined } from '@ant-design/icons-vue';
-import { Modal } from 'ant-design-vue';
+import {
+  ExclamationCircleOutlined,
+  MoreOutlined,
+  SearchOutlined,
+  PlusOutlined
+} from '@ant-design/icons-vue';
+import { MenuProps, Modal } from 'ant-design-vue';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { computed, createVNode, onMounted, reactive, ref } from 'vue';
+import { computed, createVNode, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { message } from 'ant-design-vue';
+import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
+
+// const [messageApi, contextHolder] = message.useMessage();
 
 interface NoteItem {
   id: number;
@@ -190,6 +194,8 @@ interface ActiveNoteItem {
   title: string;
 }
 
+const route = useRoute();
+
 const search = ref('');
 
 const pageData = reactive({
@@ -202,6 +208,7 @@ const pageData = reactive({
 const activeNote = ref<ActiveNoteItem>({ id: 0, title: '' });
 
 const form = reactive({
+  id: 0,
   title: '',
   skillId: null,
   exp: 0,
@@ -222,30 +229,28 @@ onMounted(async () => {
 
   await getNoteList();
   activeNote.value = pageData.noteList[0];
+
+  getNoteInfo(activeNote.value.id);
 });
 
 const getNoteList = async () => {
-  const { params } = useRoute();
-
-  const result = await SkillApi.getSkillNoteList(Number(params.id)).catch(() => {});
-
-  const { data } = result.data;
+  const result = await SkillApi.getSkillNoteList(Number(route.params.id));
+  const { data } = result;
 
   pageData.id = data.id;
   pageData.name = data.name;
   pageData.expTotal = data.expTotal;
   pageData.noteList = data.noteList;
-
-  console.log(pageData);
 };
 
-const clickNote = (note: any) => {
+const clickNote = (note: NoteItem) => {
   activeNote.value = note;
+  getNoteInfo(note.id);
 };
 
 const getSkillOptions = async () => {
   const result = await SkillApi.getSkillOptionList().catch(() => {});
-  skillOptionList.value = result.data.data;
+  skillOptionList.value = result.data;
 };
 
 const filterOption = (input: string, option: any) => {
@@ -255,9 +260,22 @@ const filterOption = (input: string, option: any) => {
 };
 
 const addNote = async () => {
-  const result = await NoteApi.add(form);
+  const result = await NoteApi.add({ skillId: pageData.id });
 
-  if (!result) {
+  if (result.code) {
+    getNoteList();
+  }
+};
+
+// const onDropdownClick: MenuProps['onClick'] = (data: any, note: NoteItem) => {
+//   if (data() == 'delete') {
+//     deleteNote(note);
+//   }
+// };
+
+const onDropdownClick = (data: MenuInfo, node: NoteItem) => {
+  if (data.key == 'delete') {
+    deleteNote(node);
   }
 };
 
@@ -280,9 +298,40 @@ const deleteNote = async (note: NoteItem) => {
 };
 
 const updateNote = async () => {
-  const result = await NoteApi.update(activeNote.value.id, form);
+  const formData = JSON.parse(JSON.stringify(form));
+  delete formData.exp;
 
-  if (!result) {
+  const result = await NoteApi.update(activeNote.value.id, formData);
+
+  if (result.code) {
+    getNoteList();
+  } else {
+    message.info(result.msg);
+  }
+};
+
+const getExp = async () => {
+  const result = await NoteApi.update(activeNote.value.id, { exp: form.exp });
+
+  if (result.code) {
+    getNoteList();
+  } else {
+    message.info(result.msg);
+  }
+};
+
+const getNoteInfo = async (id: number) => {
+  const result = await NoteApi.getById(id);
+
+  const { data, code } = result;
+
+  if (code == 1) {
+    form.id = data.id;
+    form.title = data.title;
+    form.skillId = data.skillId;
+    form.exp = data.exp;
+    form.content = data.content;
+    form.remark = data.remark;
   }
 };
 </script>
@@ -382,6 +431,9 @@ export default {
 </script> -->
 
 <style lang="less" scoped>
+.add-note-btn {
+}
+
 .note-card {
   &:hover {
     background: rgba(41, 145, 242, 0.05);

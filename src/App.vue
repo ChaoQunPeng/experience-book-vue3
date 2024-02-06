@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-04 12:53:07
+ * @LastEditTime: 2024-02-06 14:26:36
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -25,7 +25,13 @@
 </template>
 
 <script setup lang="ts">
+import { provide } from 'vue';
+import { message } from 'ant-design-vue';
 import SideNav from '@/layout/side-nav.vue';
+
+// const [messageApi, contextHolder] = message.useMessage();
+
+provide('AMessage', message)
 
 const themeToken = {
   wireframe: false,

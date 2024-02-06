@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-05 13:00:59
+ * @LastEditTime: 2024-02-06 17:28:13
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -65,11 +65,12 @@
 <!-- <script src="./side-nav.ts" lang="ts"></script> -->
 <script setup lang="ts">
 import { SkillApi } from '@/api/skill';
-import { Ref, onMounted, ref } from 'vue';
+import { Ref, onMounted, ref, watch } from 'vue';
+import { usePageNav } from './nav';
+import { useRoute, useRouter } from 'vue-router';
 
 interface navOption {
   id?: string | number;
-  name?: string;
 }
 
 const skillNavList = ref<Array<navOption>>([]);
@@ -103,7 +104,7 @@ const getList = async () => {
   const result = await SkillApi.getSkillOptionList();
 
   if (result) {
-    skillNavList.value = result.data.data;
+    skillNavList.value = result.data;
   }
 };
 
@@ -114,10 +115,26 @@ const getList = async () => {
  */
 const clickNav = (nav: navOption) => {
   activeNav.value = nav;
+
+  const { goSkillNoteList, goSkillIndex } = usePageNav();
+
+  if (activeNav.value.id == 0) {
+    goSkillIndex();
+  } else {
+    goSkillNoteList(<number>activeNav.value.id);
+  }
 };
 
 onMounted(() => {
   getList();
+});
+
+const route = useRoute();
+
+watch(route, (newValue, oldValue) => {
+  console.log(newValue);
+  
+  activeNav.value.id = newValue.params.id as string ?? 0;
 });
 </script>
 
