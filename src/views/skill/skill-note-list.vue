@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-06 17:48:33
+ * @LastEditTime: 2024-02-06 19:21:40
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -171,10 +171,10 @@ import {
   SearchOutlined,
   PlusOutlined
 } from '@ant-design/icons-vue';
-import { MenuProps, Modal } from 'ant-design-vue';
+import { Modal } from 'ant-design-vue';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { computed, createVNode, onMounted, onUnmounted, reactive, ref } from 'vue';
+import { computed, createVNode, onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
@@ -249,7 +249,7 @@ const clickNote = (note: NoteItem) => {
 };
 
 const getSkillOptions = async () => {
-  const result = await SkillApi.getSkillOptionList().catch(() => {});
+  const result = await SkillApi.getSkillOptionList();
   skillOptionList.value = result.data;
 };
 

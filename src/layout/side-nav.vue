@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-06 17:28:13
+ * @LastEditTime: 2024-02-06 19:22:49
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -67,10 +67,11 @@
 import { SkillApi } from '@/api/skill';
 import { Ref, onMounted, ref, watch } from 'vue';
 import { usePageNav } from './nav';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 interface navOption {
   id?: string | number;
+  name?: string;
 }
 
 const skillNavList = ref<Array<navOption>>([]);
@@ -131,10 +132,8 @@ onMounted(() => {
 
 const route = useRoute();
 
-watch(route, (newValue, oldValue) => {
-  console.log(newValue);
-  
-  activeNav.value.id = newValue.params.id as string ?? 0;
+watch(route, newValue => {
+  activeNav.value.id = (newValue.params.id as string) ?? 0;
 });
 </script>
 
