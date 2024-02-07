@@ -25,6 +25,10 @@
   margin-right: auto
 }
 
+.mb-10 {
+  margin-bottom: 10px
+}
+
 .mb-12 {
   margin-bottom: 12px
 }
@@ -154,6 +158,10 @@
   width: 286px
 }
 
+.w-full {
+  width: 100%
+}
+
 .flex-1 {
   flex: 1 1 0%
 }
@@ -260,6 +268,10 @@
   padding-right: 32px
 }
 
+.pb-30 {
+  padding-bottom: 30px
+}
+
 .pb-7 {
   padding-bottom: 7px
 }
@@ -278,6 +290,10 @@
 
 .pt-10 {
   padding-top: 10px
+}
+
+.pt-30 {
+  padding-top: 30px
 }
 
 .pt-40 {

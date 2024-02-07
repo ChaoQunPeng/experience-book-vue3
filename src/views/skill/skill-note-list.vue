@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-06 19:21:40
+ * @LastEditTime: 2024-02-07 15:09:32
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -26,17 +26,19 @@
           <span class="font-bold ml-10"> {{ pageData.expTotal }} </span>exp
         </div>
 
-        <a-input
-          v-model:value="search"
-          placeholder="搜索笔记"
-          class="mt-10 rounded-none border-none"
-        >
-          <template #suffix>
-            <span class="is-link">
-              <SearchOutlined />
-            </span>
-          </template>
-        </a-input>
+        <div class="px-15 mb-10">
+          <a-input
+            v-model:value="search"
+            placeholder="搜索笔记"
+            class="search-input mt-10 rounded-none border-none"
+          >
+            <template #suffix>
+              <span class="is-link">
+                <SearchOutlined />
+              </span>
+            </template>
+          </a-input>
+        </div>
       </div>
 
       <div id="Note-List" class="note-list overflow-auto">
@@ -92,17 +94,18 @@
         :label-col="{ style: { width: '100px' } }"
       >
         <a-row align="top">
-          <a-col :span="24">
+          <a-col :span="14">
             <a-form-item label="笔记标题">
               <a-input
                 v-model:value="form.title"
                 size="large"
                 placeholder="请输入"
                 :maxlength="50"
+                @change="onInput"
               />
             </a-form-item>
           </a-col>
-          <a-col :span="11">
+          <a-col :span="9" :offset="1">
             <a-form-item label="所属技能" name="skillId">
               <a-select
                 ref="select"
@@ -112,6 +115,7 @@
                 show-search
                 :filter-option="filterOption"
                 optionFilterProp="label"
+                @change="onChange"
               >
                 <a-select-option
                   v-for="skill in skillOptionList"
@@ -122,21 +126,12 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :span="11" :offset="2">
-            <a-form-item label="经验值" name="exp">
-              <a-select ref="select" v-model:value="form.exp" size="large" placeholder="请选择">
-                <a-select-option :value="0">0</a-select-option>
-                <a-select-option v-for="exp in 5" :key="exp" :value="exp">
-                  {{ exp }}
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
           <a-col :span="24">
             <a-form-item
               label="备注"
               name="username"
               :rules="[{ message: 'Please input your username!' }]"
+              @change="onInput"
             >
               <a-input v-model:value="form.remark" size="large" placeholder="请输入" />
             </a-form-item>
@@ -150,14 +145,27 @@
         class="md-editor rounded-radius-4 h-300"
         height="300px"
         :toolbarsExclude="['github', 'next', 'revoke']"
+        @on-save="onSave"
+        @on-change="onChange"
       />
 
-      <div class="text-right">
-        <a-space block class="mt-30">
-          <a-button type="primary" @click="updateNote">保存</a-button>
-          <a-button type="primary" :disabled="form.exp == 0" @click="getExp">Get Exp!</a-button>
-        </a-space>
-      </div>
+      <a-divider orientation="left">Get Exp！</a-divider>
+
+      <a-row class="pb-30" :gutter="20">
+        <a-col :span="21">
+          <a-select class="w-full" v-model:value="exp" size="large" placeholder="请选择">
+            <a-select-option :value="0">0</a-select-option>
+            <a-select-option v-for="exp in 5" :key="exp" :value="exp">
+              {{ exp }}
+            </a-select-option>
+          </a-select>
+        </a-col>
+        <a-col class="text-right" :span="3">
+          <a-button class="w-full" type="primary" :disabled="exp == 0" size="large" @click="getExp">
+            Get Exp!
+          </a-button>
+        </a-col>
+      </a-row>
     </div>
   </div>
 </template>
@@ -178,7 +186,7 @@ import { computed, createVNode, onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
-
+import * as _ from 'lodash';
 // const [messageApi, contextHolder] = message.useMessage();
 
 interface NoteItem {
@@ -211,10 +219,12 @@ const form = reactive({
   id: 0,
   title: '',
   skillId: null,
-  exp: 0,
+  // exp: 0,
   remark: '',
   content: ''
 });
+
+const exp = ref(0);
 
 const skillOptionList = ref<Array<{ id: number; name: string }>>([]);
 
@@ -311,7 +321,7 @@ const updateNote = async () => {
 };
 
 const getExp = async () => {
-  const result = await NoteApi.update(activeNote.value.id, { exp: form.exp });
+  const result = await NoteApi.update(activeNote.value.id, { exp: exp });
 
   if (result.code) {
     getNoteList();
@@ -329,10 +339,21 @@ const getNoteInfo = async (id: number) => {
     form.id = data.id;
     form.title = data.title;
     form.skillId = data.skillId;
-    form.exp = data.exp;
     form.content = data.content;
     form.remark = data.remark;
   }
+};
+
+const onChange = _.debounce(function () {
+  updateNote();
+}, 650);
+
+const onInput = _.debounce(function () {
+  updateNote();
+}, 650);
+
+const onSave = () => {
+  updateNote();
 };
 </script>
 
@@ -432,6 +453,14 @@ export default {
 
 <style lang="less" scoped>
 .add-note-btn {
+}
+
+.search-input {
+  box-shadow: none !important;
+
+  &:focus {
+    box-shadow: none !important;
+  }
 }
 
 .note-card {
