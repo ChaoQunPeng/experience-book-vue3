@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-07 15:09:32
+ * @LastEditTime: 2024-02-07 22:11:22
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -238,19 +238,23 @@ onMounted(async () => {
   getSkillOptions();
 
   await getNoteList();
-  activeNote.value = pageData.noteList[0];
 
-  getNoteInfo(activeNote.value.id);
+  if (pageData.noteList.length) {
+    activeNote.value = pageData.noteList[0];
+    getNoteInfo(activeNote.value.id);
+  }
 });
 
 const getNoteList = async () => {
   const result = await SkillApi.getSkillNoteList(Number(route.params.id));
-  const { data } = result;
+  const { code, data } = result;
 
-  pageData.id = data.id;
-  pageData.name = data.name;
-  pageData.expTotal = data.expTotal;
-  pageData.noteList = data.noteList;
+  if (code) {
+    pageData.id = data.id;
+    pageData.name = data.name;
+    pageData.expTotal = data.expTotal;
+    pageData.noteList = data.noteList;
+  }
 };
 
 const clickNote = (note: NoteItem) => {
