@@ -1,0 +1,47 @@
+version: "1.0"
+
+services:
+  # 这个就是默认的网络别名
+  exp-book-mysql:
+    image: mysql:8.0
+    ports:
+      - 3307:3306
+    volumes:
+      - exp-book-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: experience_book
+    networks:
+      exp-book-net:
+
+  exp-book-server:
+    image: exp-book-server
+    networks:
+      exp-book-net:
+    ports:
+      - 3100:3000
+    working_dir: /app
+    environment:
+      MYSQL_HOST: exp-book-mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456789
+      MYSQL_DB: experience_book
+    command: sh -c "npm install && npm run start"
+
+  exp-book-website:
+    image: exp-book-vue3-web:latest
+    networks:
+      exp-book-net:
+    ports:
+      - 8100:80
+    volumes:
+      - type: bind
+        source: ./dist
+        target: /usr/share/nginx/html/
+      - ./nginx/default.conf:/etc/nginx/nginx.conf
+
+networks:
+  exp-book-net:
+
+volumes:
+  exp-book-data:
