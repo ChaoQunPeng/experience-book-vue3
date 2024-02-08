@@ -20,10 +20,10 @@
           :class="{ active: activeNav.id == 0 }"
           @click="clickNav({ id: 0 })"
         >
-          <i
+          <!-- <i
             class="iconfont icon-shuji-line"
             :class="[activeNav.id == 0 ? 'icon-shuji-fill' : 'icon-shuji-line']"
-          ></i>
+          ></i> -->
           <span class="text-size-16 text-black select-none">经验本</span>
         </div>
         <ul class="ml-24 mt-5">
