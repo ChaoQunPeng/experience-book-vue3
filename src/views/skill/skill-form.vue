@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 12:16:40
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 17:36:53
+ * @LastEditTime: 2024-02-08 20:08:58
  * @FilePath: /experience-book-vue3/src/views/skill/skill-form.vue
  * @Description: 
 -->
@@ -40,8 +40,9 @@
 
 <script setup lang="ts">
 import { SkillApi } from '@/api/skill';
+import { subject } from '@/utils/subject';
 import { FormInstance, message, Modal } from 'ant-design-vue';
-import { computed, getCurrentInstance, onMounted, onUnmounted, reactive, ref } from 'vue';
+import { computed, getCurrentInstance, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 
 /**
  * 组件配置
@@ -60,6 +61,7 @@ const emit = defineEmits<{
 }>();
 
 const visible = ref(false);
+const loading = ref(false);
 
 const form = reactive({
   name: '',
@@ -67,7 +69,6 @@ const form = reactive({
 });
 
 const formRef = ref<FormInstance>();
-const modal = ref(null);
 
 const rules = {
   name: [{ required: true, message: '名称不能为空' }]
@@ -135,22 +136,29 @@ const open = async (options: ComponentOptions) => {
 };
 
 const onOk = async () => {
+  if (loading.value) {
+    return;
+  }
+  
+  loading.value = true;
   const valid = await formRef.value?.validate().catch(() => {});
 
   if (valid) {
+    let result;
     if (componentOptions.editId) {
-      const result = await updateSkill();
-
-      if (!result.code) {
-        message.error(result.msg);
-      }
+      result = await updateSkill();
     } else {
-      const result = await addSkill();
-
-      if (!result.code) {
-        message.error(result.msg);
-      }
+      result = await addSkill();
     }
+
+    if (result.code == 0) {
+      message.error(result.msg);
+      return;
+    }
+
+    subject.publish('after-skill-curd');
+
+    loading.value = false;
 
     if (componentOptions.onOk) {
       componentOptions.onOk();
@@ -160,9 +168,11 @@ const onOk = async () => {
   }
 };
 
-const onCancel = () => {
+const onCancel = () => {};
+
+watch(visible, () => {
   formRef.value?.resetFields();
-};
+});
 
 defineExpose({
   handleVisible,

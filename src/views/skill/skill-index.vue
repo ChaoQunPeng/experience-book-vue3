@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 12:07:19
+ * @LastEditTime: 2024-02-08 20:05:25
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -103,6 +103,7 @@ import { Modal, message } from 'ant-design-vue';
 import { SkillApi } from '@/api/skill';
 import { computed, createVNode, onMounted, ref } from 'vue';
 import router from '@/router';
+import { subject } from '@/utils/subject';
 
 interface SkillListItem {
   id: number;
@@ -159,7 +160,7 @@ const getList = async () => {
   if (result.code) {
     skillList.value = result.data;
   } else {
-    message.error(`result.msg`);
+    message.error(`获取技能列表错误`);
   }
 };
 
@@ -179,15 +180,6 @@ const openSkillForm = (options: { editId?: number }) => {
 };
 
 /**
- * @description: 前往笔记列表
- * @param {*} skill
- * @return {*}
- */
-const goNoteList = (skill: SkillListItem) => {
-  router.push({ path: `/skill-note-list/${skill.id}` });
-};
-
-/**
  * @description: 二次确认删除
  * @param {*} skill
  * @return {*}
@@ -201,11 +193,21 @@ const confirmDelete = (skill: SkillListItem) => {
 
       if (result.code) {
         getList();
+        subject.publish('after-skill-curd');
       } else {
         message.error(result.msg);
       }
     }
   });
+};
+
+/**
+ * @description: 前往笔记列表
+ * @param {*} skill
+ * @return {*}
+ */
+const goNoteList = (skill: SkillListItem) => {
+  router.push({ path: `/skill-note-list/${skill.id}` });
 };
 </script>
 
@@ -213,10 +215,13 @@ const confirmDelete = (skill: SkillListItem) => {
 @import '../../assets/theme/var.less';
 
 .skill-card {
+  box-shadow: 0 0 0 rgba(31, 51, 73, 0);
+  transform: translateY(0);
+  transition: all .3s;
+
   &:hover {
-    .skill-name {
-      color: var(--eb-color-blue);
-    }
+    box-shadow: 5px 5px 10px rgba(31, 51, 73, 0.09);
+    transform: translateY(-5px);
   }
 
   .level-badge {

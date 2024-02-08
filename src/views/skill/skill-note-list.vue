@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 16:49:50
+ * @LastEditTime: 2024-02-08 18:11:43
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -14,7 +14,9 @@
     >
       <div class="border-b border-black-5" style="border-bottom-style: solid">
         <div class="flex items-center mt-20 pl-20 pr-15 relative">
-          <span class="text-size-24 text-black font-bold flex-shrink-0">{{ pageData.name }}</span>
+          <span class="text-size-24 text-black font-bold flex-shrink-0 max-w-190 ellipsis">
+            {{ pageData.name }}
+          </span>
 
           <a-button class="add-note-btn ml-auto" type="primary" shape="circle" @click="addNote">
             <PlusOutlined size="20px" />
@@ -94,7 +96,7 @@
         :label-col="{ style: { width: '100px' } }"
       >
         <a-row align="top">
-          <a-col :span="14">
+          <a-col :span="24">
             <a-form-item label="笔记标题">
               <a-input
                 v-model:value="form.title"
@@ -105,7 +107,7 @@
               />
             </a-form-item>
           </a-col>
-          <a-col :span="9" :offset="1">
+          <!-- <a-col :span="9" :offset="1">
             <a-form-item label="所属技能" name="skillId">
               <a-select
                 ref="select"
@@ -125,7 +127,7 @@
                 >
               </a-select>
             </a-form-item>
-          </a-col>
+          </a-col> -->
           <a-col :span="24">
             <a-form-item
               label="备注"
@@ -233,7 +235,6 @@ const resolveNoteList = computed(() => {
 });
 
 onMounted(async () => {
-
   getSkillOptions();
 
   await getNoteList();
@@ -299,7 +300,8 @@ const addNote = async () => {
   const result = await NoteApi.add({ skillId: pageData.id });
 
   if (result.code) {
-    getNoteList();
+    await getNoteList();
+    activeNote.value = pageData.noteList[0];
   } else {
     message.error(result.msg);
   }
@@ -345,6 +347,10 @@ const updateNote = async () => {
  * @return {*}
  */
 const getNoteList = async () => {
+  if (!route.params.id) {
+    return;
+  }
+
   const result = await SkillApi.getSkillNoteList(Number(route.params.id));
   const { code, data, msg } = result;
 
@@ -455,12 +461,6 @@ watch(route, () => {
   .more-action {
     display: none;
   }
-}
-
-.ellipsis {
-  white-space: nowrap; /* 不换行 */
-  overflow: hidden; /* 隐藏内容溢出部分 */
-  text-overflow: ellipsis; /* 使用省略号表示被裁切的文本 */
 }
 
 .ellipsis-3 {

@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 16:50:01
+ * @LastEditTime: 2024-02-08 19:58:17
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -10,7 +10,7 @@
   <div>
     <div class="h-36 flex items-center ml-30 mt-20">
       <img class="size-22" src="@/assets/logo.svg" alt="logo" />
-      <span class="text-size-26 font-medium">xp-Book</span>
+      <span class="text-size-26 font-medium ml-3 tracking-letter-spacing-1">xp-Book</span>
     </div>
 
     <div class="mt-20">
@@ -38,7 +38,7 @@
         </ul>
       </div>
 
-      <div class="w-220 mx-auto">
+      <div v-if="false" class="w-220 mx-auto">
         <div
           class="nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black"
           :class="{ active: activeNav.id == 'all-title' }"
@@ -65,7 +65,7 @@
 <!-- <script src="./side-nav.ts" lang="ts"></script> -->
 <script setup lang="ts">
 import { SkillApi } from '@/api/skill';
-import { Ref, onMounted, ref, watch } from 'vue';
+import { Ref, onMounted, onUnmounted, ref, watch } from 'vue';
 import { usePageNav } from './nav';
 import { useRoute } from 'vue-router';
 import { subject } from '../utils/subject';
@@ -131,7 +131,13 @@ const clickNav = (nav: navOption) => {
 };
 
 onMounted(() => {
+  subject.subscribe('after-skill-curd', getList);
+
   getList();
+});
+
+onUnmounted(() => {
+  subject.unsubscribe('after-skill-curd', getList);
 });
 
 watch(route, newValue => {

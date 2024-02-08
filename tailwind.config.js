@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 14:38:29
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-03 15:38:28
+ * @LastEditTime: 2024-02-08 19:57:55
  * @FilePath: /experience-book-vue3/tailwind.config.js
  * @Description:
  */
@@ -27,13 +27,20 @@ export default {
       white: '#ffffff'
     },
     extend: {
-      fontSize: [12, 14, 16, 18, 20, 24, 26, 28, 30, 32, 34, 36, 38, 40].reduce((acc, cur, index) => {
-        acc[`size-${cur}`] = `${cur}px`;
-        return acc;
-      }, {}),
+      fontSize: [12, 14, 16, 18, 20, 24, 26, 28, 30, 32, 34, 36, 38, 40].reduce(
+        (acc, cur, index) => {
+          acc[`size-${cur}`] = `${cur}px`;
+          return acc;
+        },
+        {}
+      ),
       // Array(5).fill(0).map((e,i)=>i+1)
       borderRadius: Array.from({ length: 20 }, (e, i) => i + 1).reduce((acc, cur, index) => {
         acc[`radius-${cur}`] = `${cur}px`;
+        return acc;
+      }, {}),
+      letterSpacing: Array.from({ length: 20 }, (e, i) => i + 1).reduce((acc, cur, index) => {
+        acc[`letter-spacing-${cur}`] = `${cur}px`;
         return acc;
       }, {})
     }
