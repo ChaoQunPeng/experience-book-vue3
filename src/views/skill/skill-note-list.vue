@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-07 22:11:22
+ * @LastEditTime: 2024-02-08 12:37:01
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -182,12 +182,12 @@ import {
 import { Modal } from 'ant-design-vue';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { computed, createVNode, onMounted, reactive, ref } from 'vue';
+import { computed, createVNode, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
 import * as _ from 'lodash';
-// const [messageApi, contextHolder] = message.useMessage();
+import { subject } from '@/utils/subject';
 
 interface NoteItem {
   id: number;
@@ -208,7 +208,7 @@ const search = ref('');
 
 const pageData = reactive({
   id: 0,
-  name: '测试的技能',
+  name: '',
   expTotal: 0,
   noteList: <Array<NoteItem>>[]
 });
@@ -219,7 +219,6 @@ const form = reactive({
   id: 0,
   title: '',
   skillId: null,
-  // exp: 0,
   remark: '',
   content: ''
 });
@@ -228,13 +227,16 @@ const exp = ref(0);
 
 const skillOptionList = ref<Array<{ id: number; name: string }>>([]);
 
-// const toolbars = ['italic', 'underline', '-', 'bold', '=', 'github'];
-
+// 计算属性
 const resolveNoteList = computed(() => {
   return pageData.noteList.filter((e: any) => e.title.indexOf(search.value) > -1);
 });
 
 onMounted(async () => {
+  subject.subscribe('click-skill-nav', (nav: any) => {
+    console.log(`nav`, nav, subject);
+  });
+
   getSkillOptions();
 
   await getNoteList();
@@ -245,54 +247,72 @@ onMounted(async () => {
   }
 });
 
-const getNoteList = async () => {
-  const result = await SkillApi.getSkillNoteList(Number(route.params.id));
-  const { code, data } = result;
+onUnmounted(() => {
+  subject.unsubscribe('click-skill-nav');
+});
 
-  if (code) {
-    pageData.id = data.id;
-    pageData.name = data.name;
-    pageData.expTotal = data.expTotal;
-    pageData.noteList = data.noteList;
-  }
-};
-
-const clickNote = (note: NoteItem) => {
-  activeNote.value = note;
-  getNoteInfo(note.id);
-};
-
+/**
+ * @description: 获取技能下拉
+ * @return {*}
+ */
 const getSkillOptions = async () => {
   const result = await SkillApi.getSkillOptionList();
   skillOptionList.value = result.data;
 };
 
+/**
+ * @description: 搜索技能下拉方法
+ * @param {*} input
+ * @param {*} option
+ * @return {*}
+ */
 const filterOption = (input: string, option: any) => {
   const item: any = skillOptionList.value.find((e: any) => e.id == option.value);
 
   return item.name.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
 
+/**
+ * @description: 点击笔记
+ * @param {*} note
+ * @return {*}
+ */
+const clickNote = (note: NoteItem) => {
+  activeNote.value = note;
+  getNoteInfo(note.id);
+};
+
+/**
+ * @description: 点击笔记列表下拉方法
+ * @param {*} data
+ * @param {*} note
+ * @return {*}
+ */
+const onDropdownClick = (data: MenuInfo, note: NoteItem) => {
+  if (data.key == 'delete') {
+    deleteNote(note);
+  }
+};
+
+/**
+ * @description: 添加笔记
+ * @return {*}
+ */
 const addNote = async () => {
   const result = await NoteApi.add({ skillId: pageData.id });
 
   if (result.code) {
     getNoteList();
+  } else {
+    message.error(result.msg);
   }
 };
 
-// const onDropdownClick: MenuProps['onClick'] = (data: any, note: NoteItem) => {
-//   if (data() == 'delete') {
-//     deleteNote(note);
-//   }
-// };
-
-const onDropdownClick = (data: MenuInfo, node: NoteItem) => {
-  if (data.key == 'delete') {
-    deleteNote(node);
-  }
-};
-
+/**
+ * @description: 删除笔记
+ * @param {*} note
+ * @return {*}
+ */
 const deleteNote = async (note: NoteItem) => {
   Modal.confirm({
     title: `确定要删除${note.title}吗？`,
@@ -300,22 +320,21 @@ const deleteNote = async (note: NoteItem) => {
     onOk: async () => {
       const result = await NoteApi.delele(note.id);
 
-      if (result) {
+      if (result.code) {
         pageData.noteList = pageData.noteList.filter(e => e.id != note.id);
+      } else {
+        message.error(result.msg);
       }
-    },
-
-    onCancel() {
-      console.log('Cancel');
     }
   });
 };
 
+/**
+ * @description: 更新笔记
+ * @return {*}
+ */
 const updateNote = async () => {
-  const formData = JSON.parse(JSON.stringify(form));
-  delete formData.exp;
-
-  const result = await NoteApi.update(activeNote.value.id, formData);
+  const result = await NoteApi.update(activeNote.value.id, form);
 
   if (result.code) {
     getNoteList();
@@ -324,16 +343,29 @@ const updateNote = async () => {
   }
 };
 
-const getExp = async () => {
-  const result = await NoteApi.update(activeNote.value.id, { exp: exp });
+/**
+ * @description: 获取笔记列表
+ * @return {*}
+ */
+const getNoteList = async () => {
+  const result = await SkillApi.getSkillNoteList(Number(route.params.id));
+  const { code, data, msg } = result;
 
-  if (result.code) {
-    getNoteList();
+  if (code) {
+    pageData.id = data.id;
+    pageData.name = data.name;
+    pageData.expTotal = data.expTotal;
+    pageData.noteList = data.noteList;
   } else {
-    message.info(result.msg);
+    message.error(msg);
   }
 };
 
+/**
+ * @description: 获取笔记详情
+ * @param {*} id
+ * @return {*}
+ */
 const getNoteInfo = async (id: number) => {
   const result = await NoteApi.getById(id);
 
@@ -348,112 +380,47 @@ const getNoteInfo = async (id: number) => {
   }
 };
 
+/**
+ * @description: 得到经验
+ * @return {*}
+ */
+const getExp = async () => {
+  const result = await NoteApi.update(activeNote.value.id, { exp: exp });
+
+  if (result.code) {
+    getNoteList();
+  } else {
+    message.info(result.msg);
+  }
+};
+
+/**
+ * @description: 部分控件的Change事件
+ * @param {*} function
+ * @return {*}
+ */
 const onChange = _.debounce(function () {
   updateNote();
 }, 650);
 
+/**
+ * @description: 部分控件的Input事件
+ * @param {*} function
+ * @return {*}
+ */
 const onInput = _.debounce(function () {
   updateNote();
 }, 650);
 
-const onSave = () => {
+/**
+ * @description: 富文本编辑器的保存事件
+ * @param {*} function
+ * @return {*}
+ */
+const onSave = _.debounce(function () {
   updateNote();
-};
+});
 </script>
-
-<!-- <script lang="ts">
-import { axiosInstance } from '@/api/config/http';
-import { MoreOutlined, SearchOutlined } from '@ant-design/icons-vue';
-import { MdEditor } from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-export default {
-  name: 'skill-note-list',
-
-  components: {
-    SearchOutlined,
-    MoreOutlined,
-    MdEditor
-  },
-
-  // props: {},
-
-  data() {
-    return {
-      search: '',
-      pageData: {
-        noteList: []
-      },
-      activeNote: {},
-      form: {
-        title: '',
-        skillId: null,
-        exp: 0,
-        remark: ''
-      },
-      content: '',
-      skillOptionList: [],
-      toolbars: ['italic', 'underline', '-', 'bold', '=', 'github']
-    };
-  },
-
-  computed: {
-    resolveNoteList() {
-      return this.pageData.noteList.filter((e: any) => e.title.indexOf(this.search) > -1);
-    }
-  },
-
-  created() {},
-
-  async mounted() {
-    this.getSkillOptions();
-    await this.getNoteList();
-
-    this.activeNote = this.pageData.noteList[0];
-  },
-
-  methods: {
-    async getNoteList() {
-      const res = await axiosInstance.get(`/api/skill/note-list`).catch(() => {});
-
-      this.pageData = res.data.data;
-
-      console.log(`this.pageData`, this.pageData);
-    },
-    clickNote(note) {
-      this.activeNote = note;
-    },
-    getSkillOptions() {
-      axiosInstance
-        .get('/api/skill/options')
-        .then(res => {
-          this.skillOptionList = res.data.data;
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    },
-    filterOption(input: string, option: any) {
-      const item: any = this.skillOptionList.find(e => e.id == option.value);
-
-      return item.name.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-    },
-    getPopupContainer(id) {
-      this.$nextTick(() => {
-        // console.log(document.getElementById('Note-List'));
-        // console.log(document.getElementById('Note-List'));
-      });
-
-      return document.getElementById('Note-List');
-      // return document.getElementById(id);
-    }
-  }
-
-  // watch: {},
-
-  // filters: {},
-};
-</script> -->
 
 <style lang="less" scoped>
 .add-note-btn {

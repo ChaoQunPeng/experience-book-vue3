@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-06 13:10:01
+ * @LastEditTime: 2024-02-08 12:07:19
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -99,7 +99,7 @@
 <script setup lang="ts">
 import { PlusOutlined, MoreOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import SkillForm from './skill-form.vue';
-import { Modal } from 'ant-design-vue';
+import { Modal, message } from 'ant-design-vue';
 import { SkillApi } from '@/api/skill';
 import { computed, createVNode, onMounted, ref } from 'vue';
 import router from '@/router';
@@ -124,6 +124,7 @@ const resolveSkillList = computed<Array<SkillListItem>>(() => {
   return skillList.value.filter((e: any) => e.name.indexOf(search.value) > -1);
 });
 
+// 计算属性
 const resolveProgressstrokeColor = computed<Function>(() => {
   return function (color: string) {
     if (color == 'black') {
@@ -144,14 +145,29 @@ const resolveProgressstrokeColor = computed<Function>(() => {
   };
 });
 
-const getList = async () => {
-  const result = await SkillApi.getSkillList().catch(() => {});
+onMounted(() => {
+  getList();
+});
 
-  if (result) {
+/**
+ * @description: 获取列表
+ * @return {*}
+ */
+const getList = async () => {
+  const result = await SkillApi.getSkillList();
+
+  if (result.code) {
     skillList.value = result.data;
+  } else {
+    message.error(`result.msg`);
   }
 };
 
+/**
+ * @description: 打开技能表单
+ * @param {*} options
+ * @return {*}
+ */
 const openSkillForm = (options: { editId?: number }) => {
   skillFormRef.value?.open({
     editId: options?.editId,
@@ -162,31 +178,35 @@ const openSkillForm = (options: { editId?: number }) => {
   });
 };
 
+/**
+ * @description: 前往笔记列表
+ * @param {*} skill
+ * @return {*}
+ */
 const goNoteList = (skill: SkillListItem) => {
-  router.push({ path: `/skill-note-list/${skill.id}`});
+  router.push({ path: `/skill-note-list/${skill.id}` });
 };
 
+/**
+ * @description: 二次确认删除
+ * @param {*} skill
+ * @return {*}
+ */
 const confirmDelete = (skill: SkillListItem) => {
   Modal.confirm({
     title: `确定要删除${skill.name}吗？`,
     icon: createVNode(ExclamationCircleOutlined),
     onOk: async () => {
-      const res = await SkillApi.delele(skill.id);
+      const result = await SkillApi.delele(skill.id);
 
-      if (res) {
+      if (result.code) {
         getList();
+      } else {
+        message.error(result.msg);
       }
-    },
-
-    onCancel() {
-      console.log('Cancel');
     }
   });
 };
-
-onMounted(() => {
-  getList();
-});
 </script>
 
 <style lang="less" scoped>

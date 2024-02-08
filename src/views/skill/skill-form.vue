@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 12:16:40
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-05 15:37:09
+ * @LastEditTime: 2024-02-08 11:29:05
  * @FilePath: /experience-book-vue3/src/views/skill/skill-form.vue
  * @Description: 
 -->
@@ -15,7 +15,6 @@
     cancel-text="关闭"
     :mask-closable="false"
     @ok="onOk"
-    @cancel="onCancel"
   >
     <a-form
       class="mt-30"
@@ -39,7 +38,7 @@
 
 <script setup lang="ts">
 import { SkillApi } from '@/api/skill';
-import { FormInstance } from 'ant-design-vue';
+import { FormInstance, message } from 'ant-design-vue';
 import { computed, reactive, ref } from 'vue';
 
 /**
@@ -66,11 +65,6 @@ const form = reactive({
 });
 
 const formRef = ref<FormInstance>();
-// const formRef = ref<FormInstance>();
-
-// const rules = reactive({
-//   name: [{ required: true, message: '名称不能为空' }]
-// });
 
 const rules = {
   name: [{ required: true, message: '名称不能为空' }]
@@ -89,7 +83,7 @@ const dialogTitle = computed(() => {
  * @return {*}
  */
 const addSkill = async () => {
-  await SkillApi.add(form).catch(() => {});
+  return await SkillApi.add(form);
 };
 
 /**
@@ -97,7 +91,7 @@ const addSkill = async () => {
  * @return {*}
  */
 const updateSkill = async () => {
-  await SkillApi.update(<number>componentOptions.editId, form).catch(() => {});
+  return await SkillApi.update(<number>componentOptions.editId, form);
 };
 
 /**
@@ -105,14 +99,13 @@ const updateSkill = async () => {
  * @return {*}
  */
 const getInfo = async (editId: number | string) => {
-  const result = await SkillApi.getById(editId).catch(err => {
-    console.log(err);
-  });
+  const result = await SkillApi.getById(editId);
 
-  if (result) {
-    const { data } = result.data;
-    form.name = data.name;
-    form.description = data.description;
+  if (result.code) {
+    form.name = result.data.name;
+    form.description = result.data.description;
+  } else {
+    message.error(result.msg);
   }
 };
 
@@ -139,18 +132,23 @@ const open = async (options: ComponentOptions) => {
 };
 
 const onOk = async () => {
-  // const valid = await this.$refs.formRef.validate().catch(() => {});
-
   const valid = await formRef.value?.validate().catch(() => {});
 
   if (valid) {
     if (componentOptions.editId) {
-      await updateSkill();
+      const result = await updateSkill();
+
+      if (!result.code) {
+        message.error(result.msg);
+      }
     } else {
-      await addSkill();
+      const result = await addSkill();
+      
+      if (!result.code) {
+        message.error(result.msg);
+      }
     }
 
-    debugger;
     if (componentOptions.onOk) {
       componentOptions.onOk();
     }
@@ -159,13 +157,8 @@ const onOk = async () => {
   }
 };
 
-const onCancel = () => {};
-
 defineExpose({
   handleVisible,
-  /**
-   * 创建并打开弹框
-   */
   open
 });
 </script>

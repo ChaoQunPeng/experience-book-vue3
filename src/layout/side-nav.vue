@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-06 19:22:49
+ * @LastEditTime: 2024-02-08 12:36:03
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -68,6 +68,10 @@ import { SkillApi } from '@/api/skill';
 import { Ref, onMounted, ref, watch } from 'vue';
 import { usePageNav } from './nav';
 import { useRoute } from 'vue-router';
+import { subject } from '../utils/subject';
+import { message } from 'ant-design-vue';
+
+const route = useRoute();
 
 interface navOption {
   id?: string | number;
@@ -75,9 +79,7 @@ interface navOption {
 }
 
 const skillNavList = ref<Array<navOption>>([]);
-
 const activeNav = ref<navOption>({});
-
 const taskNavList: Ref<Array<navOption>> = ref([
   {
     id: 'all',
@@ -104,8 +106,10 @@ const taskNavList: Ref<Array<navOption>> = ref([
 const getList = async () => {
   const result = await SkillApi.getSkillOptionList();
 
-  if (result) {
+  if (result.code) {
     skillNavList.value = result.data;
+  } else {
+    message.error(result.msg);
   }
 };
 
@@ -122,15 +126,17 @@ const clickNav = (nav: navOption) => {
   if (activeNav.value.id == 0) {
     goSkillIndex();
   } else {
+    subject.publish('click-skill-nav', nav);
     goSkillNoteList(<number>activeNav.value.id);
   }
 };
 
 onMounted(() => {
+  subject.publish('click-skill-nav');
+  console.log(`subjectsubject`, subject);
+
   getList();
 });
-
-const route = useRoute();
 
 watch(route, newValue => {
   activeNav.value.id = (newValue.params.id as string) ?? 0;

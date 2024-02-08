@@ -2,13 +2,13 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 18:44:06
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-07 22:06:29
+ * @LastEditTime: 2024-02-08 11:56:20
  * @FilePath: /experience-book-vue3/src/api/config/http.ts
  * @Description: http文件
  */
 
 import { message } from 'ant-design-vue';
-import axios, { InternalAxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
+import axios, { InternalAxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: '/api/',
@@ -33,17 +33,16 @@ axiosInstance.interceptors.response.use(
     // 对响应数据做点什么
     if (response.status == 200) {
       return response.data;
-    } else {
-      return handleError(response);
     }
   },
-  (error: any) => {
+  (error: AxiosError) => {
+    handleError(error.response);
     // 处理响应错误
     return Promise.reject(error);
   }
 );
 
-function handleError(response: AxiosResponse) {
+function handleError(response: any) {
   if (response.status == 404) {
     message.error(`资源不存在哦 (。・＿・。)ﾉ~~`);
   } else if (response.status == 500) {
