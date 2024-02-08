@@ -2,19 +2,21 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 12:16:40
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 11:29:05
+ * @LastEditTime: 2024-02-08 17:36:53
  * @FilePath: /experience-book-vue3/src/views/skill/skill-form.vue
  * @Description: 
 -->
 <template>
   <a-modal
     v-model:open="visible"
-    :title="dialogTitle"
+    :title="componentOptions.editId ? '编辑技能' : '创建技能'"
     width="626px"
     ok-text="保存"
     cancel-text="关闭"
     :mask-closable="false"
+    :destroy-on-close="true"
     @ok="onOk"
+    @cancel="onCancel"
   >
     <a-form
       class="mt-30"
@@ -38,8 +40,8 @@
 
 <script setup lang="ts">
 import { SkillApi } from '@/api/skill';
-import { FormInstance, message } from 'ant-design-vue';
-import { computed, reactive, ref } from 'vue';
+import { FormInstance, message, Modal } from 'ant-design-vue';
+import { computed, getCurrentInstance, onMounted, onUnmounted, reactive, ref } from 'vue';
 
 /**
  * 组件配置
@@ -65,6 +67,7 @@ const form = reactive({
 });
 
 const formRef = ref<FormInstance>();
+const modal = ref(null);
 
 const rules = {
   name: [{ required: true, message: '名称不能为空' }]
@@ -143,7 +146,7 @@ const onOk = async () => {
       }
     } else {
       const result = await addSkill();
-      
+
       if (!result.code) {
         message.error(result.msg);
       }
@@ -155,6 +158,10 @@ const onOk = async () => {
 
     emit('on-ok');
   }
+};
+
+const onCancel = () => {
+  formRef.value?.resetFields();
 };
 
 defineExpose({
