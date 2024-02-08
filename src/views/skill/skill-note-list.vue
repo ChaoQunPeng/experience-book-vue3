@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 18:11:43
+ * @LastEditTime: 2024-02-08 20:22:17
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -264,11 +264,11 @@ const getSkillOptions = async () => {
  * @param {*} option
  * @return {*}
  */
-const filterOption = (input: string, option: any) => {
-  const item: any = skillOptionList.value.find((e: any) => e.id == option.value);
+// const filterOption = (input: string, option: any) => {
+//   const item: any = skillOptionList.value.find((e: any) => e.id == option.value);
 
-  return item.name.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-};
+//   return item.name.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+// };
 
 /**
  * @description: 点击笔记

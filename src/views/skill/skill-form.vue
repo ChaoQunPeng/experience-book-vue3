@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 12:16:40
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 20:08:58
+ * @LastEditTime: 2024-02-08 20:22:02
  * @FilePath: /experience-book-vue3/src/views/skill/skill-form.vue
  * @Description: 
 -->
@@ -41,8 +41,8 @@
 <script setup lang="ts">
 import { SkillApi } from '@/api/skill';
 import { subject } from '@/utils/subject';
-import { FormInstance, message, Modal } from 'ant-design-vue';
-import { computed, getCurrentInstance, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
+import { FormInstance, message } from 'ant-design-vue';
+import { reactive, ref, watch } from 'vue';
 
 /**
  * 组件配置
@@ -77,9 +77,9 @@ const rules = {
 let componentOptions: ComponentOptions = {};
 
 // # region 计算属性
-const dialogTitle = computed(() => {
-  return componentOptions.editId ? '编辑技能' : '创建技能';
-});
+// const dialogTitle = computed(() => {
+//   return componentOptions.editId ? '编辑技能' : '创建技能';
+// });
 // # endregion
 
 /**
@@ -139,7 +139,7 @@ const onOk = async () => {
   if (loading.value) {
     return;
   }
-  
+
   loading.value = true;
   const valid = await formRef.value?.validate().catch(() => {});
 
