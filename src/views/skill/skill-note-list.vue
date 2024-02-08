@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 12:37:01
+ * @LastEditTime: 2024-02-08 16:49:50
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -182,7 +182,7 @@ import {
 import { Modal } from 'ant-design-vue';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { computed, createVNode, onMounted, onUnmounted, reactive, ref } from 'vue';
+import { computed, createVNode, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
@@ -233,9 +233,6 @@ const resolveNoteList = computed(() => {
 });
 
 onMounted(async () => {
-  subject.subscribe('click-skill-nav', (nav: any) => {
-    console.log(`nav`, nav, subject);
-  });
 
   getSkillOptions();
 
@@ -419,6 +416,10 @@ const onInput = _.debounce(function () {
  */
 const onSave = _.debounce(function () {
   updateNote();
+});
+
+watch(route, () => {
+  getNoteList();
 });
 </script>
 

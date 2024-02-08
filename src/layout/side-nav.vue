@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 12:36:03
+ * @LastEditTime: 2024-02-08 16:50:01
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -126,15 +126,11 @@ const clickNav = (nav: navOption) => {
   if (activeNav.value.id == 0) {
     goSkillIndex();
   } else {
-    subject.publish('click-skill-nav', nav);
     goSkillNoteList(<number>activeNav.value.id);
   }
 };
 
 onMounted(() => {
-  subject.publish('click-skill-nav');
-  console.log(`subjectsubject`, subject);
-
   getList();
 });
 

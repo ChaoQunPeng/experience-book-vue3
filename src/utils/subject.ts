@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-08-27 23:32:56
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 12:34:39
+ * @LastEditTime: 2024-02-08 13:09:51
  * @FilePath: /experience-book-vue3/src/utils/subject.ts
  * @Description: 通用的发布订阅
  */
@@ -35,6 +35,20 @@ export class Subject {
   }
 
   /**
+   * @description: 发布
+   * @return {*}
+   */
+  publish(eventName: string, data?: object) {
+    if (!this.subjectMaps[eventName]) {
+      return;
+    }
+
+    this.subjectMaps[eventName].forEach((fn: Function) => {
+      fn(data);
+    });
+  }
+
+  /**
    * @description: 添加订阅
    * @param {*} observer
    * @return {*}
@@ -59,20 +73,6 @@ export class Subject {
     } else {
       this.subjectMaps[eventName] = [];
     }
-  }
-
-  /**
-   * @description: 发布
-   * @return {*}
-   */
-  publish(eventName: string, data?: object) {
-    if (!this.subjectMaps[eventName]) {
-      return;
-    }
-
-    this.subjectMaps[eventName].forEach((fn: Function) => {
-      fn(data);
-    });
   }
 }
 
