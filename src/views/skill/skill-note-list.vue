@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 20:22:17
+ * @LastEditTime: 2024-02-10 22:33:02
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -91,6 +91,7 @@
     <div class="note-editor overflow-y-auto flex-1 px-32 pt-40 bg-white w-0">
       <a-form
         :model="form"
+        ref="formRef"
         name="basic"
         labelAlign="left"
         :label-col="{ style: { width: '100px' } }"
@@ -142,13 +143,14 @@
       </a-form>
 
       <MdEditor
-        v-model="form.content"
+        v-model="content"
         :preview="true"
         class="md-editor rounded-radius-4 h-300"
         height="300px"
         :toolbarsExclude="['github', 'next', 'revoke']"
         @on-save="onSave"
         @on-change="onChange"
+        @on-focus="editorOnFocus"
       />
 
       <a-divider orientation="left">Get Exp！</a-divider>
@@ -156,8 +158,7 @@
       <a-row class="pb-30" :gutter="20">
         <a-col :span="21">
           <a-select class="w-full" v-model:value="exp" size="large" placeholder="请选择">
-            <a-select-option :value="0">0</a-select-option>
-            <a-select-option v-for="exp in 5" :key="exp" :value="exp">
+            <a-select-option v-for="exp in 24" :key="exp" :value="exp" :label="exp">
               {{ exp }}
             </a-select-option>
           </a-select>
@@ -181,7 +182,7 @@ import {
   SearchOutlined,
   PlusOutlined
 } from '@ant-design/icons-vue';
-import { Modal } from 'ant-design-vue';
+import { FormInstance, Modal } from 'ant-design-vue';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { computed, createVNode, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
@@ -221,13 +222,16 @@ const form = reactive({
   id: 0,
   title: '',
   skillId: null,
-  remark: '',
-  content: ''
+  remark: ''
 });
 
+const content = ref('');
 const exp = ref(0);
+const editorIsActived = ref(false);
 
 const skillOptionList = ref<Array<{ id: number; name: string }>>([]);
+
+const formRef = ref<FormInstance>();
 
 // 计算属性
 const resolveNoteList = computed(() => {
@@ -235,19 +239,29 @@ const resolveNoteList = computed(() => {
 });
 
 onMounted(async () => {
+  subject.subscribe('click-skill-nav', onClickSkillNav);
+
   getSkillOptions();
 
   await getNoteList();
 
-  if (pageData.noteList.length) {
+  if (pageData.noteList.length > 0) {
     activeNote.value = pageData.noteList[0];
     getNoteInfo(activeNote.value.id);
   }
 });
 
 onUnmounted(() => {
-  subject.unsubscribe('click-skill-nav');
+  subject.unsubscribe('click-skill-nav', onClickSkillNav);
 });
+
+/**
+ * @description: 点击技能导航
+ * @return {*}
+ */
+const onClickSkillNav = () => {
+  editorIsActived.value = false;
+};
 
 /**
  * @description: 获取技能下拉
@@ -264,10 +278,10 @@ const getSkillOptions = async () => {
  * @param {*} option
  * @return {*}
  */
-// const filterOption = (input: string, option: any) => {
-//   const item: any = skillOptionList.value.find((e: any) => e.id == option.value);
-
-//   return item.name.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+// const filterOption = (input: string) => {
+//   let res = Array.from({ length: 24 }, (_, i) => i).includes(Number(input));
+//   console.log(res);
+//   return res;
 // };
 
 /**
@@ -333,7 +347,7 @@ const deleteNote = async (note: NoteItem) => {
  * @return {*}
  */
 const updateNote = async () => {
-  const result = await NoteApi.update(activeNote.value.id, form);
+  const result = await NoteApi.update(activeNote.value.id, { ...form, content: content.value });
 
   if (result.code) {
     getNoteList();
@@ -378,8 +392,10 @@ const getNoteInfo = async (id: number) => {
     form.id = data.id;
     form.title = data.title;
     form.skillId = data.skillId;
-    form.content = data.content;
     form.remark = data.remark;
+
+    content.value = data.content;
+    exp.value = data.exp;
   }
 };
 
@@ -388,9 +404,10 @@ const getNoteInfo = async (id: number) => {
  * @return {*}
  */
 const getExp = async () => {
-  const result = await NoteApi.update(activeNote.value.id, { exp: exp });
+  const result = await NoteApi.update(activeNote.value.id, { exp: exp.value });
 
   if (result.code) {
+    message.success(`恭喜你，获得了 ${exp.value}exp！`);
     getNoteList();
   } else {
     message.info(result.msg);
@@ -403,8 +420,18 @@ const getExp = async () => {
  * @return {*}
  */
 const onChange = _.debounce(function () {
-  updateNote();
+  if (editorIsActived.value) {
+    updateNote();
+  }
 }, 650);
+
+/**
+ * @description: 编辑器获得焦点
+ * @return {*}
+ */
+const editorOnFocus = () => {
+  editorIsActived.value = true;
+};
 
 /**
  * @description: 部分控件的Input事件
@@ -421,11 +448,26 @@ const onInput = _.debounce(function () {
  * @return {*}
  */
 const onSave = _.debounce(function () {
+  alert(1);
   updateNote();
 });
 
-watch(route, () => {
-  getNoteList();
+watch(route, async () => {
+  await getNoteList();
+
+  if (pageData.noteList.length > 0) {
+    activeNote.value = pageData.noteList[0];
+    getNoteInfo(activeNote.value.id);
+  } else {
+    form.id = 0;
+
+    form.remark = '';
+    form.skillId = null;
+    form.title = '';
+
+    content.value = '';
+    exp.value = 0;
+  }
 });
 </script>
 

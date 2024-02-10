@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 19:58:17
+ * @LastEditTime: 2024-02-10 22:02:19
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -127,6 +127,7 @@ const clickNav = (nav: navOption) => {
     goSkillIndex();
   } else {
     goSkillNoteList(<number>activeNav.value.id);
+    subject.publish('click-skill-nav');
   }
 };
 

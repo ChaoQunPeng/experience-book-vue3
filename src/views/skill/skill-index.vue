@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 20:05:25
+ * @LastEditTime: 2024-02-10 22:33:49
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -75,13 +75,13 @@
               </template>
 
               <span class="ml-auto text-size-12 text-black leading-none">
-                {{ skill.currentLevelExp }}/{{ skill.range[1] }}exp
+                {{ skill.currentLevelExp }}/{{ Number(skill.range[1]) - Number(skill.range[0]) }}exp
               </span>
             </div>
 
             <a-progress
               class="progress-bar"
-              :percent="skill.currentLevelExp"
+              :percent="resolvePercent(skill)"
               :showInfo="false"
               :size="3"
               status="active"
@@ -143,6 +143,17 @@ const resolveProgressstrokeColor = computed<Function>(() => {
     } else {
       return '';
     }
+  };
+});
+
+const resolvePercent = computed(() => {
+  return function (skill: SkillListItem) {
+    const s = skill.range[0] as unknown as number;
+    const e = skill.range[1] as unknown as number;
+
+    const d = (e - s) as unknown as number;
+
+    return (skill.currentLevelExp / d) * 100;
   };
 });
 
@@ -217,7 +228,7 @@ const goNoteList = (skill: SkillListItem) => {
 .skill-card {
   box-shadow: 0 0 0 rgba(31, 51, 73, 0);
   transform: translateY(0);
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:hover {
     box-shadow: 5px 5px 10px rgba(31, 51, 73, 0.09);
