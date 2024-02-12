@@ -2,12 +2,13 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-10 22:33:02
+ * @LastEditTime: 2024-02-12 14:07:53
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
 <template>
   <div class="flex h-screen overflow-hidden">
+    <!--  -->
     <div
       class="note-area flex flex-col w-286 bg-eb-blue border-l border-r border-black-5"
       style="border-left-style: solid; border-right-style: solid"
@@ -88,7 +89,8 @@
       </div>
     </div>
 
-    <div class="note-editor overflow-y-auto flex-1 px-32 pt-40 bg-white w-0">
+    <!-- 编辑器 -->
+    <div v-if="activeNote.id" class="note-editor overflow-y-auto flex-1 px-32 pt-40 bg-white w-0">
       <a-form
         :model="form"
         ref="formRef"
@@ -170,6 +172,7 @@
         </a-col>
       </a-row>
     </div>
+    <div v-else class="bg-white"></div>
   </div>
 </template>
 
@@ -202,7 +205,7 @@ interface NoteItem {
 
 interface ActiveNoteItem {
   id: number;
-  title: string;
+  // title: string;
 }
 
 const route = useRoute();
@@ -216,7 +219,7 @@ const pageData = reactive({
   noteList: <Array<NoteItem>>[]
 });
 
-const activeNote = ref<ActiveNoteItem>({ id: 0, title: '' });
+const activeNote = ref<ActiveNoteItem>({ id: 0 });
 
 const form = reactive({
   id: 0,
@@ -316,6 +319,7 @@ const addNote = async () => {
   if (result.code) {
     await getNoteList();
     activeNote.value = pageData.noteList[0];
+    getNoteInfo(activeNote.value.id);
   } else {
     message.error(result.msg);
   }
@@ -335,6 +339,10 @@ const deleteNote = async (note: NoteItem) => {
 
       if (result.code) {
         pageData.noteList = pageData.noteList.filter(e => e.id != note.id);
+
+        if (pageData.noteList.length == 0) {
+          activeNote.value.id = 0;
+        }
       } else {
         message.error(result.msg);
       }

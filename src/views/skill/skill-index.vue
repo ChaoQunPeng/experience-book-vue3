@@ -2,13 +2,13 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-10 22:33:49
+ * @LastEditTime: 2024-02-12 14:12:01
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
 <template>
-  <div>
-    <div class="flex mt-30 mb-20 px-20">
+  <div class="bg-eb-blue pt-30 h-full">
+    <div class="flex mb-20 px-20">
       <a-input
         v-model:value="search"
         class="w-270"
