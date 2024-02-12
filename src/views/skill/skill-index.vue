@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-12 14:12:01
+ * @LastEditTime: 2024-02-12 17:49:03
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -54,9 +54,14 @@
             </a-dropdown>
           </div>
 
-          <div class="leading-normal text-size-12 text-black-65">
+          <!-- <div>
+            <span>笔记数量 {{ skill.noteTotal }}</span>
+            <span>总经验值 {{ skill.expTotal }}</span>
+          </div> -->
+
+          <!-- <div class="leading-normal text-size-12 text-black-65">
             {{ skill.description }}
-          </div>
+          </div> -->
 
           <div class="mt-auto">
             <div class="flex items-center mb-8" :class="skill.color">
@@ -113,6 +118,8 @@ interface SkillListItem {
   levelName: string;
   currentLevelExp: number;
   color: string;
+  expTotal: number | string;
+  noteTotal: number | string;
   range: Array<number>[];
 }
 
