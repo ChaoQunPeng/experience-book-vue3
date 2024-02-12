@@ -134,12 +134,12 @@
   height: 60px
 }
 
-.h-screen {
-  height: 100vh
-}
-
 .h-full {
   height: 100%
+}
+
+.h-screen {
+  height: 100vh
 }
 
 .min-h-140 {
