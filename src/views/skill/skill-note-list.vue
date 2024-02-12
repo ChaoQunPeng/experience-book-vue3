@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-12 14:22:24
+ * @LastEditTime: 2024-02-12 14:25:07
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -160,6 +160,9 @@
       <a-row class="pb-30" :gutter="20">
         <a-col :span="21">
           <a-select class="w-full" v-model:value="exp" size="large" placeholder="请选择">
+            <a-select-option :value="0" :label="0">
+              0exp
+            </a-select-option>
             <a-select-option v-for="exp in 24" :key="exp" :value="exp" :label="exp">
               {{ exp }}exp
             </a-select-option>
