@@ -20,6 +20,22 @@
   margin: 46px
 }
 
+.m-94 {
+  margin: 94px
+}
+
+.m-107 {
+  margin: 107px
+}
+
+.m-624 {
+  margin: 624px
+}
+
+.m-30 {
+  margin: 30px
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto
@@ -97,12 +113,36 @@
   margin-top: auto
 }
 
+.mr-12 {
+  margin-right: 12px
+}
+
+.mr-3 {
+  margin-right: 3px
+}
+
+.mr-6 {
+  margin-right: 6px
+}
+
+.mr-5 {
+  margin-right: 5px
+}
+
+.mr-14 {
+  margin-right: 14px
+}
+
 .block {
   display: block
 }
 
 .flex {
   display: flex
+}
+
+.inline-flex {
+  display: inline-flex
 }
 
 .hidden {
@@ -142,6 +182,10 @@
   height: 100vh
 }
 
+.h-180 {
+  height: 180px
+}
+
 .min-h-140 {
   min-height: 140px
 }
@@ -168,6 +212,10 @@
 
 .w-full {
   width: 100%
+}
+
+.w-30 {
+  width: 30px
 }
 
 .max-w-190 {
@@ -202,6 +250,10 @@
 
 .items-center {
   align-items: center
+}
+
+.justify-center {
+  justify-content: center
 }
 
 .overflow-auto {

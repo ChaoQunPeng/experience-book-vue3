@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-12 17:49:03
+ * @LastEditTime: 2024-02-13 16:59:17
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -26,17 +26,26 @@
     <a-row class="px-20" :gutter="20">
       <a-col v-for="skill in resolveSkillList" :key="skill.id" :span="6" class="mb-20">
         <div
-          class="skill-card flex flex-col p-15 rounded-radius-4 bg-white h-160 cursor-pointer"
+          class="skill-card flex flex-col p-15 rounded-radius-4 bg-white h-180 cursor-pointer"
           @click="goNoteList(skill)"
         >
-          <div class="flex mb-4 items-center">
+          <div class="flex mb-8 items-center">
             <span
               class="font-bold text-size-20 text-black leading-normal skill-name transition-all"
             >
               {{ skill.name }}
             </span>
 
-            <a-dropdown class="ml-auto" trigger="click">
+            <a-dropdown
+              class="ml-auto"
+              trigger="click"
+              placement="bottomRight"
+              :getPopupContainer="
+                (triggerNode:any) => {
+                  return triggerNode.parentNode
+                }
+              "
+            >
               <span @click.stop>
                 <MoreOutlined class="is-link text-size-16" />
               </span>
@@ -44,20 +53,50 @@
               <template #overlay>
                 <a-menu>
                   <a-menu-item>
-                    <div @click="openSkillForm({ editId: skill.id })">编辑</div>
+                    <div class="w-30" @click.stop="openSkillForm({ editId: skill.id })">编辑</div>
                   </a-menu-item>
                   <a-menu-item>
-                    <div class="text-red" @click="confirmDelete(skill)">删除</div>
+                    <div class="text-red w-30" @click.stop="confirmDelete(skill)">删除</div>
                   </a-menu-item>
                 </a-menu>
               </template>
             </a-dropdown>
           </div>
 
-          <!-- <div>
-            <span>笔记数量 {{ skill.noteTotal }}</span>
-            <span>总经验值 {{ skill.expTotal }}</span>
-          </div> -->
+          <div class="text-black-65">
+            <a-tooltip placement="top">
+              <template #title>
+                <span>总笔记数</span>
+              </template>
+
+              <div class="inline-flex items-center justify-center mr-14">
+                <i class="iconfont icon-qingdan text-size-14 mr-4"></i>
+                <span class="text-size-14">{{ skill.noteTotal }}</span>
+              </div>
+            </a-tooltip>
+
+            <a-tooltip placement="top">
+              <template #title>
+                <span>经验值为0的笔记数</span>
+              </template>
+
+              <div class="inline-flex items-center justify-center mr-14">
+                <i class="iconfont icon-daiban1 text-size-14 mr-5"></i>
+                <span class="text-size-14">{{ skill.todoNoteTotal }}</span>
+              </div>
+            </a-tooltip>
+
+            <a-tooltip placement="top">
+              <template #title>
+                <span>总经验值</span>
+              </template>
+
+              <div class="inline-flex items-center justify-center mr-14">
+                <i class="iconfont icon-shuidi text-size-14 mr-4"></i>
+                <span class="text-size-14">{{ skill.expTotal }}exp</span>
+              </div>
+            </a-tooltip>
+          </div>
 
           <!-- <div class="leading-normal text-size-12 text-black-65">
             {{ skill.description }}
@@ -120,6 +159,7 @@ interface SkillListItem {
   color: string;
   expTotal: number | string;
   noteTotal: number | string;
+  todoNoteTotal: number | string;
   range: Array<number>[];
 }
 
@@ -235,11 +275,13 @@ const goNoteList = (skill: SkillListItem) => {
 .skill-card {
   box-shadow: 0 0 0 rgba(31, 51, 73, 0);
   transform: translateY(0);
+  // transform: translateZ(0) scale(1);
   transition: all 0.3s;
 
   &:hover {
     box-shadow: 5px 5px 10px rgba(31, 51, 73, 0.09);
     transform: translateY(-5px);
+    // transform: translateZ(0) scale(1.05);
   }
 
   .level-badge {
