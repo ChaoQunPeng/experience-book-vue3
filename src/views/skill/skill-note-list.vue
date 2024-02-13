@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-13 11:54:05
+ * @LastEditTime: 2024-02-13 11:56:36
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -197,7 +197,6 @@ import { message } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
 import * as _ from 'lodash';
 import { subject } from '@/utils/subject';
-import { fakeSleep } from '@/utils/fake-sleep';
 
 interface NoteItem {
   id: number;
