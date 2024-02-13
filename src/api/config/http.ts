@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 18:44:06
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 11:56:20
+ * @LastEditTime: 2024-02-13 11:39:48
  * @FilePath: /experience-book-vue3/src/api/config/http.ts
  * @Description: http文件
  */
@@ -43,6 +43,10 @@ axiosInstance.interceptors.response.use(
 );
 
 function handleError(response: any) {
+  if (!response) {
+    return;
+  }
+
   if (response.status == 404) {
     message.error(`资源不存在哦 (。・＿・。)ﾉ~~`);
   } else if (response.status == 500) {

@@ -2,13 +2,12 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-12 16:33:26
+ * @LastEditTime: 2024-02-13 11:54:05
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
 <template>
   <div class="flex h-screen overflow-hidden">
-    <!--  -->
     <div
       class="note-area flex flex-col w-286 bg-eb-blue border-l border-r border-black-5"
       style="border-left-style: solid; border-right-style: solid"
@@ -107,6 +106,7 @@
                 placeholder="请输入"
                 :maxlength="50"
                 @change="onInput"
+                @on-focus="onFocus"
               />
             </a-form-item>
           </a-col>
@@ -131,7 +131,8 @@
               </a-select>
             </a-form-item>
           </a-col> -->
-          <a-col :span="24">
+
+          <!-- <a-col :span="24">
             <a-form-item
               label="备注"
               name="username"
@@ -140,7 +141,7 @@
             >
               <a-input v-model:value="form.remark" size="large" placeholder="请输入" />
             </a-form-item>
-          </a-col>
+          </a-col> -->
         </a-row>
       </a-form>
 
@@ -155,7 +156,10 @@
         @on-focus="editorOnFocus"
       />
 
-      <a-divider orientation="left">Get Exp！</a-divider>
+      <a-divider orientation="left">
+        Get Exp！
+        <span class="text-size-14 text-black-45 font-normal">(1小时=1exp)</span>
+      </a-divider>
 
       <a-row class="pb-30" :gutter="20">
         <a-col :span="21">
@@ -167,9 +171,7 @@
           </a-select>
         </a-col>
         <a-col class="text-right" :span="3">
-          <a-button class="w-full" type="primary" :disabled="exp == 0" size="large" @click="getExp">
-            Get Exp!
-          </a-button>
+          <a-button class="w-full" type="primary" size="large" @click="getExp"> Get Exp! </a-button>
         </a-col>
       </a-row>
     </div>
@@ -195,6 +197,7 @@ import { message } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
 import * as _ from 'lodash';
 import { subject } from '@/utils/subject';
+import { fakeSleep } from '@/utils/fake-sleep';
 
 interface NoteItem {
   id: number;
@@ -236,6 +239,8 @@ const editorIsActived = ref(false);
 const skillOptionList = ref<Array<{ id: number; name: string }>>([]);
 
 const formRef = ref<FormInstance>();
+
+const apiSignal = ref<AbortController | null>(null);
 
 // 计算属性
 const resolveNoteList = computed(() => {
@@ -341,8 +346,12 @@ const deleteNote = async (note: NoteItem) => {
       if (result.code) {
         pageData.noteList = pageData.noteList.filter(e => e.id != note.id);
 
-        if (pageData.noteList.length == 0) {
-          activeNote.value.id = 0;
+        if (pageData.noteList.findIndex(e => e.id == note.id) == -1) {
+          if (pageData.noteList.length == 0) {
+            activeNote.value.id = 0;
+          } else {
+            getNoteInfo(pageData.noteList[0].id);
+          }
         }
       } else {
         message.error(result.msg);
@@ -398,9 +407,24 @@ const getNoteList = async () => {
  * @return {*}
  */
 const getNoteInfo = async (id: number) => {
-  const result = await NoteApi.getById(id);
+  if (apiSignal.value) {
+    apiSignal.value.abort();
+    apiSignal.value = null;
+  }
 
-  const { data, code } = result;
+  const controller = new AbortController();
+  apiSignal.value = controller;
+
+  const result = await NoteApi.getById(id, { signal: controller.signal }).catch(err => {
+    console.log(`err`, err);
+  });
+
+  // 取消请求后会是undefined
+  if (!result) {
+    return;
+  }
+
+  const { data, code } = <{ data: any; code: number }>result;
 
   if (code == 1) {
     form.id = data.id;
@@ -421,7 +445,12 @@ const getExp = async () => {
   const result = await NoteApi.update(activeNote.value.id, { exp: exp.value });
 
   if (result.code) {
-    message.success(`恭喜你，获得了 ${exp.value}exp！`);
+    if (exp.value > 0) {
+      message.success(`恭喜你，获得了 ${exp.value}exp！`);
+    } else {
+      message.warning(`要继续学习呢~ o(╥﹏╥)o`);
+    }
+
     getNoteList();
   } else {
     message.info(result.msg);
@@ -448,13 +477,23 @@ const editorOnFocus = () => {
 };
 
 /**
- * @description: 部分控件的Input事件
+ * @description: 控件的Input事件
  * @param {*} function
  * @return {*}
  */
 const onInput = _.debounce(function () {
-  updateNote();
+  if (editorIsActived.value) {
+    updateNote();
+  }
 }, 650);
+
+/**
+ * @description: 控件的focus事件
+ * @return {*}
+ */
+const onFocus = () => {
+  editorIsActived.value = true;
+};
 
 /**
  * @description: 富文本编辑器的保存事件
