@@ -2,15 +2,15 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-13 11:56:36
+ * @LastEditTime: 2024-02-15 10:54:05
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
 <template>
   <div class="flex h-screen overflow-hidden">
     <div
-      class="note-area flex flex-col w-286 bg-eb-blue border-l border-r border-black-5"
-      style="border-left-style: solid; border-right-style: solid"
+      class="note-area flex flex-col w-286 bg-eb-blue border-r border-black-5"
+      style="border-right-style: solid"
     >
       <div class="border-b border-black-5" style="border-bottom-style: solid">
         <div class="flex items-center mt-20 pl-20 pr-15 relative">
@@ -148,8 +148,7 @@
       <MdEditor
         v-model="content"
         :preview="true"
-        class="md-editor rounded-radius-4 h-300"
-        height="300px"
+        class="md-editor rounded-radius-4"
         :toolbarsExclude="['github', 'next', 'revoke']"
         @on-save="onSave"
         @on-change="onChange"
@@ -569,6 +568,6 @@ watch(route, async () => {
 }
 
 .md-editor {
-  height: 400px !important;
+  // height: 400px !important;
 }
 </style>
