@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4428761 */
-  src: url('iconfont.woff2?t=1707812088057') format('woff2'),
-       url('iconfont.woff?t=1707812088057') format('woff'),
-       url('iconfont.ttf?t=1707812088057') format('truetype');
+  src: url('iconfont.woff2?t=1707822240036') format('woff2'),
+       url('iconfont.woff?t=1707822240036') format('woff'),
+       url('iconfont.ttf?t=1707822240036') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chart-area:before {
+  content: "\e78f";
+}
+
+.icon-chart-line:before {
+  content: "\e790";
+}
+
+.icon-alignright-fill:before {
+  content: "\e7ba";
+}
+
+.icon-alignleft-fill:before {
+  content: "\e7bb";
+}
+
+.icon-address-book-fill:before {
+  content: "\e84a";
+}
+
+.icon-address-book:before {
+  content: "\e84b";
 }
 
 .icon-ERP_daiban:before {

@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6151033",
+      "name": "chart-area",
+      "font_class": "chart-area",
+      "unicode": "e78f",
+      "unicode_decimal": 59279
+    },
+    {
+      "icon_id": "6151034",
+      "name": "chart-line",
+      "font_class": "chart-line",
+      "unicode": "e790",
+      "unicode_decimal": 59280
+    },
+    {
+      "icon_id": "6151118",
+      "name": "align right-fill",
+      "font_class": "alignright-fill",
+      "unicode": "e7ba",
+      "unicode_decimal": 59322
+    },
+    {
+      "icon_id": "6151119",
+      "name": "align left-fill",
+      "font_class": "alignleft-fill",
+      "unicode": "e7bb",
+      "unicode_decimal": 59323
+    },
+    {
+      "icon_id": "34453160",
+      "name": "address-book-fill",
+      "font_class": "address-book-fill",
+      "unicode": "e84a",
+      "unicode_decimal": 59466
+    },
+    {
+      "icon_id": "34453163",
+      "name": "address-book",
+      "font_class": "address-book",
+      "unicode": "e84b",
+      "unicode_decimal": 59467
+    },
+    {
       "icon_id": "2192945",
       "name": "ERP_待办",
       "font_class": "ERP_daiban",
