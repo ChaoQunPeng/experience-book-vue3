@@ -78,6 +78,14 @@
   margin: 84px
 }
 
+.m-12 {
+  margin: 12px
+}
+
+.m-14 {
+  margin: 14px
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto

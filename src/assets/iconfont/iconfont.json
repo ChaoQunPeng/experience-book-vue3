@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "39250482",
+      "name": "shuoming",
+      "font_class": "tubiaozhizuomoban1",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "39250436",
+      "name": "jingyanben-1",
+      "font_class": "tubiaozhizuomoban",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "6151033",
       "name": "chart-area",
       "font_class": "chart-area",
