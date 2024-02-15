@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-06 16:48:29
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-06 17:12:33
+ * @LastEditTime: 2024-02-15 10:35:30
  * @FilePath: /experience-book-vue3/src/layout/nav.ts
  * @Description:
  */
@@ -17,8 +17,13 @@ export function usePageNav() {
     router.push({ path: `/` });
   };
 
+  const goDashboard = () => {
+    router.push({ path: `/dashboard` });
+  };
+
   return {
     goSkillNoteList,
-    goSkillIndex
+    goSkillIndex,
+    goDashboard
   };
 }
