@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-15 20:09:27
+ * @LastEditTime: 2024-02-15 20:10:46
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -70,8 +70,8 @@
     </div>
 
     <a-modal v-model:open="showIllustrateModel" title="项目介绍" width="800px" centered okText="">
-      <shuoming></shuoming>
-
+      <app-explain></app-explain>
+      
       <template #footer>
         <a-button key="back" @click="showIllustrateModel = false">了解</a-button>
       </template>
@@ -87,7 +87,7 @@ import { usePageNav } from './nav';
 import { useRoute } from 'vue-router';
 import { subject } from '../utils/subject';
 import { message } from 'ant-design-vue';
-import shuoming from './shuoming.vue';
+import AppExplain from './app-explain.vue';
 
 const route = useRoute();
 
