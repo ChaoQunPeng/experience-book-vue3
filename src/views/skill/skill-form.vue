@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 12:16:40
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-08 20:22:02
+ * @LastEditTime: 2024-02-14 23:50:29
  * @FilePath: /experience-book-vue3/src/views/skill/skill-form.vue
  * @Description: 
 -->
@@ -31,9 +31,9 @@
         <a-input v-model:value="form.name" size="large" placeholder="请输入"></a-input>
       </a-form-item>
 
-      <a-form-item label="描述" name="description">
+      <!-- <a-form-item label="描述" name="description">
         <a-input v-model:value="form.description" size="large" placeholder="请输入"></a-input>
-      </a-form-item>
+      </a-form-item> -->
     </a-form>
   </a-modal>
 </template>
