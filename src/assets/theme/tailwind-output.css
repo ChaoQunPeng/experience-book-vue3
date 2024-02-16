@@ -320,6 +320,10 @@
   background-color: rgba(24 ,144 ,255,1)
 }
 
+.bg-eb-black {
+  background-color: rgba(31,51,73,0.05)
+}
+
 .bg-eb-blue {
   background-color: rgba(246, 248, 250, 1)
 }
@@ -335,10 +339,6 @@
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
-}
-
-.bg-eb-black {
-  background-color: rgba(31,51,73,0.05)
 }
 
 .p-15 {
