@@ -170,6 +170,11 @@
   height: 22px
 }
 
+.size-24 {
+  width: 24px;
+  height: 24px
+}
+
 .h-180 {
   height: 180px
 }
@@ -292,6 +297,10 @@
   border-radius: 4px
 }
 
+.rounded-radius-2 {
+  border-radius: 2px
+}
+
 .border-b {
   border-bottom-width: 1px
 }
@@ -320,6 +329,10 @@
   background-color: rgba(24 ,144 ,255,1)
 }
 
+.bg-eb-black {
+  background-color: rgba(31,51,73,0.05)
+}
+
 .bg-eb-blue {
   background-color: rgba(246, 248, 250, 1)
 }
@@ -335,10 +348,6 @@
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
-}
-
-.bg-eb-black {
-  background-color: rgba(31,51,73,0.05)
 }
 
 .p-15 {
@@ -485,6 +494,10 @@
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity))
+}
+
+.text-white-85 {
+  color: rgba(255, 255, 255, 0.85)
 }
 
 .antialiased {

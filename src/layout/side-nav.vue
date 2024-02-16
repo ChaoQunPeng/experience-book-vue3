@@ -2,34 +2,35 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-16 17:03:20
+ * @LastEditTime: 2024-02-16 19:46:51
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
 <template>
-  <div class="flex flex-col h-full border-r border-black-5" style="border-right-style: solid">
+  <div
+    class="side-area flex flex-col h-full border-r border-black-5"
+    style="border-right-style: solid"
+  >
     <div class="h-36 flex items-center ml-30 mt-20 mb-20">
-      <img class="size-22" src="@/assets/logo.svg" alt="logo" />
-      <span class="text-size-26 font-medium ml-3 tracking-letter-spacing-1">xp-Book</span>
+      <img class="size-22 rounded-radius-2" src="@/assets/logo.svg" alt="logo" />
+      <span class="text-size-26 font-medium ml-3 tracking-letter-spacing-1 text-white"
+        >xp-Book</span
+      >
     </div>
 
     <div class="flex-1">
       <div class="w-220 mx-auto">
-        <div
-          class="nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-45"
-          :class="{ active: activeNav.id == 0 }"
-          @click="clickNav({ id: 0 })"
-        >
+        <div class="nav-item" :class="{ active: activeNav.id == 0 }" @click="clickNav({ id: 0 })">
           <i
             class="iconfont mr-12"
             :class="[activeNav.id == 0 ? 'icon-databaseset-fill' : 'icon-database-set']"
           ></i>
           <span class="text-size-16 select-none">经验本</span>
         </div>
-        <ul class="ml-24 mt-5">
+        <ul class="ml-24 mt-10">
           <li
             v-for="book in skillNavList"
-            class="nav-item h-36 flex items-center pl-15 mb-8 rounded cursor-pointer text-black-45"
+            class="nav-item h-36 flex items-center pl-15 mb-10 rounded cursor-pointer text-black-45"
             :class="{ active: book.id == activeNav.id }"
             @click="clickNav(book)"
           >
@@ -174,27 +175,31 @@ watch(route, newValue => {
 </script>
 
 <style lang="less" scoped>
+.side-area {
+  // background: #121212;
+  background: linear-gradient(181deg, #121212, rgba(18, 18, 18, 0.9));
+}
+
 .nav-item {
-  // display: flex;
-  // align-items: center;
-  // height: 44px;
-  // cursor: pointer;
-  // padding-left: 15;
-  // border-radius: 4px;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  cursor: pointer;
+  padding-left: 15px;
+  border-radius: 4px;
+  color: var(--eb-color-black-45);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  color: rgba(255, 255, 255, 0.9);
 
   &.active {
-    background: rgba(246, 248, 250, 1);
-    color: var(--eb-color-black);
-    font-weight: 500;
-
-    // i,
-    // span {
-    //   color: var(--eb-color-black);
-    // }
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--eb-color-blue);
   }
 
   &:hover {
-    background: rgba(246, 248, 250, 1);
+    background: rgba(255, 255, 255, 0.1);
   }
 }
 </style>
