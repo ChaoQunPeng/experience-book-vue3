@@ -2,12 +2,12 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-13 16:59:17
+ * @LastEditTime: 2024-02-16 18:36:02
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
 <template>
-  <div class="bg-eb-blue pt-30 h-full">
+  <div class="bg-eb-black pt-30 h-full">
     <div class="flex mb-20 px-20">
       <a-input
         v-model:value="search"
@@ -16,9 +16,10 @@
         size="large"
         allow-clear
       ></a-input>
+
       <a-button class="ml-auto" type="primary" shape="circle" size="large" @click="openSkillForm">
         <template #icon>
-          <PlusOutlined />
+          <i class="iconfont icon-plus"></i>
         </template>
       </a-button>
     </div>
@@ -69,8 +70,8 @@
                 <span>总笔记数</span>
               </template>
 
-              <div class="inline-flex items-center justify-center mr-14">
-                <i class="iconfont icon-qingdan text-size-14 mr-4"></i>
+              <div class="inline-flex items-center justify-center mr-16">
+                <i class="iconfont icon-layer-group text-size-14 mr-4"></i>
                 <span class="text-size-14">{{ skill.noteTotal }}</span>
               </div>
             </a-tooltip>
@@ -80,8 +81,8 @@
                 <span>经验值为0的笔记数</span>
               </template>
 
-              <div class="inline-flex items-center justify-center mr-14">
-                <i class="iconfont icon-daiban1 text-size-14 mr-5"></i>
+              <div class="inline-flex items-center justify-center mr-16">
+                <i class="iconfont icon-paperclip text-size-14 mr-5"></i>
                 <span class="text-size-14">{{ skill.todoNoteTotal }}</span>
               </div>
             </a-tooltip>
@@ -91,8 +92,8 @@
                 <span>总经验值</span>
               </template>
 
-              <div class="inline-flex items-center justify-center mr-14">
-                <i class="iconfont icon-shuidi text-size-14 mr-4"></i>
+              <div class="inline-flex items-center justify-center mr-16">
+                <i class="iconfont icon-flag text-size-14 mr-4"></i>
                 <span class="text-size-14">{{ skill.expTotal }}exp</span>
               </div>
             </a-tooltip>

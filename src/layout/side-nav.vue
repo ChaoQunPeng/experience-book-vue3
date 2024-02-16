@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-15 20:10:46
+ * @LastEditTime: 2024-02-16 17:03:20
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -20,7 +20,10 @@
           :class="{ active: activeNav.id == 0 }"
           @click="clickNav({ id: 0 })"
         >
-          <i class="iconfont icon-address-book-fill mr-12"></i>
+          <i
+            class="iconfont mr-12"
+            :class="[activeNav.id == 0 ? 'icon-databaseset-fill' : 'icon-database-set']"
+          ></i>
           <span class="text-size-16 select-none">经验本</span>
         </div>
         <ul class="ml-24 mt-5">
@@ -30,7 +33,10 @@
             :class="{ active: book.id == activeNav.id }"
             @click="clickNav(book)"
           >
-            <i class="iconfont icon-tubiaozhizuomoban text-size-14 mr-12"></i>
+            <i
+              class="iconfont text-size-14 mr-12"
+              :class="[book.id == activeNav.id ? 'icon-file-fill' : 'icon-file']"
+            ></i>
             <span class="text-size-14 select-none">{{ book.name }}</span>
           </li>
         </ul>
@@ -42,7 +48,10 @@
           :class="{ active: activeNav.id == 'dashboard' }"
           @click="clickNav({ id: 'dashboard' })"
         >
-          <i class="iconfont icon-chart-area mr-15"></i>
+          <i
+            class="iconfont mr-15"
+            :class="[activeNav.id == 'dashboard' ? 'icon-chart-area' : 'icon-chart-line']"
+          ></i>
           <span class="text-size-16 select-none">数据统计</span>
         </div>
 
@@ -61,17 +70,17 @@
 
     <div class="w-220 mx-auto mb-20">
       <div
-        class="nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black"
+        class="nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-65"
         @click="openIllustrate"
       >
-        <i class="iconfont icon-tubiaozhizuomoban1 mr-15"></i>
+        <i class="iconfont icon-question-circle mr-15"></i>
         <span class="text-size-16 select-none">说明</span>
       </div>
     </div>
 
-    <a-modal v-model:open="showIllustrateModel" title="项目介绍" width="800px" centered okText="">
+    <a-modal v-model:open="showIllustrateModel" title="项目介绍" width="1000px" okText="">
       <app-explain></app-explain>
-      
+
       <template #footer>
         <a-button key="back" @click="showIllustrateModel = false">了解</a-button>
       </template>

@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-15 10:25:13
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-15 19:48:10
+ * @LastEditTime: 2024-02-16 17:27:47
  * @FilePath: /experience-book-vue3/src/views/dashboard/dashboard-index.vue
  * @Description: 
 -->
@@ -41,13 +41,16 @@ onMounted(async () => {
     xField: 'name',
     yField: 'totalExp',
     label: {
+      position: 'top',
       content: data => {
         return data.totalExp + 'exp';
       },
       style: {
-        fontSize: 18  
+        fontSize: 14,
+        fill: 'rgba(31, 51, 73, 0.65)'
       }
     },
+    columnWidthRatio: 0.2,
     xAxis: {
       label: {
         autoHide: true,
@@ -95,6 +98,21 @@ onMounted(async () => {
         fillOpacity: 0.15
       }
     },
+    xAxis: {
+      tickCount: 7,
+      tickInterval: 1,
+      // 这个属性可以修改折线图的起始点和结束点。即到图表两端空白的距离。
+      range: [0.02, 0.98]
+    },
+    yAxis: {
+      grid: {
+        line: {
+          style: {
+            stroke: 'rgba(31,51,73,0.10)'
+          }
+        }
+      }
+    }
     // point: {
     //   size: 5,
     //   shape: 'diamond',
@@ -111,19 +129,6 @@ onMounted(async () => {
     //   //   };
     //   // }
     // },
-    xAxis: {
-      type: 'cat',
-      tickCount: 7
-    },
-    yAxis: {
-      grid: {
-        line: {
-          style: {
-            stroke: 'rgba(31,51,73,0.10)'
-          }
-        }
-      }
-    }
   });
 
   line.render();
