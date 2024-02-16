@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-16 18:36:02
+ * @LastEditTime: 2024-02-16 20:42:34
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -120,7 +120,7 @@
               </template>
 
               <span class="ml-auto text-size-12 text-black leading-none">
-                {{ skill.currentLevelExp }}/{{ Number(skill.range[1]) - Number(skill.range[0]) }}exp
+                {{ skill.currentLevelExp }}/{{ skill.levelExpCap }}exp
               </span>
             </div>
 
@@ -142,7 +142,7 @@
 </template>
 
 <script setup lang="ts">
-import { PlusOutlined, MoreOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { MoreOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import SkillForm from './skill-form.vue';
 import { Modal, message } from 'ant-design-vue';
 import { SkillApi } from '@/api/skill';
@@ -162,6 +162,7 @@ interface SkillListItem {
   noteTotal: number | string;
   todoNoteTotal: number | string;
   range: Array<number>[];
+  levelExpCap: number;
 }
 
 const search = ref('');

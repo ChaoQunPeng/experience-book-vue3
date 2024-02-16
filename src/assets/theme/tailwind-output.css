@@ -170,6 +170,11 @@
   height: 22px
 }
 
+.size-24 {
+  width: 24px;
+  height: 24px
+}
+
 .h-180 {
   height: 180px
 }
@@ -290,6 +295,10 @@
 
 .rounded-radius-4 {
   border-radius: 4px
+}
+
+.rounded-radius-2 {
+  border-radius: 2px
 }
 
 .border-b {
@@ -485,6 +494,10 @@
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity))
+}
+
+.text-white-85 {
+  color: rgba(255, 255, 255, 0.85)
 }
 
 .antialiased {
