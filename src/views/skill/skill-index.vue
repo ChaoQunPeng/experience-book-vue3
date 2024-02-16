@@ -142,7 +142,7 @@
 </template>
 
 <script setup lang="ts">
-import { PlusOutlined, MoreOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { MoreOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import SkillForm from './skill-form.vue';
 import { Modal, message } from 'ant-design-vue';
 import { SkillApi } from '@/api/skill';
