@@ -16,6 +16,8 @@ services:
 
   exp-book-server:
     image: exp-book-server
+    depends_on:
+      - exp-book-mysql
     networks:
       exp-book-net:
     ports:
@@ -30,6 +32,9 @@ services:
 
   exp-book-website:
     image: nginx:latest
+    depends_on:
+      - exp-book-mysql
+      - exp-book-server
     networks:
       exp-book-net:
     ports:
@@ -42,6 +47,7 @@ services:
 
 networks:
   exp-book-net:
+
 
 volumes:
   exp-book-data:
