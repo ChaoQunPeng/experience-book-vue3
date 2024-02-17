@@ -89,16 +89,12 @@
   margin-left: 10px
 }
 
-.ml-24 {
-  margin-left: 24px
+.ml-22 {
+  margin-left: 22px
 }
 
 .ml-3 {
   margin-left: 3px
-}
-
-.ml-30 {
-  margin-left: 30px
 }
 
 .ml-auto {
@@ -107,10 +103,6 @@
 
 .mr-12 {
   margin-right: 12px
-}
-
-.mr-15 {
-  margin-right: 15px
 }
 
 .mr-16 {
@@ -170,11 +162,6 @@
   height: 22px
 }
 
-.size-24 {
-  width: 24px;
-  height: 24px
-}
-
 .h-180 {
   height: 180px
 }
@@ -207,12 +194,12 @@
   width: 0px
 }
 
-.w-220 {
-  width: 220px
+.w-180 {
+  width: 180px
 }
 
-.w-260 {
-  width: 260px
+.w-200 {
+  width: 200px
 }
 
 .w-270 {
@@ -277,6 +264,10 @@
   overflow: hidden
 }
 
+.overflow-visible {
+  overflow: visible
+}
+
 .overflow-y-auto {
   overflow-y: auto
 }
@@ -293,12 +284,12 @@
   border-radius: 0px
 }
 
-.rounded-radius-4 {
-  border-radius: 4px
-}
-
 .rounded-radius-2 {
   border-radius: 2px
+}
+
+.rounded-radius-4 {
+  border-radius: 4px
 }
 
 .border-b {
@@ -313,8 +304,8 @@
   border-style: none
 }
 
-.border-black-5 {
-  border-color: rgba(31,51,73,0.05)
+.border-eb-border-color {
+  border-color: rgba(31,51,73,0.08)
 }
 
 .bg-black {
@@ -401,6 +392,10 @@
 
 .pl-20 {
   padding-left: 20px
+}
+
+.pl-40 {
+  padding-left: 40px
 }
 
 .pr-15 {
@@ -494,10 +489,6 @@
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity))
-}
-
-.text-white-85 {
-  color: rgba(255, 255, 255, 0.85)
 }
 
 .antialiased {

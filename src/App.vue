@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-12 14:10:13
+ * @LastEditTime: 2024-02-17 13:55:32
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -14,10 +14,10 @@
   >
     <div id="modalMount"></div>
     <div class="flex h-screen overflow-x-hidden">
-      <div class="w-260">
+      <div class="w-200">
         <side-nav></side-nav>
       </div>
-      <main class="flex-1">
+      <main class="flex-1 overflow-auto">
         <router-view></router-view>
       </main>
     </div>
@@ -25,13 +25,10 @@
 </template>
 
 <script setup lang="ts">
-import { provide } from 'vue';
-import { message } from 'ant-design-vue';
 import SideNav from '@/layout/side-nav.vue';
+import { onMounted } from 'vue';
 
 // const [messageApi, contextHolder] = message.useMessage();
-
-provide('AMessage', message)
 
 const themeToken = {
   wireframe: false,
@@ -46,6 +43,10 @@ const themeToken = {
   colorBorderSecondary: '#f3f3f4',
   borderRadiusLG: '4px'
 };
+
+onMounted(() => {
+  // document.documentElement.classList.add();
+});
 </script>
 
 <style lang="less"></style>

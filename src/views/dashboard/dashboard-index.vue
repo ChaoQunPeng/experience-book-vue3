@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-15 10:25:13
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-16 17:27:47
+ * @LastEditTime: 2024-02-17 12:21:27
  * @FilePath: /experience-book-vue3/src/views/dashboard/dashboard-index.vue
  * @Description: 
 -->
@@ -41,7 +41,7 @@ onMounted(async () => {
     xField: 'name',
     yField: 'totalExp',
     label: {
-      position: 'top',
+      position: 'right',
       content: data => {
         return data.totalExp + 'exp';
       },

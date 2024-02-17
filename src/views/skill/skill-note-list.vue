@@ -2,17 +2,17 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-16 19:41:53
+ * @LastEditTime: 2024-02-17 13:40:57
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
 <template>
   <div class="flex h-screen overflow-hidden">
     <div
-      class="note-area flex flex-col w-286 bg-eb-black border-r border-black-5"
+      class="note-area flex flex-col w-286 border-r border-eb-border-color"
       style="border-right-style: solid"
     >
-      <div class="border-b border-black-5" style="border-bottom-style: solid">
+      <div class="border-b border-eb-border-color" style="border-bottom-style: solid">
         <div class="flex items-center mt-20 pl-20 pr-15 relative">
           <span class="text-size-24 text-black font-bold flex-shrink-0 max-w-190 ellipsis">
             {{ pageData.name }}
@@ -25,7 +25,7 @@
 
         <div class="text-size-12 text-black-45 pl-20 mt-5">
           {{ pageData.noteList?.length }}篇笔记
-          <span class="font-bold ml-10"> {{ pageData.expTotal }} </span>exp
+          <span class="ml-10"> {{ pageData.expTotal }} </span>exp
         </div>
 
         <div class="px-15 mb-10">
@@ -532,6 +532,10 @@ watch(route, async () => {
   &:focus {
     box-shadow: none !important;
   }
+}
+
+.note-area {
+  background: var(--eb-theme-bg-color);
 }
 
 .note-card {

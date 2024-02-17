@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 14:38:29
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-16 19:19:06
+ * @LastEditTime: 2024-02-17 13:39:36
  * @FilePath: /experience-book-vue3/tailwind.config.js
  * @Description:
  */
@@ -17,6 +17,7 @@ export default {
     colors: {
       'eb-blue': 'rgba(246, 248, 250, 1)',
       'eb-black': 'rgba(31,51,73,0.05)',
+      'eb-border-color': 'rgba(31,51,73,0.08)',
       red: 'rgba(227, 23, 0, 1)',
       blue: 'rgba(24 ,144 ,255,1)',
       purple: 'rgba(133, 37, 250,1)',
@@ -29,7 +30,7 @@ export default {
       'black-5': 'rgba(31,51,73,0.05)',
       white: '#ffffff',
       'white-90': 'rgba(255, 255, 255, 0.90)',
-      'white-85': 'rgba(255, 255, 255, 0.85)',
+      'white-85': 'rgba(255, 255, 255, 0.85)'
     },
     extend: {
       // padding: Array.from({ length: 20 }, (e, i) => i + 1).reduce((acc, cur, index) => {

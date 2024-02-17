@@ -2,35 +2,41 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-16 19:46:51
+ * @LastEditTime: 2024-02-17 13:42:28
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
 <template>
   <div
-    class="side-area flex flex-col h-full border-r border-black-5"
+    class="eb-side-area flex flex-col h-full border-r border-eb-border-color"
     style="border-right-style: solid"
   >
-    <div class="h-36 flex items-center ml-30 mt-20 mb-20">
-      <img class="size-22 rounded-radius-2" src="@/assets/logo.svg" alt="logo" />
+    <div class="eb-logo h-36 flex items-center ml-22 mt-20 mb-20">
+      <!-- <img class="size-22 rounded-radius-2" src="@/assets/logo-light.svg" alt="logo" /> -->
+      <div class="logo size-22 rounded-radius-2"></div>
       <span class="text-size-26 font-medium ml-3 tracking-letter-spacing-1 text-white"
         >xp-Book</span
       >
     </div>
 
     <div class="flex-1">
-      <div class="w-220 mx-auto">
-        <div class="nav-item" :class="{ active: activeNav.id == 0 }" @click="clickNav({ id: 0 })">
+      <div class="w-180 mx-auto mb-10">
+        <div
+          class="eb-nav-item nav-item pl-15 mb-5"
+          :class="{ active: activeNav.id == 0 }"
+          @click="clickNav({ id: 0 })"
+        >
           <i
-            class="iconfont mr-12"
+            class="iconfont mr-12 text-size-14"
             :class="[activeNav.id == 0 ? 'icon-databaseset-fill' : 'icon-database-set']"
           ></i>
-          <span class="text-size-16 select-none">经验本</span>
+          <span class="text-size-14 select-none">经验本</span>
         </div>
-        <ul class="ml-24 mt-10">
+
+        <ul>
           <li
             v-for="book in skillNavList"
-            class="nav-item h-36 flex items-center pl-15 mb-10 rounded cursor-pointer text-black-45"
+            class="eb-nav-item nav-item h-36 flex items-center pl-40 mb-5 rounded cursor-pointer text-black-45"
             :class="{ active: book.id == activeNav.id }"
             @click="clickNav(book)"
           >
@@ -43,39 +49,28 @@
         </ul>
       </div>
 
-      <div class="w-220 mx-auto">
+      <div class="w-180 mx-auto">
         <div
-          class="nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-45"
+          class="eb-nav-item nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-45"
           :class="{ active: activeNav.id == 'dashboard' }"
           @click="clickNav({ id: 'dashboard' })"
         >
           <i
-            class="iconfont mr-15"
+            class="iconfont mr-12 text-size-14"
             :class="[activeNav.id == 'dashboard' ? 'icon-chart-area' : 'icon-chart-line']"
           ></i>
-          <span class="text-size-16 select-none">数据统计</span>
+          <span class="text-size-14 select-none">数据统计</span>
         </div>
-
-        <!-- <ul v-if="false" class="ml-24 mt-5">
-          <li
-            v-for="taskNav in taskNavList"
-            class="nav-item h-36 flex items-center pl-15 mb-5 rounded cursor-pointer text-black"
-            :class="{ active: taskNav.id == activeNav.id }"
-            @click="clickNav(taskNav)"
-          >
-            <span class="text-size-14 select-none">{{ taskNav.name }}</span>
-          </li>
-        </ul> -->
       </div>
     </div>
 
-    <div class="w-220 mx-auto mb-20">
+    <div class="w-180 mx-auto mb-20">
       <div
-        class="nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-65"
+        class="eb-nav-item nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-65"
         @click="openIllustrate"
       >
-        <i class="iconfont icon-question-circle mr-15"></i>
-        <span class="text-size-16 select-none">说明</span>
+        <i class="iconfont icon-question-circle mr-12 text-size-14"></i>
+        <span class="text-size-14 select-none">说明</span>
       </div>
     </div>
 
@@ -175,31 +170,21 @@ watch(route, newValue => {
 </script>
 
 <style lang="less" scoped>
-.side-area {
-  // background: #121212;
-  background: linear-gradient(181deg, #121212, rgba(18, 18, 18, 0.9));
+.logo-box {
+  > span {
+    color: var(--eb-theme-color);
+  }
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  height: 44px;
+  height: 32px;
   cursor: pointer;
-  padding-left: 15px;
-  border-radius: 4px;
-  color: var(--eb-color-black-45);
+  border-radius: 2px;
+
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-  color: rgba(255, 255, 255, 0.9);
-
-  &.active {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--eb-color-blue);
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
 }
 </style>

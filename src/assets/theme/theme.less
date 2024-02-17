@@ -1,0 +1,85 @@
+:root {
+  // 基础
+  --eb-color-black: @eb-color-black;
+  --eb-color-black-85: @eb-color-black-85;
+  --eb-color-black-65: @eb-color-black-65;
+  --eb-color-black-45: @eb-color-black-45;
+  --eb-color-blue: @eb-color-blue;
+  --eb-color-red: @eb-color-red;
+  --eb-color-green: @eb-color-green;
+  --eb-color-purple: @eb-color-purple;
+  --eb-color-gold: @eb-color-gold;
+}
+
+.light-theme {
+  // 主题色
+  --eb-theme-color: rgba(255, 255, 255, 1);
+  --eb-theme-bg-color: rgba(246, 248, 250, 1);
+
+  .eb-logo {
+    > .logo {
+      background: url('../logo-black.svg') no-repeat center center;
+      background-size: contain;
+    }
+
+    > span {
+      color: @eb-color-black;
+    }
+  }
+
+  .eb-side-area {
+    background: #fff;
+  }
+
+  .eb-nav-item {
+    color: @eb-color-black-85;
+
+    &:hover {
+      background: rgba(25, 140, 255, 0.08);
+    }
+
+    &.active {
+      // 填充色
+      // background: @eb-color-blue;
+      // color: #fff;
+
+      background: rgba(25, 140, 255, 0.08);
+      color: @eb-color-blue;
+    }
+  }
+}
+
+.dark-theme {
+  --eb-theme-color: rgba(31, 51, 73, 1);
+  --eb-theme-bg-color: rgba(31, 51, 73, 0.05);
+
+  .eb-logo {
+    > .logo {
+      background: url('../logo-white.svg') no-repeat center center;
+      background-size: contain;
+    }
+
+    > span {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  }
+
+  .eb-side-area {
+    background: linear-gradient(130deg, #121212, rgba(18, 18, 18, 0.9));
+  }
+
+  .eb-nav-item {
+    color: rgba(255, 255, 255, 0.8);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    &.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.95);
+
+      // background: var(--eb-color-blue);
+    }
+  }
+}
