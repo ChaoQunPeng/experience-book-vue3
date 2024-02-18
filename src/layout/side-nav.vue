@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-17 13:42:28
+ * @LastEditTime: 2024-02-18 13:38:05
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -20,7 +20,7 @@
     </div>
 
     <div class="flex-1">
-      <div class="w-180 mx-auto mb-10">
+      <div class="w-200 mx-auto mb-10">
         <div
           class="eb-nav-item nav-item pl-15 mb-5"
           :class="{ active: activeNav.id == 0 }"
@@ -44,7 +44,7 @@
               class="iconfont text-size-14 mr-12"
               :class="[book.id == activeNav.id ? 'icon-file-fill' : 'icon-file']"
             ></i>
-            <span class="text-size-14 select-none">{{ book.name }}</span>
+            <span class="text-size-12 select-none">{{ book.name }}</span>
           </li>
         </ul>
       </div>
@@ -70,7 +70,7 @@
         @click="openIllustrate"
       >
         <i class="iconfont icon-question-circle mr-12 text-size-14"></i>
-        <span class="text-size-14 select-none">说明</span>
+        <span class="text-size-12 select-none">说明</span>
       </div>
     </div>
 
@@ -179,7 +179,7 @@ watch(route, newValue => {
 .nav-item {
   display: flex;
   align-items: center;
-  height: 32px;
+  height: 28px;
   cursor: pointer;
   border-radius: 2px;
 
