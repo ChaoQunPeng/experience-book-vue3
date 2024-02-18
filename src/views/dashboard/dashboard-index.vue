@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-15 10:25:13
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-17 12:21:27
+ * @LastEditTime: 2024-02-18 15:49:54
  * @FilePath: /experience-book-vue3/src/views/dashboard/dashboard-index.vue
  * @Description: 
 -->
@@ -92,10 +92,10 @@ onMounted(async () => {
     xField: 'get_exp_datetime',
     yField: 'exp',
     seriesField: 'skill',
-    smooth: true,
+    smooth: false,
     area: {
       style: {
-        fillOpacity: 0.15
+        fillOpacity: 0
       }
     },
     xAxis: {
