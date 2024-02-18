@@ -57,6 +57,10 @@
   margin-right: auto
 }
 
+.mb-0 {
+  margin-bottom: 0px
+}
+
 .mb-10 {
   margin-bottom: 10px
 }
@@ -137,10 +141,6 @@
   margin-top: auto
 }
 
-.mb-0 {
-  margin-bottom: 0px
-}
-
 .block {
   display: block
 }
@@ -192,10 +192,6 @@
 
 .min-h-140 {
   min-height: 140px
-}
-
-.w-0 {
-  width: 0px
 }
 
 .w-180 {
@@ -312,10 +308,6 @@
   border-color: rgba(31,51,73,0.08)
 }
 
-.border-t-eb-border-color {
-  border-top-color: rgba(31,51,73,0.08)
-}
-
 .bg-black {
   background-color: rgba(31,51,73,1)
 }
@@ -361,10 +353,6 @@
   padding: 6px
 }
 
-.p-14 {
-  padding: 14px
-}
-
 .px-15 {
   padding-left: 15px;
   padding-right: 15px
@@ -375,29 +363,19 @@
   padding-right: 20px
 }
 
-.px-32 {
-  padding-left: 32px;
-  padding-right: 32px
-}
-
 .px-6 {
   padding-left: 6px;
   padding-right: 6px
 }
 
-.py-4 {
-  padding-top: 4px;
-  padding-bottom: 4px
-}
-
-.px-30 {
-  padding-left: 30px;
-  padding-right: 30px
-}
-
 .py-14 {
   padding-top: 14px;
   padding-bottom: 14px
+}
+
+.py-4 {
+  padding-top: 4px;
+  padding-bottom: 4px
 }
 
 .pb-30 {
@@ -430,10 +408,6 @@
 
 .pt-30 {
   padding-top: 30px
-}
-
-.pt-40 {
-  padding-top: 40px
 }
 
 .text-right {

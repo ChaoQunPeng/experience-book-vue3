@@ -2,14 +2,14 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 21:26:00
+ * @LastEditTime: 2024-02-18 21:56:54
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
 <template>
   <div class="flex h-screen overflow-hidden">
     <div
-      class="note-area flex flex-col w-286 border-r border-eb-border-color"
+      class="note-area flex flex-col w-286 border-r border-eb-border-color flex-shrink-0"
       style="border-right-style: solid"
     >
       <div class="border-b border-eb-border-color" style="border-bottom-style: solid">
