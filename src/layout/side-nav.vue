@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 21:30:26
+ * @LastEditTime: 2024-02-18 21:53:32
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -22,7 +22,7 @@
     <div class="flex-1">
       <div class="w-200 mx-auto mb-10">
         <div
-          class="eb-nav-item nav-item pl-15 mb-5"
+          class="eb-nav-item nav-item pl-20 mb-5"
           :class="{ active: activeNav.id == 0 }"
           @click="clickNav({ id: 0 })"
         >
@@ -49,9 +49,9 @@
         </ul>
       </div>
 
-      <div class="w-180 mx-auto">
+      <div class="w-200 mx-auto">
         <div
-          class="eb-nav-item nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-45"
+          class="eb-nav-item nav-item flex items-center h-44 cursor-pointer pl-20 rounded transition-all text-black-45"
           :class="{ active: activeNav.id == 'dashboard' }"
           @click="clickNav({ id: 'dashboard' })"
         >
