@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 18:44:06
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-13 11:39:48
+ * @LastEditTime: 2024-02-18 15:57:04
  * @FilePath: /experience-book-vue3/src/api/config/http.ts
  * @Description: http文件
  */
@@ -10,8 +10,16 @@
 import { message } from 'ant-design-vue';
 import axios, { InternalAxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
+let baseURL = '';
+
+if (import.meta.env.MODE == 'mock') {
+  baseURL = '/mock/';
+} else {
+  baseURL = '/api/';
+}
+
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: '/api/',
+  baseURL: baseURL,
   timeout: 5000
 });
 
