@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 12:16:40
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-14 23:50:29
+ * @LastEditTime: 2024-02-18 15:20:23
  * @FilePath: /experience-book-vue3/src/views/skill/skill-form.vue
  * @Description: 
 -->
@@ -168,7 +168,9 @@ const onOk = async () => {
   }
 };
 
-const onCancel = () => {};
+const onCancel = () => {
+  formRef.value?.resetFields();
+};
 
 watch(visible, () => {
   formRef.value?.resetFields();
