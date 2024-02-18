@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 15:15:58
+ * @LastEditTime: 2024-02-18 21:26:00
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -43,7 +43,8 @@
         </div>
       </div>
 
-      <div id="Note-List" class="note-list overflow-auto">
+      <!-- 菜单列表 -->
+      <div id="Note-List" class="note-list overflow-auto flex-shrink-0">
         <div
           v-for="note in resolveNoteList"
           :id="'Note-Card' + note.id"
@@ -53,27 +54,29 @@
           @click="clickNote(note)"
         >
           <div class="header flex mb-6">
-            <span class="text-size-16 ellipsis font-medium mb-6">{{ note.title }}</span>
+            <span class="text-size-16 ellipsis font-medium mb-6">{{ note.title || '无标题' }}</span>
 
-            <a-dropdown
-              trigger="click"
-              :getPopupContainer="
+            <span @click.stop class="ml-auto">
+              <a-dropdown
+                trigger="click"
+                :getPopupContainer="
                 (triggerNode:any) => {
                   return triggerNode.parentNode
                 }
               "
-            >
-              <div class="more-action ml-auto" @click.stop>
-                <MoreOutlined />
-              </div>
-              <template #overlay>
-                <a-menu @click="onDropdownClick($event, note)">
-                  <a-menu-item key="delete">
-                    <div class="text-red">删除</div>
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown>
+              >
+                <div class="more-action" @click.stop>
+                  <MoreOutlined />
+                </div>
+                <template #overlay>
+                  <a-menu @click="onDropdownClick($event, note)">
+                    <a-menu-item key="delete">
+                      <div class="text-red">删除</div>
+                    </a-menu-item>
+                  </a-menu>
+                </template>
+              </a-dropdown>
+            </span>
           </div>
 
           <div class="summary mb-12 text-size-14 ellipsis-3 text-black-65 h-60">
@@ -89,7 +92,7 @@
     </div>
 
     <!-- 编辑器 -->
-    <div v-if="activeNote.id" class="note-editor overflow-y-auto flex-1 px-32 pt-40 bg-white w-0">
+    <div v-if="activeNote.id" class="note-editor flex flex-col overflow-y-auto bg-white">
       <a-form
         :model="form"
         ref="formRef"
@@ -99,11 +102,12 @@
       >
         <a-row align="top">
           <a-col :span="24">
-            <a-form-item label="笔记标题">
+            <a-form-item class="mb-0">
               <a-input
+                class="title-input text-size-24 px-20 py-14 border-none rounded-none"
                 v-model:value="form.title"
                 size="large"
-                placeholder="请输入"
+                placeholder="无标题"
                 :maxlength="50"
                 @change="onInput"
                 @focus="onFocus"
@@ -148,7 +152,7 @@
       <MdEditor
         v-model="content"
         :preview="true"
-        class="md-editor rounded-radius-4"
+        class="md-editor"
         :toolbarsExclude="['github', 'next', 'revoke']"
         @on-save="onSave"
         @on-change="onChange"
@@ -160,7 +164,7 @@
         <span class="text-size-14 text-black-45 font-normal">(1小时=1exp)</span>
       </a-divider>
 
-      <a-row class="pb-30" :gutter="20">
+      <a-row class="px-20 pb-30" :gutter="20">
         <a-col :span="21">
           <a-select class="w-full" v-model:value="exp" size="large" placeholder="请选择">
             <a-select-option :value="0" :label="0"> 0exp </a-select-option>
@@ -336,7 +340,7 @@ const addNote = async () => {
  */
 const deleteNote = async (note: NoteItem) => {
   Modal.confirm({
-    title: `确定要删除${note.title}吗？`,
+    title: `确定要删除【${note.title}】吗？`,
     icon: createVNode(ExclamationCircleOutlined),
     onOk: async () => {
       const result = await NoteApi.delele(note.id);
@@ -348,7 +352,8 @@ const deleteNote = async (note: NoteItem) => {
           if (pageData.noteList.length == 0) {
             activeNote.value.id = 0;
           } else {
-            getNoteInfo(pageData.noteList[0].id);
+            await getNoteInfo(pageData.noteList[0].id);
+            activeNote.value = pageData.noteList[0];
           }
         }
       } else {
@@ -571,6 +576,8 @@ watch(route, async () => {
 }
 
 .md-editor {
-  // height: 400px !important;
+  border: none;
+  border-top: 1px solid rgba(31, 51, 73, 0.08);
+  border-bottom: 1px solid rgba(31, 51, 73, 0.08);
 }
 </style>

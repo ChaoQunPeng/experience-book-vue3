@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 13:38:05
+ * @LastEditTime: 2024-02-18 21:30:26
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -42,7 +42,7 @@
           >
             <i
               class="iconfont text-size-14 mr-12"
-              :class="[book.id == activeNav.id ? 'icon-file-fill' : 'icon-file']"
+              :class="[book.id == activeNav.id ? 'icon-address-book-fill' : 'icon-address-book']"
             ></i>
             <span class="text-size-12 select-none">{{ book.name }}</span>
           </li>
