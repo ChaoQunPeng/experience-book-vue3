@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-17 13:40:57
+ * @LastEditTime: 2024-02-18 15:15:58
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -106,7 +106,7 @@
                 placeholder="请输入"
                 :maxlength="50"
                 @change="onInput"
-                @on-focus="onFocus"
+                @focus="onFocus"
               />
             </a-form-item>
           </a-col>
@@ -499,7 +499,6 @@ const onFocus = () => {
  * @return {*}
  */
 const onSave = _.debounce(function () {
-  alert(1);
   updateNote();
 });
 
