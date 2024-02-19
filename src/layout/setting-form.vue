@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-19 12:36:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 14:49:35
+ * @LastEditTime: 2024-02-19 15:18:17
  * @FilePath: /experience-book-vue3/src/layout/setting-form.vue
  * @Description: 
 -->
@@ -12,12 +12,11 @@
     title="设置"
     width="600px"
     cancel-text="关闭"
-    :show-ok="false"
-    :okButtonProps="{ style: { display: 'none' } }"
+    :footer="null"
   >
-    <div class="pt-2">
+    <div class="pt-2 pb-30">
       <a-divider orientation="left">主题选择</a-divider>
-      <a-radio-group v-model:value="themeSwitch" @change="changeTheme">
+      <a-radio-group class="mt-10" v-model:value="themeSwitch" @change="changeTheme">
         <a-radio value="dark-theme">暗色</a-radio>
         <a-radio value="light-theme">浅色</a-radio>
       </a-radio-group>
