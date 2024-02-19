@@ -17,7 +17,7 @@
     <div class="pt-2 pb-30">
       <a-divider orientation="left">主题选择</a-divider>
       <a-radio-group class="mt-10" v-model:value="themeSwitch" @change="changeTheme">
-        <a-radio value="dark-theme">暗色</a-radio>
+        <a-radio value="dark-theme" class="mr-20">暗色</a-radio>
         <a-radio value="light-theme">浅色</a-radio>
       </a-radio-group>
     </div>
