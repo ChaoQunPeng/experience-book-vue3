@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-17 13:55:32
+ * @LastEditTime: 2024-02-18 17:22:21
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -12,21 +12,24 @@
       token: themeToken
     }"
   >
-    <div id="modalMount"></div>
-    <div class="flex h-screen overflow-x-hidden">
-      <div class="w-200">
-        <side-nav></side-nav>
+    <a-spin :spinning="spinning" wrapperClassName="h-full">
+      <div id="modalMount"></div>
+
+      <div v-if="visible" class="flex h-screen overflow-x-hidden">
+        <div class="w-200">
+          <side-nav></side-nav>
+        </div>
+        <main class="flex-1 overflow-auto">
+          <router-view></router-view>
+        </main>
       </div>
-      <main class="flex-1 overflow-auto">
-        <router-view></router-view>
-      </main>
-    </div>
+    </a-spin>
   </a-config-provider>
 </template>
 
 <script setup lang="ts">
 import SideNav from '@/layout/side-nav.vue';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 // const [messageApi, contextHolder] = message.useMessage();
 
@@ -44,8 +47,27 @@ const themeToken = {
   borderRadiusLG: '4px'
 };
 
+const visible = ref(false);
+const spinning = ref(false);
+
 onMounted(() => {
-  // document.documentElement.classList.add();
+  console.log('meta ', import.meta.env);
+
+  setTimeout(
+    () => {
+      visible.value = true;
+    },
+    // vite-plugin-mock插件中用来处理生产环境的函数createProdMockServer还未执行完成，所以要延时一下
+    import.meta.env.MODE == 'mock' ? 100 : 0
+  );
+
+  // if (import.meta.env.MODE == 'mock') {
+  //   setTimeout(() => {
+  //     visible.value = true;
+  //   }, 100);
+  // } else {
+  //   visible.value = true;
+  // }
 });
 </script>
 
