@@ -26,7 +26,6 @@ declare module 'vue' {
     ASelect: typeof import('ant-design-vue/es')['Select']
     ASelectOption: typeof import('ant-design-vue/es')['SelectOption']
     ASpin: typeof import('ant-design-vue/es')['Spin']
-    ASwitch: typeof import('ant-design-vue/es')['Switch']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     Dialog: typeof import('./src/components/dialog/dialog.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
