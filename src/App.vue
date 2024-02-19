@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 17:22:21
+ * @LastEditTime: 2024-02-19 14:06:46
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import SideNav from '@/layout/side-nav.vue';
 import { onMounted, ref } from 'vue';
+import { useAppStorage } from './layout/use-app';
 
 // const [messageApi, contextHolder] = message.useMessage();
 
@@ -52,6 +53,10 @@ const spinning = ref(false);
 
 onMounted(() => {
   console.log('meta ', import.meta.env);
+
+  const { initTheme } = useAppStorage();
+
+  initTheme();
 
   setTimeout(
     () => {

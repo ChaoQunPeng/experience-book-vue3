@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 21:53:32
+ * @LastEditTime: 2024-02-19 12:50:50
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -66,6 +66,14 @@
 
     <div class="w-180 mx-auto mb-20">
       <div
+        class="eb-nav-item nav-item mb-10 flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-65"
+        @click="openSetting"
+      >
+        <i class="iconfont icon-cog mr-12 text-size-14"></i>
+        <span class="text-size-12 select-none">设置</span>
+      </div>
+
+      <div
         class="eb-nav-item nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-65"
         @click="openIllustrate"
       >
@@ -81,6 +89,8 @@
         <a-button key="back" @click="showIllustrateModel = false">了解</a-button>
       </template>
     </a-modal>
+
+    <setting-form ref="settingFormRef"></setting-form>
   </div>
 </template>
 
@@ -93,6 +103,7 @@ import { useRoute } from 'vue-router';
 import { subject } from '../utils/subject';
 import { message } from 'ant-design-vue';
 import AppExplain from './app-explain.vue';
+import SettingForm from './setting-form.vue';
 
 const route = useRoute();
 
@@ -103,6 +114,7 @@ interface navOption {
 
 const skillNavList = ref<Array<navOption>>([]);
 const activeNav = ref<navOption>({});
+const settingFormRef = ref<InstanceType<typeof SettingForm> | null>(null);
 
 onMounted(() => {
   subject.subscribe('after-skill-curd', getList);
@@ -156,6 +168,14 @@ const showIllustrateModel = ref(false);
  */
 const openIllustrate = () => {
   showIllustrateModel.value = true;
+};
+
+/**
+ * @description: 打开设置页面
+ * @return {*}
+ */
+const openSetting = () => {
+  settingFormRef.value?.handleModalOpen();
 };
 
 watch(route, newValue => {
