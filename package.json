@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "mock": "vue-tsc && vite build --mode mock",
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/assets/tailwind-input.css -o ./src/assets/theme/tailwind-output.css --watch",
     "compose": "docker compose up -d"
