@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "vue-tsc && vite build --mode production",
     "build-mock": "vue-tsc && vite build --mode mock",
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/assets/tailwind-input.css -o ./src/assets/theme/tailwind-output.css --watch",
