@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 12:50:50
+ * @LastEditTime: 2024-02-19 15:09:11
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -118,6 +118,8 @@ const settingFormRef = ref<InstanceType<typeof SettingForm> | null>(null);
 
 onMounted(() => {
   subject.subscribe('after-skill-curd', getList);
+  
+  setActivedNav();
 
   getList();
 });
@@ -125,6 +127,20 @@ onMounted(() => {
 onUnmounted(() => {
   subject.unsubscribe('after-skill-curd', getList);
 });
+
+/**
+ * @description: 设置激活菜单
+ * @return {*}
+ */
+const setActivedNav = () => {
+  if (route.name == 'skill-note-list') {
+    activeNav.value.id = route.params.id as string;
+  } else if (route.name == 'skill') {
+    activeNav.value.id = 0;
+  } else if (route.name == 'dashboard') {
+    activeNav.value.id = 'dashboard';
+  }
+};
 
 /**
  * @description: 获取列表
