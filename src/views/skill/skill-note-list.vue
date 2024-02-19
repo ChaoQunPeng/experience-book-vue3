@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 22:03:04
+ * @LastEditTime: 2024-02-19 15:28:46
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -92,7 +92,10 @@
     </div>
 
     <!-- 编辑器 -->
-    <div v-if="activeNote.id" class="note-editor flex flex-col overflow-y-auto bg-white w-full overflow-x-hidden">
+    <div
+      v-if="activeNote.id"
+      class="note-editor flex flex-col overflow-y-auto bg-white w-full overflow-x-hidden"
+    >
       <a-form
         :model="form"
         ref="formRef"
@@ -514,8 +517,9 @@ watch(route, async () => {
     activeNote.value = pageData.noteList[0];
     getNoteInfo(activeNote.value.id);
   } else {
+    activeNote.value = { id: 0 };
+    
     form.id = 0;
-
     form.remark = '';
     form.skillId = null;
     form.title = '';
