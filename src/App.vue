@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 14:06:46
+ * @LastEditTime: 2024-02-19 15:32:17
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -63,7 +63,7 @@ onMounted(() => {
       visible.value = true;
     },
     // vite-plugin-mock插件中用来处理生产环境的函数createProdMockServer还未执行完成，所以要延时一下
-    import.meta.env.MODE == 'mock' ? 100 : 0
+    import.meta.env.MODE == 'mock' ? 300 : 0
   );
 
   // if (import.meta.env.MODE == 'mock') {

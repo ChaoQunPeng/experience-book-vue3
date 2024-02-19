@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 15:28:46
+ * @LastEditTime: 2024-02-19 15:34:56
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -155,7 +155,7 @@
       <MdEditor
         v-model="content"
         :preview="true"
-        class="md-editor"
+        class="md-editor h-screen"
         :toolbarsExclude="['github', 'next', 'revoke']"
         @on-save="onSave"
         @on-change="onChange"

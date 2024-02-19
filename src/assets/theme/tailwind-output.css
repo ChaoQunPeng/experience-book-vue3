@@ -105,16 +105,16 @@
   margin-left: auto
 }
 
-.mr-10 {
-  margin-right: 10px
-}
-
 .mr-12 {
   margin-right: 12px
 }
 
 .mr-16 {
   margin-right: 16px
+}
+
+.mr-20 {
+  margin-right: 20px
 }
 
 .mr-4 {
@@ -143,10 +143,6 @@
 
 .mt-auto {
   margin-top: auto
-}
-
-.mr-20 {
-  margin-right: 20px
 }
 
 .block {
