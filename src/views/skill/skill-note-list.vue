@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 15:48:16
+ * @LastEditTime: 2024-02-19 20:56:45
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -44,7 +44,7 @@
       </div>
 
       <!-- 菜单列表 -->
-      <div id="Note-List" class="note-list overflow-auto flex-shrink-0">
+      <div id="Note-List" class="note-list overflow-auto flex-1 ">
         <div
           v-for="note in resolveNoteList"
           :id="'Note-Card' + note.id"
