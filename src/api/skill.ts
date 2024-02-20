@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 15:07:59
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-15 17:41:54
+ * @LastEditTime: 2024-02-20 11:48:05
  * @FilePath: /experience-book-vue3/src/api/skill.ts
  * @Description:
  */
@@ -45,6 +45,14 @@ class Skill extends BaseApi {
    */
   getExpStatistics(): Promise<ResponseModel> {
     return axiosInstance.get(`/${this.name}/exp/statistics`);
+  }
+
+  /**
+   * @description: 获取技能笔记数统计
+   * @return {*}
+   */
+  getNoteStatistics(): Promise<ResponseModel> {
+    return axiosInstance.get(`/${this.name}/note/statistics`);
   }
 
   /**

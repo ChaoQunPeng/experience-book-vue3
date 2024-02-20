@@ -2,12 +2,12 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-15 10:25:13
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 15:49:54
+ * @LastEditTime: 2024-02-20 14:27:03
  * @FilePath: /experience-book-vue3/src/views/dashboard/dashboard-index.vue
  * @Description: 
 -->
 <template>
-  <div class="h-screen bg-eb-blue p-20">
+  <!-- <div >
     <div class="card-area mb-20">
       <a-card title="技能经验统计" class="chart-card h-full">
         <div id="Statistics" class="h-full"></div>
@@ -19,15 +19,44 @@
         <div id="Trend" class="h-full"></div>
       </a-card>
     </div>
-  </div>
+  </div> -->
+
+  <a-row :gutter="20" class="h-screen bg-eb-blue p-20">
+    <a-col :span="12">
+      <div class="card-area mb-20">
+        <a-card title="经验值统计" class="chart-card h-full">
+          <div id="Statistics" class="h-full"></div>
+        </a-card>
+      </div>
+    </a-col>
+
+    <a-col :span="12">
+      <div class="card-area mb-20">
+        <a-card title="笔记数统计" class="chart-card h-full">
+          <div id="NoteTotalStatistics" class="h-full"></div>
+        </a-card>
+      </div>
+    </a-col>
+
+    <a-col :span="24">
+      <div class="card-area">
+        <a-card title="学习趋势" class="chart-card h-full">
+          <div id="Trend" class="h-full"></div>
+        </a-card>
+      </div>
+    </a-col>
+  </a-row>
 </template>
 
 <script setup lang="ts">
 import { SkillApi } from '@/api/skill';
-import { Column, Line } from '@antv/g2plot';
+import { Column, Datum, Line } from '@antv/g2plot';
 import { message } from 'ant-design-vue';
 import { onMounted } from 'vue';
 
+/**
+ * 获取技能经验值统计
+ */
 onMounted(async () => {
   const result = await SkillApi.getExpStatistics();
 
@@ -40,8 +69,9 @@ onMounted(async () => {
     data: result.data,
     xField: 'name',
     yField: 'totalExp',
+    appendPadding: [20, 0, 0, 0],
     label: {
-      position: 'right',
+      position: 'top',
       content: data => {
         return data.totalExp + 'exp';
       },
@@ -79,6 +109,87 @@ onMounted(async () => {
   columnPlot.render();
 });
 
+/**
+ * 技能笔记数统计
+ */
+onMounted(async () => {
+  const result = await SkillApi.getNoteStatistics();
+
+  if (result.code == 0) {
+    message.error(`获取统计失败`);
+    return;
+  }
+
+  const columnPlot = new Column('NoteTotalStatistics', {
+    data: result.data,
+    isStack: true,
+    seriesField: 'hasExp',
+    legend: {
+      position: 'top'
+    },
+    tooltip: {
+      title: data => {
+        const total = result.data
+          .filter((e: any) => e.name == data)
+          .reduce((acc: any, cur: any) => {
+            return (acc += cur.total);
+          }, 0);
+
+        return data + `-共${total}篇`;
+      }
+    },
+    color: datum => {
+      if (datum.hasExp == 'exp=0的笔记数') {
+        return '#e31700';
+      } else {
+        return '#FA9A25';
+      }
+    },
+    xField: 'name',
+    yField: 'total',
+    slider: undefined,
+    label: {
+      position: 'right',
+      content: data => {
+        return data.total + '篇';
+      },
+      style: {
+        fontSize: 14,
+        fill: 'rgba(31, 51, 73, 0.85)'
+      }
+    },
+    columnWidthRatio: 0.2,
+    xAxis: {
+      label: {
+        autoHide: true,
+        autoRotate: false
+      }
+    },
+    yAxis: {
+      grid: {
+        line: {
+          style: {
+            stroke: 'rgba(31,51,73,0.10)'
+          }
+        }
+      }
+    },
+    meta: {
+      name: {
+        alias: '技能'
+      },
+      total: {
+        alias: '经验值'
+      }
+    }
+  });
+
+  columnPlot.render();
+});
+
+/**
+ * 经验趋势统计
+ */
 onMounted(async () => {
   const result = await SkillApi.getExpTrend();
 
@@ -96,6 +207,11 @@ onMounted(async () => {
     area: {
       style: {
         fillOpacity: 0
+      }
+    },
+    tooltip: {
+      formatter: (datum: Datum) => {
+        return { name: datum.skill, value: datum.exp + 'exp' };
       }
     },
     xAxis: {
