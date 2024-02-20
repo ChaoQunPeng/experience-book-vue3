@@ -2,13 +2,12 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 11:21:48
+ * @LastEditTime: 2024-02-20 15:23:30
  * @FilePath: /experience-book-vue3/vite.config.ts
  * @Description:
  */
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { resolve } from 'path'
 import Components from 'unplugin-vue-components/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
