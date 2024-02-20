@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 16:53:00
+ * @LastEditTime: 2024-02-20 15:04:28
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -181,13 +181,13 @@ const resolveProgressstrokeColor = computed<Function>(() => {
     } else if (color == 'black-85') {
       return 'rgba(31, 51, 73, 0.85)';
     } else if (color == 'blue') {
-      return '#198cff';
+      return 'var(--eb-color-blue)';
     } else if (color == 'red') {
-      return '#e31700';
+      return 'var(--eb-color-red)';
     } else if (color == 'purple') {
-      return '#8525fa';
+      return 'var(--eb-color-purple)';
     } else if (color == 'green') {
-      return '#5dce00';
+      return 'var(--eb-color-green';
     } else {
       return '';
     }

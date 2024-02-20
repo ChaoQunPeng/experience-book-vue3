@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 15:32:17
+ * @LastEditTime: 2024-02-20 11:56:38
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -19,7 +19,7 @@
         <div class="w-200">
           <side-nav></side-nav>
         </div>
-        <main class="flex-1 overflow-auto">
+        <main class="flex-1 overflow-hidden">
           <router-view></router-view>
         </main>
       </div>
