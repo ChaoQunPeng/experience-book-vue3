@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 18:44:06
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 15:57:04
+ * @LastEditTime: 2024-02-21 15:14:56
  * @FilePath: /experience-book-vue3/src/api/config/http.ts
  * @Description: http文件
  */
@@ -12,7 +12,7 @@ import axios, { InternalAxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosE
 
 let baseURL = '';
 
-if (import.meta.env.MODE == 'mock') {
+if (import.meta.env.MODE == 'mock' || _EnableGlobalMock) {
   baseURL = '/mock/';
 } else {
   baseURL = '/api/';
@@ -26,6 +26,10 @@ const axiosInstance: AxiosInstance = axios.create({
 // 添加请求拦截器
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    if (config.baseURL == '/mock/') {
+      console.warn(`注意！！！地址 ${config.url}使用的是mock`);
+    }
+
     // 在发送请求之前做些什么
     return config;
   },

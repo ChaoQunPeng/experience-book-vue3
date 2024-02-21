@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 17:20:14
+ * @LastEditTime: 2024-02-21 14:11:18
  * @FilePath: /experience-book-vue3/src/main.ts
  * @Description:
  */
@@ -13,10 +13,14 @@ import App from './App.vue';
 
 import router from './router';
 
-import { setupProdMockServer } from '../mock/mockProdServer';
+import { setupMockServer } from '../mock/mock-server';
 
-if (process.env.NODE_ENV === 'production') {
-  setupProdMockServer();
+if (process.env.NODE_ENV === 'development') {
+  setupMockServer();
+}
+
+if (process.env.NODE_ENV === 'production' && import.meta.env.MODE == 'mock') {
+  setupMockServer();
 }
 
 export const app = createApp(App);

@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 15:07:59
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-20 11:48:05
+ * @LastEditTime: 2024-02-21 15:32:10
  * @FilePath: /experience-book-vue3/src/api/skill.ts
  * @Description:
  */
@@ -28,6 +28,8 @@ class Skill extends BaseApi {
    * @return {*}
    */
   getSkillOptionList(): Promise<ResponseModel> {
+    // 如此启用mock
+    // return axiosInstance.get(`/${this.name}/options`, { baseURL: '/mock/' });
     return axiosInstance.get(`/${this.name}/options`);
   }
 
