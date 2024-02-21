@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 20:56:45
+ * @LastEditTime: 2024-02-21 20:16:05
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -44,7 +44,7 @@
       </div>
 
       <!-- 菜单列表 -->
-      <div id="Note-List" class="note-list overflow-auto flex-1 ">
+      <div id="Note-List" class="note-list overflow-auto flex-1">
         <div
           v-for="note in resolveNoteList"
           :id="'Note-Card' + note.id"
@@ -153,6 +153,7 @@
       </a-form>
 
       <MdEditor
+        ref="mdEditorRef"
         v-model="content"
         :preview="true"
         class="md-editor"
@@ -195,7 +196,7 @@ import {
   PlusOutlined
 } from '@ant-design/icons-vue';
 import { FormInstance, Modal } from 'ant-design-vue';
-import { MdEditor } from 'md-editor-v3';
+import { ExposeParam, MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { computed, createVNode, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -203,6 +204,7 @@ import { message } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
 import * as _ from 'lodash';
 import { subject } from '@/utils/subject';
+import { CommonApi } from '@/api/common';
 
 interface NoteItem {
   id: number;
@@ -244,6 +246,7 @@ const editorIsActived = ref(false);
 const skillOptionList = ref<Array<{ id: number; name: string }>>([]);
 
 const formRef = ref<FormInstance>();
+const mdEditorRef = ref<ExposeParam>();
 
 const apiSignal = ref<AbortController | null>(null);
 
@@ -254,6 +257,8 @@ const resolveNoteList = computed(() => {
 
 onMounted(async () => {
   subject.subscribe('click-skill-nav', onClickSkillNav);
+
+  document.addEventListener('paste', getBolb);
 
   getSkillOptions();
 
@@ -267,7 +272,65 @@ onMounted(async () => {
 
 onUnmounted(() => {
   subject.unsubscribe('click-skill-nav', onClickSkillNav);
+
+  document.removeEventListener('paste', getBolb);
 });
+
+const getBolb = async (e: any) => {
+  // function blobToBase64Image(blob: Blob) {
+  //   return new Promise((resolve, reject) => {
+  //     const img = new Image();
+  //     img.onload = () => {
+  //       const canvas = document.createElement('canvas');
+  //       canvas.width = img.width;
+  //       canvas.height = img.height;
+  //       const ctx: any = canvas.getContext('2d');
+  //       ctx.drawImage(img, 0, 0);
+  //       const base64Data = canvas.toDataURL('image/jpeg');
+  //       resolve(base64Data);
+  //     };
+  //     img.onerror = error => reject(error);
+
+  //     img.src = URL.createObjectURL(blob);
+  //   });
+  // }
+
+  let cbd: any = e.clipboardData;
+
+  // 如果是 Safari 直接 return
+  if (!(e.clipboardData && e.clipboardData.items)) {
+    return;
+  }
+
+  for (var i = 0; i < cbd.items.length; i++) {
+    var item = cbd.items[i];
+    if (item.kind == 'file') {
+      var blob = item.getAsFile();
+      if (blob.size === 0) {
+        return;
+      }
+      // blob 就是从剪切板获得的文件 可以进行上传或其他操作
+      const formData = new FormData();
+
+      formData.append('skillId', pageData.id.toString());
+      formData.append('noteId', activeNote.value.id.toString());
+      formData.append('file', blob);
+
+      const result = await CommonApi.upload(formData);
+
+      mdEditorRef.value?.insert(selectedText => {
+        console.log(`selectedText`, selectedText);
+
+        return {
+          targetValue: `![图片](/images/${result.data.name})`,
+          select: false,
+          deviationStart: 0,
+          deviationEnd: 0
+        };
+      });
+    }
+  }
+};
 
 /**
  * @description: 点击技能导航
@@ -285,18 +348,6 @@ const getSkillOptions = async () => {
   const result = await SkillApi.getSkillOptionList();
   skillOptionList.value = result.data;
 };
-
-/**
- * @description: 搜索技能下拉方法
- * @param {*} input
- * @param {*} option
- * @return {*}
- */
-// const filterOption = (input: string) => {
-//   let res = Array.from({ length: 24 }, (_, i) => i).includes(Number(input));
-//   console.log(res);
-//   return res;
-// };
 
 /**
  * @description: 点击笔记
@@ -518,7 +569,7 @@ watch(route, async () => {
     getNoteInfo(activeNote.value.id);
   } else {
     activeNote.value = { id: 0 };
-    
+
     form.id = 0;
     form.remark = '';
     form.skillId = null;
