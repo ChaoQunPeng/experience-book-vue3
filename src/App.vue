@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-21 15:38:09
+ * @LastEditTime: 2024-02-21 16:03:42
  * @FilePath: /experience-book-vue3/src/App.vue
  * @Description: 
 -->
@@ -67,7 +67,7 @@ onMounted(() => {
     const delay = 300;
 
     if (import.meta.env.MODE == 'mock') {
-      return delay;
+      return 500;
     } else if (_EnableGlobalMock) {
       return delay;
     } else if (_EnableMockDebug) {
