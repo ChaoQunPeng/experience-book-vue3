@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 15:09:11
+ * @LastEditTime: 2024-02-22 16:52:05
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -78,7 +78,7 @@
         @click="openIllustrate"
       >
         <i class="iconfont icon-question-circle mr-12 text-size-14"></i>
-        <span class="text-size-12 select-none">说明</span>
+        <span class="text-size-12 select-none">介绍</span>
       </div>
     </div>
 
@@ -115,10 +115,11 @@ interface navOption {
 const skillNavList = ref<Array<navOption>>([]);
 const activeNav = ref<navOption>({});
 const settingFormRef = ref<InstanceType<typeof SettingForm> | null>(null);
+const showIllustrateModel = ref(false);
 
 onMounted(() => {
   subject.subscribe('after-skill-curd', getList);
-  
+
   setActivedNav();
 
   getList();
@@ -175,8 +176,6 @@ const clickNav = (nav: navOption) => {
     subject.publish('click-skill-nav');
   }
 };
-
-const showIllustrateModel = ref(false);
 
 /**
  * @description: 打开说明
