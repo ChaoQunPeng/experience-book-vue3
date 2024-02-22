@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-22 11:50:26
+ * @LastEditTime: 2024-02-22 17:51:19
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -161,6 +161,7 @@
         @on-save="onSave"
         @on-change="onChange"
         @on-focus="editorOnFocus"
+        @on-blur="editorOnBlur"
       />
 
       <a-divider orientation="left">
@@ -242,6 +243,7 @@ const form = reactive({
 const content = ref('');
 const exp = ref(0);
 const editorIsActived = ref(false);
+const mdEditorIsFocus = ref(false);
 
 const skillOptionList = ref<Array<{ id: number; name: string }>>([]);
 
@@ -282,6 +284,10 @@ onUnmounted(() => {
  * @return {*}
  */
 const getBolb = async (e: any) => {
+  // md编辑器获得焦点才能进行粘贴操作
+  if (!mdEditorIsFocus.value) {
+    return;
+  }
 
   let cbd: any = e.clipboardData;
 
@@ -522,8 +528,16 @@ const onChange = _.debounce(function () {
  */
 const editorOnFocus = () => {
   editorIsActived.value = true;
+  mdEditorIsFocus.value = true;
 };
 
+/**
+ * @description: 编辑器失焦事件
+ * @return {*}
+ */
+const editorOnBlur = () => {
+  mdEditorIsFocus.value = false;
+};
 /**
  * @description: 控件的Input事件
  * @param {*} function
@@ -573,9 +587,6 @@ watch(route, async () => {
 </script>
 
 <style lang="less" scoped>
-.add-note-btn {
-}
-
 .search-input {
   box-shadow: none !important;
 
