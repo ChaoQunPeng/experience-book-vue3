@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-21 20:16:05
+ * @LastEditTime: 2024-02-22 11:50:26
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -276,24 +276,12 @@ onUnmounted(() => {
   document.removeEventListener('paste', getBolb);
 });
 
+/**
+ * @description: 生成Bolb文件
+ * @param {*} e
+ * @return {*}
+ */
 const getBolb = async (e: any) => {
-  // function blobToBase64Image(blob: Blob) {
-  //   return new Promise((resolve, reject) => {
-  //     const img = new Image();
-  //     img.onload = () => {
-  //       const canvas = document.createElement('canvas');
-  //       canvas.width = img.width;
-  //       canvas.height = img.height;
-  //       const ctx: any = canvas.getContext('2d');
-  //       ctx.drawImage(img, 0, 0);
-  //       const base64Data = canvas.toDataURL('image/jpeg');
-  //       resolve(base64Data);
-  //     };
-  //     img.onerror = error => reject(error);
-
-  //     img.src = URL.createObjectURL(blob);
-  //   });
-  // }
 
   let cbd: any = e.clipboardData;
 
@@ -318,9 +306,12 @@ const getBolb = async (e: any) => {
 
       const result = await CommonApi.upload(formData);
 
-      mdEditorRef.value?.insert(selectedText => {
-        console.log(`selectedText`, selectedText);
+      if (result.code == 0) {
+        message.error(result.msg);
+        return;
+      }
 
+      mdEditorRef.value?.insert(() => {
         return {
           targetValue: `![图片](/images/${result.data.name})`,
           select: false,
