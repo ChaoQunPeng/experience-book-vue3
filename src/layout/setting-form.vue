@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-19 12:36:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 15:18:17
+ * @LastEditTime: 2024-02-22 17:14:55
  * @FilePath: /experience-book-vue3/src/layout/setting-form.vue
  * @Description: 
 -->
@@ -18,7 +18,7 @@
       <a-divider orientation="left">主题选择</a-divider>
       <a-radio-group class="mt-10" v-model:value="themeSwitch" @change="changeTheme">
         <a-radio value="dark-theme" class="mr-20">暗色</a-radio>
-        <a-radio value="light-theme">浅色</a-radio>
+        <a-radio value="light-theme">亮色</a-radio>
       </a-radio-group>
     </div>
   </a-modal>
