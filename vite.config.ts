@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-29 20:15:38
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-21 20:22:47
+ * @LastEditTime: 2024-02-22 00:15:18
  * @FilePath: /experience-book-vue3/vite.config.ts
  * @Description:
  */
@@ -49,8 +49,8 @@ export default ({ mode }) => {
           rewrite: path => path.replace(/^\/api/, '')
         },
         '/images': {
-          target: 'http://127.0.0.1:3000/',
-          changeOrigin: true,
+          target: 'http://localhost:3000/',
+          // changeOrigin: true,
           rewrite: path => path.replace(/^\/images/, '')
         }
       }
