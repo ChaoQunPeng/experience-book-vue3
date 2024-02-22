@@ -2,25 +2,11 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-15 10:25:13
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-20 14:27:03
+ * @LastEditTime: 2024-02-22 13:18:55
  * @FilePath: /experience-book-vue3/src/views/dashboard/dashboard-index.vue
  * @Description: 
 -->
 <template>
-  <!-- <div >
-    <div class="card-area mb-20">
-      <a-card title="技能经验统计" class="chart-card h-full">
-        <div id="Statistics" class="h-full"></div>
-      </a-card>
-    </div>
-
-    <div class="card-area">
-      <a-card title="技能学习趋势" class="chart-card h-full">
-        <div id="Trend" class="h-full"></div>
-      </a-card>
-    </div>
-  </div> -->
-
   <a-row :gutter="20" class="h-screen bg-eb-blue p-20">
     <a-col :span="12">
       <div class="card-area mb-20">
@@ -50,6 +36,7 @@
 
 <script setup lang="ts">
 import { SkillApi } from '@/api/skill';
+import { resolveColorValue } from '@/utils/exp-helper';
 import { Column, Datum, Line } from '@antv/g2plot';
 import { message } from 'ant-design-vue';
 import { onMounted } from 'vue';
@@ -79,6 +66,11 @@ onMounted(async () => {
         fontSize: 14,
         fill: 'rgba(31, 51, 73, 0.65)'
       }
+    },
+    color: ({ name }) => {
+      const item = result.data.find((e: { name: string }) => e.name == name);
+
+      return resolveColorValue(item.totalExp);
     },
     columnWidthRatio: 0.2,
     xAxis: {
@@ -262,3 +254,4 @@ onMounted(async () => {
   height: calc((100vh - 60px) / 2);
 }
 </style>
+@/utils/exp-helper
