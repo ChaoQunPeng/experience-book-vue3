@@ -9,7 +9,8 @@
     "build-mock": "vue-tsc && vite build --mode mock",
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/assets/tailwind-input.css -o ./src/assets/theme/tailwind-output.css --watch",
-    "compose": "docker compose up -d"
+    "compose": "docker compose up -d",
+    "publish": "cp -R ./dist/ /Users/pengchaoqun/code/experience-book/prod-apps/web/"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
