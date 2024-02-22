@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4428761 */
-  src: url('iconfont.woff2?t=1707999086009') format('woff2'),
-       url('iconfont.woff?t=1707999086009') format('woff'),
-       url('iconfont.ttf?t=1707999086009') format('truetype');
+  src: url('iconfont.woff2?t=1708596419689') format('woff2'),
+       url('iconfont.woff?t=1708596419689') format('woff'),
+       url('iconfont.ttf?t=1708596419689') format('truetype');
 }
 
 .iconfont {
@@ -13,12 +13,80 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-tubiaozhizuomoban1:before {
-  content: "\e603";
+.icon-info-circle-fill:before {
+  content: "\e7dc";
 }
 
-.icon-tubiaozhizuomoban:before {
-  content: "\e600";
+.icon-exclamation-circle:before {
+  content: "\e820";
+}
+
+.icon-cog-fill:before {
+  content: "\e7d6";
+}
+
+.icon-cog:before {
+  content: "\e818";
+}
+
+.icon-ellipsis-vertical:before {
+  content: "\e76a";
+}
+
+.icon-filter-fill:before {
+  content: "\e7a3";
+}
+
+.icon-filter:before {
+  content: "\e7e5";
+}
+
+.icon-flag-fill:before {
+  content: "\e7ad";
+}
+
+.icon-databaseset-fill:before {
+  content: "\e7b4";
+}
+
+.icon-layergroup-fill:before {
+  content: "\e7b5";
+}
+
+.icon-file-fill:before {
+  content: "\e7c7";
+}
+
+.icon-flag:before {
+  content: "\e7ef";
+}
+
+.icon-database-set:before {
+  content: "\e7f6";
+}
+
+.icon-layer-group:before {
+  content: "\e7f7";
+}
+
+.icon-file:before {
+  content: "\e809";
+}
+
+.icon-question-circle:before {
+  content: "\e81f";
+}
+
+.icon-minus:before {
+  content: "\e828";
+}
+
+.icon-plus:before {
+  content: "\e829";
+}
+
+.icon-paperclip:before {
+  content: "\e850";
 }
 
 .icon-chart-area:before {
@@ -45,24 +113,12 @@
   content: "\e84b";
 }
 
-.icon-ERP_daiban:before {
-  content: "\e657";
-}
-
 .icon-daiban1:before {
   content: "\e609";
 }
 
-.icon-daiban:before {
-  content: "\e66e";
-}
-
 .icon-shuliang:before {
   content: "\e607";
-}
-
-.icon-shuliang1:before {
-  content: "\e61d";
 }
 
 .icon-qingdan:before {

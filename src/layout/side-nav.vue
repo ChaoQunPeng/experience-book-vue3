@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-22 16:52:05
+ * @LastEditTime: 2024-02-22 18:07:41
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -70,15 +70,15 @@
         @click="openSetting"
       >
         <i class="iconfont icon-cog mr-12 text-size-14"></i>
-        <span class="text-size-12 select-none">设置</span>
+        <span class="text-size-14 select-none">设置</span>
       </div>
 
       <div
         class="eb-nav-item nav-item flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-65"
         @click="openIllustrate"
       >
-        <i class="iconfont icon-question-circle mr-12 text-size-14"></i>
-        <span class="text-size-12 select-none">介绍</span>
+        <i class="iconfont icon-exclamation-circle mr-12 text-size-14"></i>
+        <span class="text-size-14 select-none">介绍</span>
       </div>
     </div>
 
