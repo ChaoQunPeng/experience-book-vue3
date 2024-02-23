@@ -1,3 +1,11 @@
+<!--
+ * @Author: PengChaoQun 1152684231@qq.com
+ * @Date: 2024-02-22 18:01:44
+ * @LastEditors: PengChaoQun 1152684231@qq.com
+ * @LastEditTime: 2024-02-23 16:49:49
+ * @FilePath: /experience-book-vue3/README.md
+ * @Description: 
+-->
 ## 经验本 （exp-book）
 
 ![图片](/preview-image/1.png)
@@ -8,7 +16,6 @@
 
 ### 待办
 
-- [ ] 待学习筛选展示
 - [ ] 缺省页
 - [ ] 笔记标签
 - [ ] 展开收起侧边栏
@@ -22,6 +29,7 @@
 
 ### 已完成
 
+- [x] 待学习筛选展示
 - [x] 优化经验统计图表柱状图颜色， 柱颜色跟随等级来
 - [x] 富文本编辑器直接粘贴图片
 - [x] 上传接口开发
