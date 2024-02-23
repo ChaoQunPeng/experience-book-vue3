@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-23 13:23:33
+ * @LastEditTime: 2024-02-23 16:51:03
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -186,8 +186,6 @@ const clickNav = (nav: navOption) => {
     subject.publish('click-skill-nav');
   }
 };
-
-import data from './file.json';
 
 /**
  * @description: 导出数据
