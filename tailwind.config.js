@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 14:38:29
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-17 13:39:36
+ * @LastEditTime: 2024-02-23 12:28:36
  * @FilePath: /experience-book-vue3/tailwind.config.js
  * @Description:
  */
@@ -21,6 +21,7 @@ export default {
       red: 'rgba(227, 23, 0, 1)',
       blue: 'rgba(24 ,144 ,255,1)',
       purple: 'rgba(133, 37, 250,1)',
+      green: '#12be30',
       black: 'rgba(31,51,73,1)',
       'black-85': 'rgba(31,51,73,0.85)',
       'black-65': 'rgba(31,51,73,0.65)',
