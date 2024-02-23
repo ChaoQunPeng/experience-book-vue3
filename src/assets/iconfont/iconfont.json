@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6151157",
+      "name": "cloud download-fill",
+      "font_class": "clouddownload-fill",
+      "unicode": "e7d9",
+      "unicode_decimal": 59353
+    },
+    {
+      "icon_id": "6151277",
+      "name": "cloud download",
+      "font_class": "clouddownload",
+      "unicode": "e81b",
+      "unicode_decimal": 59419
+    },
+    {
       "icon_id": "6151161",
       "name": "info-circle-fill",
       "font_class": "info-circle-fill",
