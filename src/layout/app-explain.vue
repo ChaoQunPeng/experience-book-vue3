@@ -33,7 +33,7 @@
 
     <div>
       <p>
-        <span class="bg-black-85 text-white px-6 py-4 rounded">新手</span>
+        <span class="bg-blue text-white px-6 py-4 rounded">新手</span>
         （novice）
       </p>
       <p>分为<b>1星</b>到<b>5星</b>。总共经验为1000exp，每个等级200点经验</p>
@@ -47,7 +47,7 @@
 
     <div class="mt-30">
       <p>
-        <span class="bg-blue text-white px-6 py-4 rounded">高级新手</span>
+        <span class="bg-green text-white px-6 py-4 rounded">熟练者</span>
         （advanced beginner）
       </p>
       <p>分为<b>1星</b>到<b>5星</b>。总共经验为2000exp，每个等级400点经验</p>
@@ -116,8 +116,8 @@
       <p class="leading-7">
         当然也不用每个技能都往专家升，人的精力是有限的。根据
         <a href="https://zhuanlan.zhihu.com/p/458527504" target="_blank"> 德雷福斯模型 </a>
-        ，大多数人都处于高级新手和胜任者之间，在这个等级范围内就能处理日常工作中的内容了。即
-        <span class="bg-blue text-white px-6 py-4 rounded"> 高级新手 </span>
+        ，大多数人都处于熟练者和胜任者之间，在这个等级范围内就能处理日常工作中的内容了。即
+        <span class="bg-blue text-white px-6 py-4 rounded"> 熟练者 </span>
         2-3星左右。大多数时间只专精一到两个技能。
       </p>
     </div>
@@ -125,13 +125,7 @@
 </template>
 
 <script setup lang="ts">
-// const colorMaps = {
-//   新手: 'black-85',
-//   熟练者: 'blue',
-//   胜任者: 'red',
-//   精通者: 'purple',
-//   专家: 'black'
-// };
+
 </script>
 
 <style lang="less" scoped>
