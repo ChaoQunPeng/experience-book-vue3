@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 17:03:04
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-22 18:07:41
+ * @LastEditTime: 2024-02-23 13:23:33
  * @FilePath: /experience-book-vue3/src/layout/side-nav.vue
  * @Description: 
 -->
@@ -67,6 +67,14 @@
     <div class="w-180 mx-auto mb-20">
       <div
         class="eb-nav-item nav-item mb-10 flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-65"
+        @click="exprotData"
+      >
+        <i class="iconfont icon-clouddownload mr-12 text-size-16"></i>
+        <span class="text-size-14 select-none">导出</span>
+      </div>
+
+      <div
+        class="eb-nav-item nav-item mb-10 flex items-center h-44 cursor-pointer pl-15 rounded transition-all text-black-65"
         @click="openSetting"
       >
         <i class="iconfont icon-cog mr-12 text-size-14"></i>
@@ -104,6 +112,8 @@ import { subject } from '../utils/subject';
 import { message } from 'ant-design-vue';
 import AppExplain from './app-explain.vue';
 import SettingForm from './setting-form.vue';
+import JSZip from 'jszip';
+import { CommonApi } from '@/api/common';
 
 const route = useRoute();
 
@@ -177,8 +187,57 @@ const clickNav = (nav: navOption) => {
   }
 };
 
+import data from './file.json';
+
 /**
- * @description: 打开说明
+ * @description: 导出数据
+ * @return {*}
+ */
+const exprotData = async () => {
+  const result = await CommonApi.exportData();
+
+  if (!result.code) {
+    message.error(`导出失败！${result.msg}`);
+    return;
+  }
+
+  // 创建 JSZip 实例
+  const zip = new JSZip();
+  const dataMap = result.data;
+
+  for (const key in dataMap) {
+    const data = dataMap[key];
+    // 添加文件到 zip 文件
+    zip.file(`${key}.json`, JSON.stringify({ data }));
+  }
+
+  // 生成 zip 文件
+  zip.generateAsync({ type: 'blob' }).then(content => {
+    // 创建临时 URL
+    const url = URL.createObjectURL(content);
+
+    // 创建 <a> 标签
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'data.zip';
+    a.style.display = 'none';
+
+    // 添加 <a> 标签到页面
+    document.body.appendChild(a);
+
+    // 触发下载
+    a.click();
+
+    // 移除 <a> 标签
+    a.remove();
+
+    // 释放 URL 对象
+    URL.revokeObjectURL(url);
+  });
+};
+
+/**
+ * @description: 打开介绍
  * @return {*}
  */
 const openIllustrate = () => {

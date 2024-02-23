@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 15:07:59
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-21 18:29:21
+ * @LastEditTime: 2024-02-23 13:13:49
  * @FilePath: /experience-book-vue3/src/api/common.ts
  * @Description:
  */
@@ -22,6 +22,14 @@ class Common extends BaseApi {
    */
   upload(data: FormData): Promise<ResponseModel> {
     return axiosInstance.post(`/${this.name}/upload`, data);
+  }
+
+  /**
+   * @description: 导出所有的数据
+   * @return {*}
+   */
+  exportData(): Promise<ResponseModel> {
+    return axiosInstance.get(`/${this.name}/export-data`);
   }
 }
 
