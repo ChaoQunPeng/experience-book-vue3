@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-22 17:51:19
+ * @LastEditTime: 2024-02-23 16:45:29
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -28,11 +28,11 @@
           <span class="ml-10"> {{ pageData.expTotal }} </span>exp
         </div>
 
-        <div class="px-15 mb-10">
+        <div class="flex items-center px-15 mt-10 mb-10">
           <a-input
             v-model:value="search"
             placeholder="搜索笔记"
-            class="search-input mt-10 rounded-none border-none"
+            class="search-input rounded-none border-none"
           >
             <template #suffix>
               <span class="is-link">
@@ -40,6 +40,20 @@
               </span>
             </template>
           </a-input>
+
+          <a-tooltip :mouse-enter-delay="0.8">
+            <template #title>筛选出经验值为0的笔记</template>
+            <i
+              class="iconfont cursor-pointer ml-10 filter-btn"
+              :class="[
+                {
+                  'text-blue': noteListQueryParams.expIs0
+                },
+                noteListQueryParams.expIs0 ? 'icon-filter-fill' : 'icon-filter'
+              ]"
+              @click="handleFilterNoteList"
+            ></i>
+          </a-tooltip>
         </div>
       </div>
 
@@ -49,7 +63,7 @@
           v-for="note in resolveNoteList"
           :id="'Note-Card' + note.id"
           :key="note.id"
-          class="note-card min-h-140 px-15 pt-10 pb-7 transition-all cursor-pointer"
+          class="note-card min-h-140 px-15 pt-15 pb-10 transition-all cursor-pointer"
           :class="{ active: activeNote.id == note.id }"
           @click="clickNote(note)"
         >
@@ -249,12 +263,21 @@ const skillOptionList = ref<Array<{ id: number; name: string }>>([]);
 
 const formRef = ref<FormInstance>();
 const mdEditorRef = ref<ExposeParam>();
-
 const apiSignal = ref<AbortController | null>(null);
+
+const noteListQueryParams = reactive({
+  expIs0: false
+});
 
 // 计算属性
 const resolveNoteList = computed(() => {
-  return pageData.noteList.filter((e: any) => e.title.indexOf(search.value) > -1);
+  const finalList = pageData.noteList.filter((e: any) => e.title.indexOf(search.value) > -1);
+
+  if (noteListQueryParams.expIs0) {
+    return finalList.filter((e: any) => e.exp == 0);
+  }
+
+  return finalList;
 });
 
 onMounted(async () => {
@@ -279,7 +302,15 @@ onUnmounted(() => {
 });
 
 /**
- * @description: 生成Bolb文件
+ * @description: 筛选exp=0的数据
+ * @return {*}
+ */
+const handleFilterNoteList = () => {
+  noteListQueryParams.expIs0 = !noteListQueryParams.expIs0;
+};
+
+/**
+ * @description: 处理编辑器粘贴事件
  * @param {*} e
  * @return {*}
  */
@@ -496,7 +527,7 @@ const getNoteInfo = async (id: number) => {
  * @return {*}
  */
 const getExp = async () => {
-  const result = await NoteApi.update(activeNote.value.id, { exp: exp.value });
+  const result = await NoteApi.updateExp(activeNote.value.id, exp.value);
 
   if (result.code) {
     if (exp.value > 0) {
@@ -520,7 +551,7 @@ const onChange = _.debounce(function () {
   if (editorIsActived.value) {
     updateNote();
   }
-}, 650);
+}, 500);
 
 /**
  * @description: 编辑器获得焦点
@@ -547,7 +578,7 @@ const onInput = _.debounce(function () {
   if (editorIsActived.value) {
     updateNote();
   }
-}, 650);
+}, 500);
 
 /**
  * @description: 控件的focus事件
