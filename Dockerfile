@@ -1,6 +1,6 @@
 # Start your image with a node base image
-FROM nginx:latest
+# FROM nginx:latest
 
-COPY ./dist/ /usr/share/nginx/html/
+# COPY ./dist/ /usr/share/nginx/html/
 
-COPY ./nginx/default.conf /etc/nginx/nginx.conf
+# COPY ./nginx/default.conf /etc/nginx/nginx.conf
