@@ -2,10 +2,11 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-22 18:01:44
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-23 16:49:49
+ * @LastEditTime: 2024-02-24 16:45:43
  * @FilePath: /experience-book-vue3/README.md
- * @Description: 
+ * @Description:
 -->
+
 ## 经验本 （exp-book）
 
 ![图片](/preview-image/1.png)
@@ -47,3 +48,7 @@
 - [x] 菜单图标添加
 - [x] 经验转化率、总经验、笔记数量展示
 - [x] 获得经验的框允许为 0，在输入框中提示相应信息
+
+## 构建镜像命令 roamgunner
+
+docker build -t exp-book-vue3-web .
