@@ -117,7 +117,7 @@
         当然也不用每个技能都往专家升，人的精力是有限的。根据
         <a href="https://zhuanlan.zhihu.com/p/458527504" target="_blank"> 德雷福斯模型 </a>
         ，大多数人都处于熟练者和胜任者之间，在这个等级范围内就能处理日常工作中的内容了。即
-        <span class="bg-blue text-white px-6 py-4 rounded"> 熟练者 </span>
+        <span class="bg-blue text-white px-6 py-4 rounded">熟练者</span>
         2-3星左右。大多数时间只专精一到两个技能。
       </p>
     </div>
