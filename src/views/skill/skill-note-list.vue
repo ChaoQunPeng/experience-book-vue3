@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-23 16:45:29
+ * @LastEditTime: 2024-02-24 09:41:10
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -640,7 +640,7 @@ watch(route, async () => {
   }
 
   &.active {
-    background: rgba(41, 145, 242, 0.05);
+    background: rgba(41, 145, 242, 0.2);
 
     .header {
       color: var(--eb-color-blue);
