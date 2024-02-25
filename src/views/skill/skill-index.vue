@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-20 15:04:28
+ * @LastEditTime: 2024-02-25 14:16:27
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
@@ -24,118 +24,133 @@
       </a-button>
     </div>
 
-    <a-row class="px-20" :gutter="20">
-      <a-col v-for="skill in resolveSkillList" :key="skill.id" :span="6" class="mb-20">
-        <div
-          class="skill-card flex flex-col p-15 rounded-radius-4 bg-white h-180 cursor-pointer"
-          @click="goNoteList(skill)"
-        >
-          <div class="flex mb-8 items-center">
-            <span
-              class="font-bold text-size-20 text-black leading-normal skill-name transition-all"
-            >
-              {{ skill.name }}
-            </span>
+    <draggable
+      v-model="resolveSkillList"
+      item-key="id"
+      tag="a-row"
+      :component-data="{ gutter: 20 }"
+      class="px-20"
+      animation="300"
+      delay="100"
+      chosen-class="drag-chosen-class"
+      ghost-class="drag-ghost-class"
+      @start="onDragStart"
+      @end="onDragEnd"
+    >
+      <template #item="{ element: skill }">
+        <a-col :span="6" class="mb-20" @click.stop>
+          <div
+            class="skill-card flex flex-col p-15 rounded-radius-4 bg-white h-180 cursor-pointer"
+            :class="{ 'is-draging': isDraging }"
+            @click="goNoteList(skill)"
+          >
+            <div class="flex mb-8 items-center">
+              <span
+                class="font-bold text-size-20 text-black leading-normal skill-name transition-all"
+              >
+                {{ skill.name }}
+              </span>
 
-            <a-dropdown
-              class="ml-auto"
-              trigger="click"
-              placement="bottomRight"
-              :getPopupContainer="
+              <a-dropdown
+                class="ml-auto"
+                trigger="click"
+                placement="bottomRight"
+                :getPopupContainer="
                 (triggerNode:any) => {
                   return triggerNode.parentNode
                 }
               "
-            >
-              <span @click.stop>
-                <MoreOutlined class="is-link text-size-16" />
-              </span>
+              >
+                <span @click.stop>
+                  <MoreOutlined class="is-link text-size-16" />
+                </span>
 
-              <template #overlay>
-                <a-menu>
-                  <a-menu-item>
-                    <div class="w-30" @click.stop="openSkillForm({ editId: skill.id })">编辑</div>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <div class="text-red w-30" @click.stop="confirmDelete(skill)">删除</div>
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown>
-          </div>
+                <template #overlay>
+                  <a-menu>
+                    <a-menu-item>
+                      <div class="w-30" @click.stop="openSkillForm({ editId: skill.id })">编辑</div>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <div class="text-red w-30" @click.stop="confirmDelete(skill)">删除</div>
+                    </a-menu-item>
+                  </a-menu>
+                </template>
+              </a-dropdown>
+            </div>
 
-          <div class="text-black-65">
-            <a-tooltip placement="top">
-              <template #title>
-                <span>总笔记数</span>
-              </template>
+            <div class="text-black-65">
+              <a-tooltip placement="top">
+                <template #title>
+                  <span>总笔记数</span>
+                </template>
 
-              <div class="inline-flex items-center justify-center mr-16">
-                <i class="iconfont icon-layer-group text-size-14 mr-4"></i>
-                <span class="text-size-14">{{ skill.noteTotal }}</span>
-              </div>
-            </a-tooltip>
+                <div class="inline-flex items-center justify-center mr-16">
+                  <i class="iconfont icon-layer-group text-size-14 mr-4"></i>
+                  <span class="text-size-14">{{ skill.noteTotal }}</span>
+                </div>
+              </a-tooltip>
 
-            <a-tooltip placement="top">
-              <template #title>
-                <span>经验值为0的笔记数</span>
-              </template>
+              <a-tooltip placement="top">
+                <template #title>
+                  <span>经验值为0的笔记数</span>
+                </template>
 
-              <div class="inline-flex items-center justify-center mr-16">
-                <i class="iconfont icon-paperclip text-size-14 mr-5"></i>
-                <span class="text-size-14">{{ skill.todoNoteTotal }}</span>
-              </div>
-            </a-tooltip>
+                <div class="inline-flex items-center justify-center mr-16">
+                  <i class="iconfont icon-paperclip text-size-14 mr-5"></i>
+                  <span class="text-size-14">{{ skill.todoNoteTotal }}</span>
+                </div>
+              </a-tooltip>
 
-            <a-tooltip placement="top">
-              <template #title>
-                <span>总经验值</span>
-              </template>
+              <a-tooltip placement="top">
+                <template #title>
+                  <span>总经验值</span>
+                </template>
 
-              <div class="inline-flex items-center justify-center mr-16">
-                <i class="iconfont icon-flag text-size-14 mr-4"></i>
-                <span class="text-size-14">{{ skill.expTotal }}exp</span>
-              </div>
-            </a-tooltip>
-          </div>
+                <div class="inline-flex items-center justify-center mr-16">
+                  <i class="iconfont icon-flag text-size-14 mr-4"></i>
+                  <span class="text-size-14">{{ skill.expTotal }}exp</span>
+                </div>
+              </a-tooltip>
+            </div>
 
-          <!-- <div class="leading-normal text-size-12 text-black-65">
+            <!-- <div class="leading-normal text-size-12 text-black-65">
             {{ skill.description }}
           </div> -->
 
-          <div class="mt-auto">
-            <div class="flex items-center mb-8" :class="skill.color">
-              <span
-                class="level-badge rounded-radius-4 p-6 text-size-12 leading-none mr-4"
-                :class="skill.color"
-              >
-                {{ skill.levelName }}
-              </span>
+            <div class="mt-auto">
+              <div class="flex items-center mb-8" :class="skill.color">
+                <span
+                  class="level-badge rounded-radius-4 p-6 text-size-12 leading-none mr-4"
+                  :class="skill.color"
+                >
+                  {{ skill.levelName }}
+                </span>
 
-              <template v-for="i in 5" :key="i">
-                <i
-                  class="iconfont icon-xingxing-fill star"
-                  :class="i <= skill.level ? `active-${skill.color}` : skill.color"
-                ></i>
-              </template>
+                <template v-for="i in 5" :key="i">
+                  <i
+                    class="iconfont icon-xingxing-fill star"
+                    :class="i <= skill.level ? `active-${skill.color}` : skill.color"
+                  ></i>
+                </template>
 
-              <span class="ml-auto text-size-12 text-black leading-none">
-                {{ skill.currentLevelExp }}/{{ skill.levelExpCap }}exp
-              </span>
+                <span class="ml-auto text-size-12 text-black leading-none">
+                  {{ skill.currentLevelExp }}/{{ skill.levelExpCap }}exp
+                </span>
+              </div>
+
+              <a-progress
+                class="progress-bar"
+                :percent="resolvePercent(skill)"
+                :showInfo="false"
+                :size="3"
+                status="active"
+                :stroke-color="resolveProgressstrokeColor(skill.color)"
+              />
             </div>
-
-            <a-progress
-              class="progress-bar"
-              :percent="resolvePercent(skill)"
-              :showInfo="false"
-              :size="3"
-              status="active"
-              :stroke-color="resolveProgressstrokeColor(skill.color)"
-            />
           </div>
-        </div>
-      </a-col>
-    </a-row>
+        </a-col>
+      </template>
+    </draggable>
 
     <skill-form ref="skillFormRef"></skill-form>
   </div>
@@ -149,6 +164,7 @@ import { SkillApi } from '@/api/skill';
 import { computed, createVNode, onMounted, ref } from 'vue';
 import router from '@/router';
 import { subject } from '@/utils/subject';
+import draggable from 'vuedraggable';
 
 interface SkillListItem {
   id: number;
@@ -165,15 +181,21 @@ interface SkillListItem {
 }
 
 const search = ref('');
+const isDraging = ref(false);
 const skillList = ref<Array<SkillListItem>>([]);
-
 const skillFormRef = ref<InstanceType<typeof SkillForm>>();
 
-const resolveSkillList = computed<Array<SkillListItem>>(() => {
-  return skillList.value.filter((e: any) => e.name.indexOf(search.value) > -1);
+// #region 计算属性
+
+const resolveSkillList = computed({
+  get: () => {
+    return skillList.value.filter((e: any) => e.name.indexOf(search.value) > -1);
+  },
+  set: value => {
+    skillList.value = value;
+  }
 });
 
-// 计算属性
 const resolveProgressstrokeColor = computed<Function>(() => {
   return function (color: string) {
     if (color == 'black') {
@@ -204,6 +226,7 @@ const resolvePercent = computed(() => {
     return (skill.currentLevelExp / d) * 100;
   };
 });
+// #endregion
 
 onMounted(() => {
   getList();
@@ -268,21 +291,51 @@ const confirmDelete = (skill: SkillListItem) => {
 const goNoteList = (skill: SkillListItem) => {
   router.push({ path: `/skill-note-list/${skill.id}` });
 };
+
+/**
+ * @description: 拖动开始
+ * @return {*}
+ */
+const onDragStart = () => {
+  isDraging.value = true;
+  console.log(skillList.value.map(e => e.id));
+};
+
+/**
+ * @description: 拖动结束
+ * @return {*}
+ */
+const onDragEnd = async () => {
+  isDraging.value = false;
+  const { code } = await SkillApi.sortList(skillList.value.map(e => e.id));
+
+  if (!code) {
+    message.error(`位置调整失败`);
+  } else {
+    console.log(`123123213`);
+
+    subject.publish('after-skill-curd');
+  }
+};
 </script>
 
 <style lang="less" scoped>
 @import '../../assets/theme/var.less';
 
 .skill-card {
+  user-select: none;
   box-shadow: 0 0 0 rgba(31, 51, 73, 0);
   transform: translateY(0);
-  // transform: translateZ(0) scale(1);
   transition: all 0.3s;
 
   &:hover {
     box-shadow: 5px 5px 10px rgba(31, 51, 73, 0.09);
     transform: translateY(-5px);
-    // transform: translateZ(0) scale(1.05);
+  }
+
+  &.is-draging {
+    box-shadow: none !important;
+    transform: none !important;
   }
 
   .level-badge {
@@ -383,5 +436,18 @@ const goNoteList = (skill: SkillListItem) => {
   :deep(.ant-progress-outer) {
     display: flex;
   }
+}
+
+.drag-chosen-class {
+  .skill-card {
+    transform-origin: 0px 0px;
+    transform: rotate(10deg) !important;
+    box-shadow: none !important;
+  }
+}
+
+.drag-ghost-class {
+  opacity: 0 !important;
+  box-shadow: 5px 5px 10px rgba(255, 0, 0, 1) !important;
 }
 </style>

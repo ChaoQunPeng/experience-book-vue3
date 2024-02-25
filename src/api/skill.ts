@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 15:07:59
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-21 15:32:10
+ * @LastEditTime: 2024-02-25 14:09:44
  * @FilePath: /experience-book-vue3/src/api/skill.ts
  * @Description:
  */
@@ -63,6 +63,14 @@ class Skill extends BaseApi {
    */
   getExpTrend(): Promise<ResponseModel> {
     return axiosInstance.get(`/${this.name}/exp/trend`);
+  }
+
+  /**
+   * @description: 技能列表排序
+   * @return {*}
+   */
+  sortList(ids: Array<number>): Promise<ResponseModel> {
+    return axiosInstance.put(`/${this.name}/list/sort`, { ids });
   }
 }
 

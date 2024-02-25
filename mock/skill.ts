@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-01-30 19:14:17
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-23 16:55:01
+ * @LastEditTime: 2024-02-25 14:03:58
  * @FilePath: /experience-book-vue3/mock/skill.ts
  * @Description:
  */
@@ -626,6 +626,17 @@ export default [
             }
           ]
         }
+      });
+    }
+  },
+  {
+    url: '/mock/skill/list/sort',
+    method: 'get',
+    response: () => {
+      return new SuccessModel({
+        code: 1,
+        msg: 'success',
+        data: {}
       });
     }
   }

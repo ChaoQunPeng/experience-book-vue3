@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/assets/tailwind-input.css -o ./src/assets/theme/tailwind-output.css --watch",
     "compose": "docker compose up -d",
-    "publish": "cp -R ./dist/ /Users/pengchaoqun/code/experience-book/prod-apps/web/"
+    "publish": "cp -R ./dist/ /Users/pengchaoqun/code/experience-book/experience-book-host/web/"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
@@ -21,7 +21,8 @@
     "lodash": "^4.17.21",
     "md-editor-v3": "^4.11.1",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",
