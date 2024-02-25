@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 12:16:40
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-18 15:20:23
+ * @LastEditTime: 2024-02-25 14:55:23
  * @FilePath: /experience-book-vue3/src/views/skill/skill-form.vue
  * @Description: 
 -->
@@ -15,6 +15,7 @@
     cancel-text="关闭"
     :mask-closable="false"
     :destroy-on-close="true"
+    :confirm-loading="loading"
     @ok="onOk"
     @cancel="onCancel"
   >
@@ -28,7 +29,13 @@
       label-align="left"
     >
       <a-form-item label="名称" name="name" required>
-        <a-input v-model:value="form.name" size="large" placeholder="请输入"></a-input>
+        <a-input
+          ref="inputRef"
+          v-model:value="form.name"
+          size="large"
+          placeholder="请输入"
+          @press-enter="onPressEnter"
+        ></a-input>
       </a-form-item>
 
       <!-- <a-form-item label="描述" name="description">
@@ -42,7 +49,8 @@
 import { SkillApi } from '@/api/skill';
 import { subject } from '@/utils/subject';
 import { FormInstance, message } from 'ant-design-vue';
-import { reactive, ref, watch } from 'vue';
+import { InputRef } from 'ant-design-vue/es/vc-input/inputProps';
+import { nextTick, reactive, ref, watch } from 'vue';
 
 /**
  * 组件配置
@@ -69,6 +77,7 @@ const form = reactive({
 });
 
 const formRef = ref<FormInstance>();
+const inputRef = ref<InputRef>();
 
 const rules = {
   name: [{ required: true, message: '名称不能为空' }]
@@ -126,6 +135,13 @@ const handleVisible = () => {
  * @return {*}
  */
 const open = async (options: ComponentOptions) => {
+  setTimeout(() => {
+    // nextTick无效。
+    inputRef.value?.focus();
+    
+    // modal没有暴露打开后的事件，所有延迟300等dom加载好后获取焦点。
+  }, 300);
+
   visible.value = true;
 
   componentOptions = options;
@@ -135,6 +151,18 @@ const open = async (options: ComponentOptions) => {
   }
 };
 
+/**
+ * @description: 按下回车
+ * @return {*}
+ */
+const onPressEnter = () => {
+  onOk();
+};
+
+/**
+ * @description: 点击确定
+ * @return {*}
+ */
 const onOk = async () => {
   if (loading.value) {
     return;
@@ -168,6 +196,10 @@ const onOk = async () => {
   }
 };
 
+/**
+ * @description: 点击取消
+ * @return {*}
+ */
 const onCancel = () => {
   formRef.value?.resetFields();
 };
