@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-04 12:16:40
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-25 14:55:23
+ * @LastEditTime: 2024-02-25 15:20:46
  * @FilePath: /experience-book-vue3/src/views/skill/skill-form.vue
  * @Description: 
 -->
@@ -50,7 +50,7 @@ import { SkillApi } from '@/api/skill';
 import { subject } from '@/utils/subject';
 import { FormInstance, message } from 'ant-design-vue';
 import { InputRef } from 'ant-design-vue/es/vc-input/inputProps';
-import { nextTick, reactive, ref, watch } from 'vue';
+import { reactive, ref, watch } from 'vue';
 
 /**
  * 组件配置
