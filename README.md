@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-22 18:01:44
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-24 16:45:43
+ * @LastEditTime: 2024-02-25 15:24:10
  * @FilePath: /experience-book-vue3/README.md
  * @Description:
 -->
@@ -51,4 +51,4 @@
 
 ## 构建镜像命令 roamgunner
 
-docker build -t exp-book-vue3-web .
+docker build -t roamgunner/exp-book-vue3-web .
