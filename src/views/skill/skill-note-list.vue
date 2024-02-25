@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-24 09:41:10
+ * @LastEditTime: 2024-02-25 11:54:02
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -125,7 +125,7 @@
                 v-model:value="form.title"
                 size="large"
                 placeholder="无标题"
-                :maxlength="50"
+                :maxlength="100"
                 @change="onInput"
                 @focus="onFocus"
               />
