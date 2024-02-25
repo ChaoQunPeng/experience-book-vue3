@@ -2,12 +2,12 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-25 14:16:27
+ * @LastEditTime: 2024-02-25 16:54:16
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
 <template>
-  <div class="bg-eb-black pt-30 h-full">
+  <div class="bg-eb-black pt-30 overflow-y-auto h-full">
     <div class="flex mb-20 px-20">
       <a-input
         v-model:value="search"
@@ -29,7 +29,7 @@
       item-key="id"
       tag="a-row"
       :component-data="{ gutter: 20 }"
-      class="px-20"
+      class="px-10 !mx-0"
       animation="300"
       delay="100"
       chosen-class="drag-chosen-class"
@@ -112,10 +112,6 @@
                 </div>
               </a-tooltip>
             </div>
-
-            <!-- <div class="leading-normal text-size-12 text-black-65">
-            {{ skill.description }}
-          </div> -->
 
             <div class="mt-auto">
               <div class="flex items-center mb-8" :class="skill.color">
