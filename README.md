@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-22 18:01:44
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-25 20:03:49
+ * @LastEditTime: 2024-02-27 15:11:01
  * @FilePath: /experience-book-vue3/README.md
  * @Description:
 -->
@@ -49,5 +49,7 @@
 - [x] 获得经验的框允许为 0，在输入框中提示相应信息
 
 ## 构建镜像命令 roamgunner
-
 docker build -t roamgunner/exp-book-vue3-web .
+
+## 构建正式应用
+docker compose -f compose.yaml -p exp-book-app up -d
