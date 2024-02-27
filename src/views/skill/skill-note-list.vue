@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-02 10:52:27
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-25 11:54:02
+ * @LastEditTime: 2024-02-27 14:35:57
  * @FilePath: /experience-book-vue3/src/views/skill/skill-note-list.vue
  * @Description: 
 -->
@@ -131,38 +131,6 @@
               />
             </a-form-item>
           </a-col>
-          <!-- <a-col :span="9" :offset="1">
-            <a-form-item label="所属技能" name="skillId">
-              <a-select
-                ref="select"
-                v-model:value="form.skillId"
-                size="large"
-                placeholder="请选择"
-                show-search
-                :filter-option="filterOption"
-                optionFilterProp="label"
-                @change="onChange"
-              >
-                <a-select-option
-                  v-for="skill in skillOptionList"
-                  :key="skill.id"
-                  :value="skill.id"
-                  >{{ skill.name }}</a-select-option
-                >
-              </a-select>
-            </a-form-item>
-          </a-col> -->
-
-          <!-- <a-col :span="24">
-            <a-form-item
-              label="备注"
-              name="username"
-              :rules="[{ message: 'Please input your username!' }]"
-              @change="onInput"
-            >
-              <a-input v-model:value="form.remark" size="large" placeholder="请输入" />
-            </a-form-item>
-          </a-col> -->
         </a-row>
       </a-form>
 
@@ -172,8 +140,8 @@
         :preview="true"
         class="md-editor"
         :toolbarsExclude="['github', 'next', 'revoke']"
-        @on-save="onSave"
-        @on-change="onChange"
+        @on-save="editorOnSave"
+        @on-change="editorOnChange"
         @on-focus="editorOnFocus"
         @on-blur="editorOnBlur"
       />
@@ -422,7 +390,7 @@ const addNote = async () => {
  */
 const deleteNote = async (note: NoteItem) => {
   Modal.confirm({
-    title: `确定要删除【${note.title}】吗？`,
+    title: `确定要删除【${note.title || '无标题'}】吗？`,
     icon: createVNode(ExclamationCircleOutlined),
     onOk: async () => {
       const result = await NoteApi.delele(note.id);
@@ -454,6 +422,7 @@ const updateNote = async () => {
 
   const result = await NoteApi.update(activeNote.value.id, {
     ...form,
+    title: form.title.replace(reg, "\\'"),
     content: content.value.replace(reg, "\\'")
   });
 
@@ -515,7 +484,6 @@ const getNoteInfo = async (id: number) => {
     form.id = data.id;
     form.title = data.title;
     form.skillId = data.skillId;
-    form.remark = data.remark;
 
     content.value = data.content;
     exp.value = data.exp;
@@ -543,11 +511,11 @@ const getExp = async () => {
 };
 
 /**
- * @description: 部分控件的Change事件
+ * @description: 编辑器Change事件
  * @param {*} function
  * @return {*}
  */
-const onChange = _.debounce(function () {
+const editorOnChange = _.debounce(function () {
   if (editorIsActived.value) {
     updateNote();
   }
@@ -569,8 +537,18 @@ const editorOnFocus = () => {
 const editorOnBlur = () => {
   mdEditorIsFocus.value = false;
 };
+
 /**
- * @description: 控件的Input事件
+ * @description: 富文本编辑器的保存事件
+ * @param {*} function
+ * @return {*}
+ */
+const editorOnSave = _.debounce(function () {
+  updateNote();
+});
+
+/**
+ * @description: 部分控件的Input事件
  * @param {*} function
  * @return {*}
  */
@@ -581,21 +559,13 @@ const onInput = _.debounce(function () {
 }, 500);
 
 /**
- * @description: 控件的focus事件
+ * @description: 部分控件的focus事件
  * @return {*}
  */
 const onFocus = () => {
   editorIsActived.value = true;
 };
 
-/**
- * @description: 富文本编辑器的保存事件
- * @param {*} function
- * @return {*}
- */
-const onSave = _.debounce(function () {
-  updateNote();
-});
 
 watch(route, async () => {
   await getNoteList();
