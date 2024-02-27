@@ -1,27 +1,29 @@
-version: "1.0"
+version: "latest"
 
 services:
-  # 这个就是默认的网络别名
   exp-book-mysql:
-    image: mysql:8.0
+    image: roamgunner/exp-book-mysql
     ports:
       - 3307:3306
     volumes:
-      - exp-book-data:/var/lib/mysql
+      - eb-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456789
       MYSQL_DATABASE: experience_book
     networks:
-      exp-book-net:
+      eb-net:
+
 
   exp-book-server:
-    image: exp-book-server
+    image: roamgunner/exp-book-server
     depends_on:
       - exp-book-mysql
     networks:
-      exp-book-net:
+      eb-net:
     ports:
       - 3100:3000
+    volumes:
+      - eb-serevr-uploads:/app/uploads/
     working_dir: /app
     environment:
       MYSQL_HOST: exp-book-mysql
@@ -29,25 +31,41 @@ services:
       MYSQL_PASSWORD: 123456789
       MYSQL_DB: experience_book
     command: sh -c "npm install && npm run prod"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h exp-book-mysql -u root -p 123456789"
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-  exp-book-website:
-    image: nginx:latest
+  exp-book-vue3-web:
+    image: roamgunner/exp-book-vue3-web
     depends_on:
       - exp-book-mysql
       - exp-book-server
     networks:
-      exp-book-net:
+      eb-net:
     ports:
       - 8100:80
-    volumes:
-      - type: bind
-        source: ./dist
-        target: /usr/share/nginx/html/
-      - ./nginx/default.conf:/etc/nginx/nginx.conf
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://exp-book-server:3000/common/healthcheck"
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
-  exp-book-net:
+  eb-net:
 
 
 volumes:
-  exp-book-data:
+  eb-data:
+  eb-serevr-uploads:
