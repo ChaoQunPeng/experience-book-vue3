@@ -12,12 +12,18 @@ services:
       MYSQL_DATABASE: experience_book
     networks:
       eb-net:
-
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -P 3306 -u root --password=123456789"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   exp-book-server:
     image: roamgunner/exp-book-server
-    depends_on:
-      - exp-book-mysql
     networks:
       eb-net:
     ports:
@@ -32,35 +38,23 @@ services:
       MYSQL_DB: experience_book
     command: sh -c "npm install && npm run prod"
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "mysqladmin ping -h exp-book-mysql -u root -p 123456789"
-        ]
-      interval: 30s
-      timeout: 10s
+      test: [ "CMD", "node", "healthcheck.js" ]
+      interval: 10s
+      timeout: 5s
       retries: 3
+    depends_on:
+      exp-book-mysql:
+        condition: service_healthy
 
   exp-book-vue3-web:
     image: roamgunner/exp-book-vue3-web
-    depends_on:
-      - exp-book-mysql
-      - exp-book-server
     networks:
       eb-net:
     ports:
       - 8100:80
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "curl",
-          "-f",
-          "http://exp-book-server:3000/common/healthcheck"
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    depends_on:
+      exp-book-server:
+        condition: service_healthy
 
 networks:
   eb-net:
