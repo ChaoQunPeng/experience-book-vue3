@@ -2,12 +2,14 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-01 14:28:58
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-25 16:54:16
+ * @LastEditTime: 2024-02-29 19:51:30
  * @FilePath: /experience-book-vue3/src/views/skill/skill-index.vue
  * @Description:  技能列表
 -->
 <template>
-  <div class="bg-eb-black pt-30 overflow-y-auto h-full">
+  <div class="bg-eb-black pt-30 overflow-y-auto h-full relative">
+    <div id="particles-js" class="particles-js absolute top-0 w-full h-full overflow-hidden"></div>
+
     <div class="flex mb-20 px-20">
       <a-input
         v-model:value="search"
@@ -161,6 +163,7 @@ import { computed, createVNode, onMounted, ref } from 'vue';
 import router from '@/router';
 import { subject } from '@/utils/subject';
 import draggable from 'vuedraggable';
+import { initParticles } from './particles';
 
 interface SkillListItem {
   id: number;
@@ -225,6 +228,8 @@ const resolvePercent = computed(() => {
 // #endregion
 
 onMounted(() => {
+  initParticles();
+  
   getList();
 });
 

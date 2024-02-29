@@ -24,6 +24,4 @@ declare const _EnableGlobalMock: string;
  */
 declare const _EnableMockDebug: string;
 
-
-
-
+declare const particlesJS: any;

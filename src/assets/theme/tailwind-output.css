@@ -8,12 +8,20 @@
   visibility: visible
 }
 
+.fixed {
+  position: fixed
+}
+
 .absolute {
   position: absolute
 }
 
 .relative {
   position: relative
+}
+
+.top-0 {
+  top: 0px
 }
 
 .m-0 {
@@ -259,6 +267,10 @@
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none
+}
+
+.resize {
+  resize: both
 }
 
 .flex-col {
