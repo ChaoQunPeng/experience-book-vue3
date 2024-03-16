@@ -7,7 +7,7 @@
  * @Description:
 -->
 
-## 经验本 （exp-book）test
+## 经验本 （exp-book）
 
 ![图片](/preview-image/1.png)
 ![图片](/preview-image/2.png)
