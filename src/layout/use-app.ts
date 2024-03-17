@@ -2,7 +2,7 @@
  * @Author: PengChaoQun 1152684231@qq.com
  * @Date: 2024-02-19 13:52:45
  * @LastEditors: PengChaoQun 1152684231@qq.com
- * @LastEditTime: 2024-02-19 14:40:06
+ * @LastEditTime: 2024-03-17 10:14:18
  * @FilePath: /experience-book-vue3/src/layout/use-app.ts
  * @Description: 应用hook
  */
@@ -18,7 +18,7 @@ export const useAppStorage = () => {
 
   const initTheme = () => {
     if (localStorage.getItem(EB_THEME_KEY) == undefined) {
-      localStorage.setItem(EB_THEME_KEY, 'dark-theme');
+      localStorage.setItem(EB_THEME_KEY, 'light-theme');
     } else {
       const local = getTheme() as string;
 
